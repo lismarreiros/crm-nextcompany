@@ -2,9 +2,10 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { DivForm, DivInputs, Modal, DivTitle, InputG, Label, Title, ButtonX } from './styles';
+import { DivForm, DivInputs, Modal, DivTitle, InputG, Label, Title, ButtonX, InputP, InputPP, ButtonClient, DivSelect } from './styles';
 import { HiOutlineUserGroup } from 'react-icons/hi';
 import { HiOutlineXCircle } from 'react-icons/hi';
+// import { HiChevronDown } from 'react-icons/hi';
 
 const schema = z.object({
   cpfcnpj: z.string().min(1),
@@ -38,70 +39,120 @@ export default function ClientForm()  {
 
   const onSubmit = (data: any) => console.log(data);
   return (
-    
     <Modal>
+      {/* Título do formulário e ícones */}
       <DivTitle>
-        <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
-          <HiOutlineUserGroup size={25} style={{
+        <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', paddingLeft: 15}}>
+          <HiOutlineUserGroup size={27} style={{
             color: '#575757',
           }}/>
-          <Title>Cliente</Title>
+          <Title>Novo Cliente</Title>
         </div>
         <ButtonX>
-          <HiOutlineXCircle size={25} style={{
+          <HiOutlineXCircle size={30} style={{
             color: '#575757',
           }}/>
         </ButtonX>
       </DivTitle>
       
+      {/* Começo do Formulário */}
+      {/* Dados do Cliente */}
       <DivForm>
         <form onSubmit={handleSubmit(onSubmit)}>
           <DivInputs>
             <Label>CPF/CNPJ</Label>
-            <InputG placeholder='Digite o CPF/CNPJ'{...register('cpfcnpj')} />
+            <InputG placeholder='Digite o CPF/CNPJ' {...register('cpfcnpj')} />
           </DivInputs>
           
           <DivInputs>
             <Label>Nome/Fantasia</Label>
-            <InputG {...register('nomefantasia')}/>
+            <InputG placeholder='Digite Nome/Fantasia' {...register('nomefantasia')}/>
           </DivInputs>
 
           <DivInputs>
             <Label>Razão Social</Label>
-            <InputG {...register('razao')} />
+            <InputG placeholder='Digite a razão social' {...register('razao')} />
           </DivInputs>
-    
-          <label>Ramo Atividade</label>
-          <input {...register('ramo')} />
-          <p>{errors.ramo?.message}</p>
 
-          <label>Status</label>
-          <input {...register('razao')} />
-          <p>{errors.status?.message}</p>
-
-          <div>
-            <h2>Endereço</h2>
-            <label>CEP</label>
-            <input {...register('cep')}/>
-            <p>{errors.cep?.message}</p>
-
-            <label>Cidade</label>
-            <input {...register('cidade')} />
-            <p>{errors.cidade?.message}</p>
-
-            <label>UF</label>
-            <input {...register('uf')} />
-            <p>{errors.uf?.message}</p>
-
-            <label>Bairro</label>
-            <input {...register('bairro')} />
-            <p>{errors.bairro?.message}</p>
-
-            <label>Número</label>
-            <input {...register('numero')} />
+          <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+            <DivInputs>
+              <Label>Ramo Atividade</Label>
+              <DivSelect>
+                {/* <input type="radio" name="option" />
+                {/* <HiChevronDown /> */}
+              </DivSelect>
+            </DivInputs>
             
+            <DivInputs>
+              <Label>Status</Label>
+              <DivSelect>
+
+              </DivSelect>
+            </DivInputs>
           </div>
 
+          {/* Informações de Contato */} 
+          <div>
+            <DivTitle><Title>Contato</Title></DivTitle>
+            <DivInputs>
+              <Label>Nome do Contato</Label>
+              <InputG placeholder='Digite o nome do contato' />
+            </DivInputs>
+
+            <DivInputs>
+              <Label>Telefone</Label>
+              <InputG placeholder='Digite o número de telefone do contato' />
+            </DivInputs>
+
+            <DivInputs>
+              <Label>Telefone 2</Label>
+              <InputG placeholder='Digite o número de telefone do contato' />
+            </DivInputs>
+
+            <DivInputs>
+              <Label>Email do contato</Label>
+              <InputG placeholder='contato@email.com' />
+            </DivInputs>
+
+            <DivInputs>
+              <Label>Função</Label>
+              <InputG placeholder='' />
+            </DivInputs>
+          </div>
+
+          {/* Informações do Endereço do Cliente */}
+          <div>
+            <DivTitle><Title>Endereço</Title></DivTitle>
+            <DivInputs>
+              <Label>CEP</Label>
+              <InputG placeholder='Digite o CEP do cliente' {...register('cep')}/>
+            </DivInputs>
+            
+            <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+              <DivInputs>
+                <Label>Cidade</Label>
+                <InputP placeholder='Digite a cidade' {...register('cidade')} />
+              </DivInputs>
+
+              <DivInputs>
+                <Label>UF</Label>
+                <InputPP placeholder='Selecione UF' {...register('uf')} />
+              </DivInputs>
+            </div>
+     
+            <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+              <DivInputs>
+                <Label>Bairro</Label>
+                <InputP  {...register('bairro')} />
+              </DivInputs>
+
+              <DivInputs>
+                <Label>Número</Label>
+                <InputPP {...register('numero')} />
+              </DivInputs>
+            </div>
+          </div>
+          <ButtonClient type='submit'>Cadastrar Cliente</ButtonClient>
         </form>
       </DivForm>
     </Modal>
