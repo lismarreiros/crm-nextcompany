@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { DivForm, DivInputs, Modal, DivTitle, InputG, Label, Title, ButtonX, InputP, InputPP, ButtonClient, DivSelect } from './styles';
+import { DivForm, DivInputs, Modal, DivTitle, InputG, Label, 
+  Title, ButtonX, InputP, InputPP, ButtonClient, TooltipText } from './styles';
 import { HiOutlineUserGroup } from 'react-icons/hi';
 import { HiOutlineXCircle } from 'react-icons/hi';
-// import { HiChevronDown } from 'react-icons/hi';
+import Select from './Select';
+import InputMask from 'react-input-mask';
 
 const schema = z.object({
   cpfcnpj: z.string().min(1),
@@ -29,6 +31,18 @@ const schema = z.object({
 type FormValues = z.infer<typeof schema>;
 
 export default function ClientForm()  {
+  const [cpfCnpjMaks, setCpfCnpjMask] = useState('');
+
+  const cpfCNPJInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target;
+
+    if (value.replace(/[^0-9]/g, '').length < 12) {
+      setCpfCnpjMask('999.999.999-99'); //Máscara para CPF
+    } else {
+      setCpfCnpjMask('99.999.999/9999-99'); //Máscara para CNPJ
+    }
+  };
+
   const {
     register, 
     handleSubmit,
@@ -43,15 +57,17 @@ export default function ClientForm()  {
       {/* Título do formulário e ícones */}
       <DivTitle>
         <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', paddingLeft: 15}}>
-          <HiOutlineUserGroup size={27} style={{
+          <HiOutlineUserGroup size={28} style={{
             color: '#575757',
+            strokeWidth: 1.5
           }}/>
           <Title>Novo Cliente</Title>
         </div>
         <ButtonX>
-          <HiOutlineXCircle size={30} style={{
-            color: '#575757',
-          }}/>
+          <HiOutlineXCircle size={34} style={
+            { strokeWidth: 1.5 }
+          }/>
+          <TooltipText>Sair</TooltipText>
         </ButtonX>
       </DivTitle>
       
@@ -61,9 +77,15 @@ export default function ClientForm()  {
         <form onSubmit={handleSubmit(onSubmit)}>
           <DivInputs>
             <Label>CPF/CNPJ</Label>
-            <InputG placeholder='Digite o CPF/CNPJ' {...register('cpfcnpj')} />
+            <InputG
+              as={InputMask}
+              mask={cpfCnpjMaks}
+              maskChar={null}
+              placeholder='Digite o CPF/CNPJ' {...register('cpfcnpj')}
+              onChange={cpfCNPJInputChange}
+            />
           </DivInputs>
-          
+
           <DivInputs>
             <Label>Nome/Fantasia</Label>
             <InputG placeholder='Digite Nome/Fantasia' {...register('nomefantasia')}/>
@@ -77,18 +99,9 @@ export default function ClientForm()  {
           <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
             <DivInputs>
               <Label>Ramo Atividade</Label>
-              <DivSelect>
-                {/* <input type="radio" name="option" />
-                {/* <HiChevronDown /> */}
-              </DivSelect>
+              <Select/>
             </DivInputs>
-            
-            <DivInputs>
-              <Label>Status</Label>
-              <DivSelect>
-
-              </DivSelect>
-            </DivInputs>
+  
           </div>
 
           {/* Informações de Contato */} 
@@ -100,13 +113,13 @@ export default function ClientForm()  {
             </DivInputs>
 
             <DivInputs>
-              <Label>Telefone</Label>
-              <InputG placeholder='Digite o número de telefone do contato' />
+              <Label>Telefone Celular</Label>
+              <InputG as={InputMask} mask="(99) 99999-9999" placeholder='Digite o número de telefone do contato' />
             </DivInputs>
 
             <DivInputs>
-              <Label>Telefone 2</Label>
-              <InputG placeholder='Digite o número de telefone do contato' />
+              <Label>Telefone Fixo</Label>
+              <InputG as={InputMask} mask="(99) 9999-9999"  placeholder='Digite o número de telefone do contato' />
             </DivInputs>
 
             <DivInputs>
@@ -125,7 +138,7 @@ export default function ClientForm()  {
             <DivTitle><Title>Endereço</Title></DivTitle>
             <DivInputs>
               <Label>CEP</Label>
-              <InputG placeholder='Digite o CEP do cliente' {...register('cep')}/>
+              <InputG as={InputMask} mask="99999-999" placeholder='Digite o CEP do cliente' {...register('cep')}/>
             </DivInputs>
             
             <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>

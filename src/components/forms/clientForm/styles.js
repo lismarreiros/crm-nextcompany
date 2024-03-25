@@ -44,18 +44,23 @@ export const DivSelect = styled.div`
   border: 2px solid #f4f4f4;
   border-radius: 5px;
   font-size: 12px;
-  padding-left: 10px;
   margin: 4px 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
 `;
 
 export const InputG = styled.input`
   width: 540px;
-  height: 40px;
-  border: 2px solid #f4f4f4;
+  height: 50px;
+  border: 1px solid #d7d7d7;
   border-radius: 5px;
   outline: 0;
-  padding-left: 10px;
+  padding-left: 1rem;
   margin: 4px 0;
+  font-size: 1rem;
+  color: #575757;
 
   &:hover {
     background-color: #eeeeee75;
@@ -72,7 +77,7 @@ export const InputG = styled.input`
   &::placeholder {
     color: #C5C5C5; 
     font-family: 'Roboto';
-    font-size: 10px;
+    font-size: 1rem;
   }
 `;
 
@@ -88,26 +93,75 @@ export const InputSelect = styled(InputG)`
   width: 283px;
 `;
 export const Label = styled.label`
-  font-size: 12px;
-  color: #C5C5C5;
+  font-size: 1rem;
+  color: #777;
   text-align: left;
   font-family: 'Roboto';
-  font-weight: 600;
+  font-weight: 500;
   padding-bottom: 7px;
 `;
 
 export const Title = styled.h1`
   color: #575757;
-  font-family: 'Roboto', SemiBold;
-  font-size: 16px;
+  font-family: 'Roboto';
+  font-weight: 500;
+  font-size: 1.5rem;
   justify-self: left;
   margin-left: 7px;
 `;
 
 export const ButtonX = styled.button`
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+
   outline: none;
+  cursor: pointer;
   border: none;
-  background-color: #ffffff;
+  background-color: transparent;
+  margin-right: 1rem;
+  width: 45px;
+  height: 45px;
+
+  &:hover {
+    span {
+      visibility: visible;
+    }
+    svg {
+      color: #575757;
+    }
+
+    transform: scale(1.05);
+    transition: background-color 0.5s ease, color 0.5s ease, transform 0.5s ease;
+  }
+
+`;
+
+export const TooltipText = styled.span`
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  opacity: 0.8;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  top: 100%;
+  left: 50%;
+  margin-left: -60px;
+
+  &:after {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent black transparent;
+  }
 `;
 
 export const ButtonClient = styled.button`
@@ -119,7 +173,44 @@ export const ButtonClient = styled.button`
   font-family: 'Roboto';
   font-weight: 600;
   color: #575757;
+  cursor: pointer;
   background-color: #f4f4f4;
   transition: background-color 0.5s ease, color 0.5s ease, transform 0.5s ease;
 
-  `;
+  &:hover {
+    background-color: #575757;
+    color: #f4f4f4;
+    transform: scale(1.05);
+    transition: background-color 0.5s ease, color 0.5s ease, transform 0.5s ease;
+  }
+`;
+
+export const SelectInput = styled.select`
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 100%;
+  font-size: 1rem;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  appearance: none;
+  background-color: transparent;
+  border: none;
+  font-family: inherit;
+  color: #c5c5c5;
+;
+
+  &:focus {
+    outline: none;
+  } 
+`;
+
+export const StyledOption = styled.option`
+  background-color: #fff;
+  font-size: 1rem;
+  color: #333;
+
+  &:hover {
+    background-color: #f0f0f0;
+  }
+`;
