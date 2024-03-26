@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+/* eslint-disable no-extra-boolean-cast */
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -8,9 +9,16 @@ import { HiOutlineUserGroup } from 'react-icons/hi';
 import { HiOutlineXCircle } from 'react-icons/hi';
 import Select from './Select';
 import InputMask from 'react-input-mask';
+import ValidationCpforCnpj from '../../../validations/cpfCnpj/validationCpfCnpj';
+import CustomInputMask from '../../../utils/customInputMask';
 
+{/* validação */}
 const schema = z.object({
-  cpfcnpj: z.string().min(1),
+  cpfOrCnpj: z.string()
+    .refine((value: string) => {
+      if (typeof value !== 'string') return false;
+      return ValidationCpforCnpj.validateCpfOrCnpj(value);
+    }, 'Digite um CPF ou CNPJ válido.'),
   nomefantasia: z.string()
     .max(100)
     .transform(nomefantasia => {
@@ -22,6 +30,7 @@ const schema = z.object({
   ramo: z.string(),
   status: z.string().min(1),
   cep: z.string(),
+  rua: z.string(),
   cidade: z.string(),
   uf: z.string(),
   bairro: z.string(),
@@ -31,27 +40,50 @@ const schema = z.object({
 type FormValues = z.infer<typeof schema>;
 
 export default function ClientForm()  {
-  const [cpfCnpjMaks, setCpfCnpjMask] = useState('');
-
-  const cpfCNPJInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = event.target;
-
-    if (value.replace(/[^0-9]/g, '').length < 12) {
-      setCpfCnpjMask('999.999.999-99'); //Máscara para CPF
-    } else {
-      setCpfCnpjMask('99.999.999/9999-99'); //Máscara para CNPJ
-    }
+  const cpfCNPJInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    e.target.value = CustomInputMask.cpfCnpj(value);
   };
 
   const {
     register, 
     handleSubmit,
+    setValue,
     formState: { errors }
   } = useForm<FormValues>({
     resolver: zodResolver(schema)
   });
 
   const onSubmit = (data: any) => console.log(data);
+  const cpfCnpjRegister = register('cpfOrCnpj');
+
+  const pesquisarCep = async (cep: any) => {
+    try {
+      const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+      const data = await response.json();
+
+      if (data.erro) {
+        throw new Error('CEP não encontrado.');
+      }
+
+      setValue('rua', data.logradouro);
+      setValue('bairro', data.bairro);
+      setValue('cidade', data.localidade);
+      setValue('uf', data.uf);
+    } catch (error) {
+      console.error('Erro ao buscar CEP:', error);
+      alert('Erro ao buscar CEP. Por favor, tente novamente');
+    }
+  };
+
+  const handleCepChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const cep = e.target.value.replace(/\D/g, ''); // Remove caracteres não númericos
+
+    if (cep.length === 8) {
+      pesquisarCep(cep);
+    }
+  };
+
   return (
     <Modal>
       {/* Título do formulário e ícones */}
@@ -78,12 +110,14 @@ export default function ClientForm()  {
           <DivInputs>
             <Label>CPF/CNPJ</Label>
             <InputG
-              as={InputMask}
-              mask={cpfCnpjMaks}
-              maskChar={null}
-              placeholder='Digite o CPF/CNPJ' {...register('cpfcnpj')}
-              onChange={cpfCNPJInputChange}
+              placeholder='Digite o CPF/CNPJ'
+              {...cpfCnpjRegister}
+              onChange={(e) => {
+                cpfCNPJInputChange(e);
+                cpfCnpjRegister.onChange(e);
+              }}
             />
+            {errors?.cpfOrCnpj && <p>{errors.cpfOrCnpj.message}</p>}
           </DivInputs>
 
           <DivInputs>
@@ -101,7 +135,7 @@ export default function ClientForm()  {
               <Label>Ramo Atividade</Label>
               <Select/>
             </DivInputs>
-  
+    
           </div>
 
           {/* Informações de Contato */} 
@@ -138,13 +172,19 @@ export default function ClientForm()  {
             <DivTitle><Title>Endereço</Title></DivTitle>
             <DivInputs>
               <Label>CEP</Label>
-              <InputG as={InputMask} mask="99999-999" placeholder='Digite o CEP do cliente' {...register('cep')}/>
+              <InputPP as={InputMask} mask="99999-999" placeholder='Digite o CEP' {...register('cep')} onBlur={handleCepChange}/>
             </DivInputs>
-            
+
+            <DivInputs>
+              <Label>Rua</Label>
+              <InputG placeholder='Digite o endereço' {...register('rua')} />
+            </DivInputs>
+              
             <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
               <DivInputs>
                 <Label>Cidade</Label>
                 <InputP placeholder='Digite a cidade' {...register('cidade')} />
+              
               </DivInputs>
 
               <DivInputs>
@@ -152,7 +192,7 @@ export default function ClientForm()  {
                 <InputPP placeholder='Selecione UF' {...register('uf')} />
               </DivInputs>
             </div>
-     
+      
             <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
               <DivInputs>
                 <Label>Bairro</Label>
