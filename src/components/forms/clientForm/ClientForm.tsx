@@ -40,6 +40,11 @@ const schema = z.object({
   razao: z.string(),
   ramo: z.string(),
   status: z.string().min(1),
+  nomeContato: z.string(),
+  celular: z.string(), 
+  fixo: z.string(), 
+  email: z.string(), 
+  funcao: z.string(), 
   cep: z.string(),
   rua: z.string(),
   cidade: z.string(),
@@ -51,22 +56,35 @@ const schema = z.object({
 type FormValues = z.infer<typeof schema>;
 
 const ClientFormComponent = () => {
-  const formSchema = z.object({
-    cpfcnpj: z.string().min(2, {
-      message: 'Username must be at least 2 characters.',
-    }),
+  // const formSchema = z.object({
+  //   cpfcnpj: z.string().min(2, {
+  //     message: 'Username must be at least 2 characters.',
+  //   }),
+  // });
+
+  const form = useForm<z.infer<typeof schema>>({
+    resolver: zodResolver(schema),
   });
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues:{
-      cpfcnpj: '',
-    }
-  });
+  // function onSubmit(values: z.infer<typeof formSchema>) {
+  //   console.log(values);
+  //
+  const cpfCNPJInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    e.target.value = CustomInputMask.cpfCnpj(value);
+  };
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-  }
+  // const {
+  //   register, 
+  //   handleSubmit,
+  //   setValue,
+  //   formState: { errors }
+  // } = useForm<FormValues>({
+  //   resolver: zodResolver(schema)
+  // });
+
+  const onSubmit = (data: any) => console.log(data);
+  // const cpfCnpjRegister = register('cpfOrCnpj');
 
   return (
     
@@ -92,7 +110,7 @@ const ClientFormComponent = () => {
               {/* CPF/CNPJ */}
               <FormField
                 control={form.control}
-                name='cpfcnpj'
+                name='cpfOrCnpj'
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>CPF/CNPJ</FormLabel>
@@ -107,12 +125,12 @@ const ClientFormComponent = () => {
               {/* Nome/Fantasia */}
               <FormField
                 control={form.control}
-                name='cpfcnpj'
+                name='nomefantasia'
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Nome/Fantasia</FormLabel>
                     <FormControl>
-                      <Input placeholder="Digite CPF/CNPJ" {...field} />
+                      <Input placeholder="Digite Nome/Fantasia" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -121,12 +139,12 @@ const ClientFormComponent = () => {
               {/* Razão Social */}
               <FormField
                 control={form.control}
-                name='cpfcnpj'
+                name='razao'
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Razão Social</FormLabel>
                     <FormControl>
-                      <Input placeholder="Digite CPF/CNPJ" {...field} />
+                      <Input placeholder="Digite a razão social" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -134,9 +152,10 @@ const ClientFormComponent = () => {
               />
 
               {/* Ramo Atividade */}
+              {/* todo: altera para um componente do tipo select */}
               <FormField
                 control={form.control}
-                name='cpfcnpj'
+                name='ramo'
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Ramo Atividade</FormLabel>
@@ -155,12 +174,12 @@ const ClientFormComponent = () => {
                 {/* Nome do Contato */}
                 <FormField
                   control={form.control}
-                  name='cpfcnpj'
+                  name='nomeContato'
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Nome</FormLabel>
                       <FormControl>
-                        <Input placeholder="Digite CPF/CNPJ" {...field} />
+                        <Input placeholder="Digite o nome do contato" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -170,12 +189,12 @@ const ClientFormComponent = () => {
                 {/* Telefone 1 */}
                 <FormField
                   control={form.control}
-                  name='cpfcnpj'
+                  name='fixo'
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Telefone</FormLabel>
                       <FormControl>
-                        <Input placeholder="Digite CPF/CNPJ" {...field} />
+                        <Input placeholder="Digite CPF/Digite o número de telefone do contato" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -185,12 +204,12 @@ const ClientFormComponent = () => {
                 {/* Telefone 2 */}
                 <FormField
                   control={form.control}
-                  name='cpfcnpj'
+                  name='celular'
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Celular</FormLabel>
                       <FormControl>
-                        <Input placeholder="Digite CPF/CNPJ" {...field} />
+                        <Input placeholder="Digite o número de telefone do contato" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -200,12 +219,12 @@ const ClientFormComponent = () => {
                 {/* Email */}
                 <FormField
                   control={form.control}
-                  name='cpfcnpj'
+                  name='email'
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Email</FormLabel>
                       <FormControl>
-                        <Input placeholder="Digite CPF/CNPJ" {...field} />
+                        <Input placeholder="Digite o email do contato" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -215,12 +234,12 @@ const ClientFormComponent = () => {
                 {/* Função */}
                 <FormField
                   control={form.control}
-                  name='cpfcnpj'
+                  name='funcao'
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Função</FormLabel>
                       <FormControl>
-                        <Input placeholder="Digite CPF/CNPJ" {...field} />
+                        <Input placeholder="Digite a função" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -235,7 +254,7 @@ const ClientFormComponent = () => {
                 {/* CEP */}
                 <FormField
                   control={form.control}
-                  name='cpfcnpj'
+                  name='cep'
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>CEP</FormLabel>
@@ -250,12 +269,12 @@ const ClientFormComponent = () => {
                 {/* BAIRRO */}
                 <FormField
                   control={form.control}
-                  name='cpfcnpj'
+                  name='bairro'
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Bairro</FormLabel>
                       <FormControl>
-                        <Input placeholder="Digite CPF/CNPJ" {...field} />
+                        <Input placeholder="Digite o bairro" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -265,12 +284,12 @@ const ClientFormComponent = () => {
                 {/* RUA */}
                 <FormField
                   control={form.control}
-                  name='cpfcnpj'
+                  name='rua'
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Rua</FormLabel>
                       <FormControl>
-                        <Input placeholder="Digite CPF/CNPJ" {...field} />
+                        <Input placeholder="Digite o endereço" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -280,12 +299,12 @@ const ClientFormComponent = () => {
                 {/* CIDADE */}
                 <FormField
                   control={form.control}
-                  name='cpfcnpj'
+                  name='cidade'
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Cidade</FormLabel>
                       <FormControl>
-                        <Input placeholder="Digite CPF/CNPJ" {...field} />
+                        <Input placeholder="Digite a cidade" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -293,14 +312,15 @@ const ClientFormComponent = () => {
                 />
 
                 {/* UF */}
+                {/* todo: altera para um componente do tipo select */}
                 <FormField
                   control={form.control}
-                  name='cpfcnpj'
+                  name='uf'
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>UF</FormLabel>
                       <FormControl>
-                        <Input placeholder="Digite CPF/CNPJ" {...field} />
+                        <Input placeholder="Selecione UF" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -309,12 +329,12 @@ const ClientFormComponent = () => {
                 {/* NÚMERO */}
                 <FormField
                   control={form.control}
-                  name='cpfcnpj'
+                  name='numero'
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Número</FormLabel>
                       <FormControl>
-                        <Input placeholder="Digite CPF/CNPJ" {...field} />
+                        <Input placeholder="Digite número" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
