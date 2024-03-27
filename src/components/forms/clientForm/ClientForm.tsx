@@ -22,7 +22,6 @@ import {
 } from '@/components/shadcn/ui/dialog';
 import { Input } from '@/components/shadcn/ui/input';
 import { Form, FormControl, FormField, FormLabel, FormItem, FormMessage } from '@/components/shadcn/ui/form';
-import { ScrollArea } from '@/components/shadcn/ui/scroll-area';
 
 {/* validação */}
 const schema = z.object({
