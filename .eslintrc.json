@@ -3,6 +3,11 @@
         "browser": true,
         "es2021": true
     },
+    "ignorePatterns": [
+        "dist",
+        "craco.config.js",
+        "tailwind.config.js"
+    ],
     "extends": [
         "eslint:recommended",
         "plugin:@typescript-eslint/recommended",

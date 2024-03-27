@@ -4,13 +4,28 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { DivForm, DivInputs, Modal, DivTitle, InputG, Label, 
-  Title, ButtonX, InputP, InputPP, ButtonClient, TooltipText } from './styles';
-import { HiOutlineUserGroup } from 'react-icons/hi';
-import { HiOutlineXCircle } from 'react-icons/hi';
+  Title, InputP, InputPP,  } from './styles';
 import Select from './Select';
 import InputMask from 'react-input-mask';
-import ValidationCpforCnpj from '../../../validations/cpfCnpj/validationCpfCnpj';
-import CustomInputMask from '../../../utils/customInputMask';
+import ValidationCpforCnpj from '@/validations/cpfCnpj/validationCpfCnpj';
+import CustomInputMask from '@/utils/customInputMask';
+
+import { Users, CircleX } from 'lucide-react';
+// import { Button } from '@/components/shadcn/ui/button';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/shadcn/ui/tooltip';
+
+import { Button } from '@/components/shadcn/ui/button';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/shadcn/ui/dialog';
+import { Input } from '@/components/shadcn/ui/input';
+// import { Label } from '@/components/shadcn/ui/label';
 
 {/* validação */}
 const schema = z.object({
@@ -38,6 +53,50 @@ const schema = z.object({
 });
 
 type FormValues = z.infer<typeof schema>;
+
+const ClientFormComponent = () => {
+  return (
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button variant="outline">Edit Profile</Button>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-[425px]">
+        <DialogHeader>
+          
+          {/* <DialogTitle>Edit profile</DialogTitle>
+          <DialogDescription>
+            Make changes to your profile here. Click save when youre done.
+          </DialogDescription> */}
+        </DialogHeader>
+        <div className="grid gap-4 py-4">
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="name" className="text-right">
+              Name
+            </Label>
+            <Input
+              id="name"
+              defaultValue="Pedro Duarte"
+              className="col-span-3"
+            />
+          </div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="username" className="text-right">
+              Username
+            </Label>
+            <Input
+              id="username"
+              defaultValue="@peduarte"
+              className="col-span-3"
+            />
+          </div>
+        </div>
+        <DialogFooter>
+          <Button type="submit">Save changes</Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+};
 
 export default function ClientForm()  {
   const cpfCNPJInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -86,26 +145,27 @@ export default function ClientForm()  {
 
   return (
     <Modal>
-      {/* Título do formulário e ícones */}
-      <DivTitle>
-        <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', paddingLeft: 15}}>
-          <HiOutlineUserGroup size={28} style={{
-            color: '#575757',
-            strokeWidth: 1.5
-          }}/>
-          <Title>Novo Cliente</Title>
-        </div>
-        <ButtonX>
-          <HiOutlineXCircle size={34} style={
-            { strokeWidth: 1.5 }
-          }/>
-          <TooltipText>Sair</TooltipText>
-        </ButtonX>
-      </DivTitle>
-      
+      <ClientFormComponent />
+
       {/* Começo do Formulário */}
       {/* Dados do Cliente */}
       <DivForm>
+        {/* <Form>
+          <FormField 
+            control=''}
+            name='cpfcnpj'
+            render={({field}) => (
+              <FormItem>
+                <FormLabel>CPF/CNPJ</FormLabel>
+                <FormControl>
+                  <Input placeholder='cpf/cnpj' {...field} />
+                </FormControl>
+              </FormItem>
+            )}
+          >
+
+          </FormField>
+        </Form> */}
         <form onSubmit={handleSubmit(onSubmit)}>
           <DivInputs>
             <Label>CPF/CNPJ</Label>
@@ -205,7 +265,7 @@ export default function ClientForm()  {
               </DivInputs>
             </div>
           </div>
-          <ButtonClient type='submit'>Cadastrar Cliente</ButtonClient>
+          <Button type='submit'>Cadastrar Cliente</Button>
         </form>
       </DivForm>
     </Modal>

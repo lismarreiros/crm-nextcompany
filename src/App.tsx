@@ -1,17 +1,20 @@
 import React from 'react';
-import './App.css';
-import ClientForm from './components/forms/clientForm/ClientForm';
+import ClientForm from '@/components/forms/clientForm/ClientForm';
+import DashboardPage from './pages/dashboard/dashboard';
+import { Route, Routes } from 'react-router-dom';
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
         <div draggable='true'>
-          <ClientForm/>
+          <Routes>
+            <Route path='/' element={<ClientForm/>} />
+            <Route path='/form' element={<DashboardPage />} />
+          </Routes>
         </div>
       </header>
     </div>
-
   );
 }
 
