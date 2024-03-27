@@ -186,7 +186,6 @@ const ClientFormComponent = () => {
                           </SelectGroup>
                         </SelectContent>
                       </Select>
-                      {/* <Input placeholder="Digite CPF/CNPJ" {...field} /> */}
                     </FormControl>
                     <FormMessage />
                   </FormItem>
