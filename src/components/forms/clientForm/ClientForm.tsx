@@ -10,22 +10,19 @@ import InputMask from 'react-input-mask';
 import ValidationCpforCnpj from '@/validations/cpfCnpj/validationCpfCnpj';
 import CustomInputMask from '@/utils/customInputMask';
 
-import { Users, CircleX } from 'lucide-react';
-// import { Button } from '@/components/shadcn/ui/button';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/shadcn/ui/tooltip';
-
+import { Users } from 'lucide-react';
 import { Button } from '@/components/shadcn/ui/button';
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from '@/components/shadcn/ui/dialog';
 import { Input } from '@/components/shadcn/ui/input';
-// import { Label } from '@/components/shadcn/ui/label';
+import { Form, FormControl, FormField, FormLabel, FormItem, FormMessage } from '@/components/shadcn/ui/form';
+import { ScrollArea } from '@/components/shadcn/ui/scroll-area';
 
 {/* validação */}
 const schema = z.object({
@@ -55,46 +52,285 @@ const schema = z.object({
 type FormValues = z.infer<typeof schema>;
 
 const ClientFormComponent = () => {
+  const formSchema = z.object({
+    cpfcnpj: z.string().min(2, {
+      message: 'Username must be at least 2 characters.',
+    }),
+  });
+
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues:{
+      cpfcnpj: '',
+    }
+  });
+
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    console.log(values);
+  }
+
   return (
+    
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">Edit Profile</Button>
-      </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+        <Button variant='outline'>Edit Profile</Button>
+      </DialogTrigger> 
+      <DialogContent className='w-4/5'> 
         <DialogHeader>
-          
-          {/* <DialogTitle>Edit profile</DialogTitle>
-          <DialogDescription>
-            Make changes to your profile here. Click save when youre done.
-          </DialogDescription> */}
+          <DialogTitle>
+            <div className='flex items-center gap-2'>
+              <Users size={22} />
+                  Novo Cliente
+            </div>
+          </DialogTitle>
         </DialogHeader>
-        <div className="grid gap-4 py-4">
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="name" className="text-right">
-              Name
-            </Label>
-            <Input
-              id="name"
-              defaultValue="Pedro Duarte"
-              className="col-span-3"
-            />
-          </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="username" className="text-right">
-              Username
-            </Label>
-            <Input
-              id="username"
-              defaultValue="@peduarte"
-              className="col-span-3"
-            />
-          </div>
-        </div>
-        <DialogFooter>
-          <Button type="submit">Save changes</Button>
-        </DialogFooter>
-      </DialogContent>
+
+        {/* Começo do Formulário */}
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+            <div className='grid gap-4 pt-2'>
+
+              {/* CPF/CNPJ */}
+              <FormField
+                control={form.control}
+                name='cpfcnpj'
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>CPF/CNPJ</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Digite CPF/CNPJ" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              {/* Nome/Fantasia */}
+              <FormField
+                control={form.control}
+                name='cpfcnpj'
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Nome/Fantasia</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Digite CPF/CNPJ" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              {/* Razão Social */}
+              <FormField
+                control={form.control}
+                name='cpfcnpj'
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Razão Social</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Digite CPF/CNPJ" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              {/* Ramo Atividade */}
+              <FormField
+                control={form.control}
+                name='cpfcnpj'
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Ramo Atividade</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Digite CPF/CNPJ" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+                
+              {/* Contato do Cliente */}
+              <h2 className='font-semibold pt-2'>Contato</h2>
+              <hr />
+              <div className='grid grid-cols-2 gap-4'>
+                {/* Nome do Contato */}
+                <FormField
+                  control={form.control}
+                  name='cpfcnpj'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Nome</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Digite CPF/CNPJ" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                {/* Telefone 1 */}
+                <FormField
+                  control={form.control}
+                  name='cpfcnpj'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Telefone</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Digite CPF/CNPJ" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                {/* Telefone 2 */}
+                <FormField
+                  control={form.control}
+                  name='cpfcnpj'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Celular</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Digite CPF/CNPJ" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                {/* Email */}
+                <FormField
+                  control={form.control}
+                  name='cpfcnpj'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Email</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Digite CPF/CNPJ" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                {/* Função */}
+                <FormField
+                  control={form.control}
+                  name='cpfcnpj'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Função</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Digite CPF/CNPJ" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+
+              {/* Endereço do Cliente */}
+              <h2 className='font-semibold pt-2'>Endereço</h2>
+              <hr />  
+              <div className='grid grid-cols-2 gap-3'>
+                {/* CEP */}
+                <FormField
+                  control={form.control}
+                  name='cpfcnpj'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>CEP</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Digite CPF/CNPJ" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                {/* BAIRRO */}
+                <FormField
+                  control={form.control}
+                  name='cpfcnpj'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Bairro</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Digite CPF/CNPJ" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                {/* RUA */}
+                <FormField
+                  control={form.control}
+                  name='cpfcnpj'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Rua</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Digite CPF/CNPJ" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                {/* CIDADE */}
+                <FormField
+                  control={form.control}
+                  name='cpfcnpj'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Cidade</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Digite CPF/CNPJ" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                {/* UF */}
+                <FormField
+                  control={form.control}
+                  name='cpfcnpj'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>UF</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Digite CPF/CNPJ" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                {/* NÚMERO */}
+                <FormField
+                  control={form.control}
+                  name='cpfcnpj'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Número</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Digite CPF/CNPJ" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+            </div>
+            <DialogFooter>
+              <Button type="submit">Salvar Cliente</Button>
+            </DialogFooter>
+          </form>
+        </Form> 
+      </DialogContent> 
     </Dialog>
+  
   );
 };
 
