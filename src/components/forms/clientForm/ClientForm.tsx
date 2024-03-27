@@ -5,7 +5,7 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { DivForm, DivInputs, Modal, DivTitle, InputG, Label, 
   Title, InputP, InputPP,  } from './styles';
-import Select from './Select';
+// import Select from './Select';
 import InputMask from 'react-input-mask';
 import ValidationCpforCnpj from '@/validations/cpfCnpj/validationCpfCnpj';
 import CustomInputMask from '@/utils/customInputMask';
@@ -22,6 +22,18 @@ import {
 } from '@/components/shadcn/ui/dialog';
 import { Input } from '@/components/shadcn/ui/input';
 import { Form, FormControl, FormField, FormLabel, FormItem, FormMessage } from '@/components/shadcn/ui/form';
+
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/shadcn/ui/select';
+
+import Constants from '@/constants';
 
 {/* validação */}
 const schema = z.object({
@@ -160,7 +172,21 @@ const ClientFormComponent = () => {
                   <FormItem>
                     <FormLabel>Ramo Atividade</FormLabel>
                     <FormControl>
-                      <Input placeholder="Digite CPF/CNPJ" {...field} />
+                      <Select>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Selecione o ramo de atividade" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectGroup>
+                            {Constants.LISTA_DE_RAMO_DE_ATIVIDADE.map((ramo) => (
+                              <SelectItem key={ramo} value={ramo}>
+                                <SelectLabel>{ramo}</SelectLabel>
+                              </SelectItem>
+                            ))}
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
+                      {/* <Input placeholder="Digite CPF/CNPJ" {...field} /> */}
                     </FormControl>
                     <FormMessage />
                   </FormItem>
