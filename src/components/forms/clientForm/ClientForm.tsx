@@ -20,7 +20,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/shadcn/ui/dialog';
-import { Input } from '@/components/shadcn/ui/input';
+import { Input, InputPhoneNumber } from '@/components/shadcn/ui/input';
 import { Form, FormControl, FormField, FormLabel, FormItem, FormMessage } from '@/components/shadcn/ui/form';
 
 import {
@@ -218,7 +218,10 @@ const ClientFormComponent = () => {
                     <FormItem>
                       <FormLabel>Telefone</FormLabel>
                       <FormControl>
-                        <Input placeholder="Digite CPF/Digite o número de telefone do contato" {...field} />
+                        <Input
+                          {...field}
+                          placeholder="Digite o número de telefone do contato"
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -233,7 +236,12 @@ const ClientFormComponent = () => {
                     <FormItem>
                       <FormLabel>Celular</FormLabel>
                       <FormControl>
-                        <Input placeholder="Digite o número de telefone do contato" {...field} />
+                        <InputPhoneNumber
+                          {...field}
+                          mask="(99) 99999-9999"
+                          placeholder="Digite o número de telefone do contato"
+                        />
+                        {/* <Input placeholder="Digite o número de telefone do contato" {...field} /> */}
                       </FormControl>
                       <FormMessage />
                     </FormItem>
