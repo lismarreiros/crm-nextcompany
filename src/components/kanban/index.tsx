@@ -161,7 +161,7 @@ export default function Kanban() {
       );
       // In the same container
       if (activeContainerIndex === overContainerIndex) {
-        let newItems = [...containers];
+        const newItems = [...containers];
         newItems[activeContainerIndex].items = arrayMove(
           newItems[activeContainerIndex].items,
           activeitemIndex,
@@ -171,7 +171,7 @@ export default function Kanban() {
         setContainers(newItems);
       } else {
         // In different containers
-        let newItems = [...containers];
+        const newItems = [...containers];
         const [removeditem] = newItems[activeContainerIndex].items.splice(
           activeitemIndex,
           1,
@@ -214,7 +214,7 @@ export default function Kanban() {
       );
 
       // Remove the active item from the active container and add it to the over container
-      let newItems = [...containers];
+      const newItems = [...containers];
       const [removeditem] = newItems[activeContainerIndex].items.splice(
         activeitemIndex,
         1,
@@ -280,7 +280,7 @@ export default function Kanban() {
 
       // In the same container
       if (activeContainerIndex === overContainerIndex) {
-        let newItems = [...containers];
+        const newItems = [...containers];
         newItems[activeContainerIndex].items = arrayMove(
           newItems[activeContainerIndex].items,
           activeitemIndex,
@@ -289,7 +289,7 @@ export default function Kanban() {
         setContainers(newItems);
       } else {
         // In different containers
-        let newItems = [...containers];
+        const newItems = [...containers];
         const [removeditem] = newItems[activeContainerIndex].items.splice(
           activeitemIndex,
           1,
@@ -328,7 +328,7 @@ export default function Kanban() {
         (item) => item.id === active.id,
       );
 
-      let newItems = [...containers];
+      const newItems = [...containers];
       const [removeditem] = newItems[activeContainerIndex].items.splice(
         activeitemIndex,
         1,
@@ -340,7 +340,7 @@ export default function Kanban() {
   }
 
   return (
-    <div className="mx-auto max-w-7xl py-10">
+    <div className="px-8">
       {/* Add Container Modal */}
       <Modal
         showModal={showAddContainerModal}
