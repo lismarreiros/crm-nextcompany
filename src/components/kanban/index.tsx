@@ -42,7 +42,38 @@ type DNDType = {
 };
 
 export default function Kanban() {
-  const [containers, setContainers] = useState<DNDType[]>([]);
+  const [containers, setContainers] = useState<DNDType[]>([
+    {
+      id: `container-${uuidv4()}`,
+      title: 'Prospecção',
+      items: [],
+    },
+    {
+      id: `container-${uuidv4()}`,
+      title: 'Qualificação',
+      items: [],
+    },
+    {
+      id: `container-${uuidv4()}`,
+      title: 'Apresentação',
+      items: [],
+    },
+    {
+      id: `container-${uuidv4()}`,
+      title: 'Proposta',
+      items: [],
+    },
+    {
+      id: `container-${uuidv4()}`,
+      title: 'Negociação',
+      items: [],
+    },
+    {
+      id: `container-${uuidv4()}`,
+      title: 'Conclusão',
+      items: [],
+    }
+  ]);
   const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null);
   const [currentContainerId, setCurrentContainerId] =
     useState<UniqueIdentifier>();
@@ -340,7 +371,7 @@ export default function Kanban() {
   }
 
   return (
-    <div className="px-8">
+    <div className="px-8 overflow-auto">
       {/* Add Container Modal */}
       <Modal
         showModal={showAddContainerModal}
@@ -372,14 +403,14 @@ export default function Kanban() {
           <Button onClick={onAddItem}>Add Item</Button>
         </div>
       </Modal>
-      <div className="flex items-center justify-between gap-y-2">
+      {/* <div className="flex items-center justify-between gap-y-2">
         <h1 className="text-gray-800 text-3xl font-bold">Dnd-kit Guide</h1>
         <Button onClick={() => setShowAddContainerModal(true)}>
           Add Container
         </Button>
-      </div>
-      <div className="mt-10">
-        <div className="grid grid-cols-3 gap-6">
+      </div> */}
+      <div className="mt-8">
+        <div className="flex gap-x-4">
           <DndContext
             sensors={sensors}
             collisionDetection={closestCorners}
