@@ -218,8 +218,9 @@ const ClientFormComponent = () => {
                     <FormItem>
                       <FormLabel>Telefone</FormLabel>
                       <FormControl>
-                        <Input
+                        <InputPhoneNumber
                           {...field}
+                          mask="(99) 99999-9999"
                           placeholder="Digite o número de telefone do contato"
                         />
                       </FormControl>
@@ -241,7 +242,6 @@ const ClientFormComponent = () => {
                           mask="(99) 99999-9999"
                           placeholder="Digite o número de telefone do contato"
                         />
-                        {/* <Input placeholder="Digite o número de telefone do contato" {...field} /> */}
                       </FormControl>
                       <FormMessage />
                     </FormItem>
