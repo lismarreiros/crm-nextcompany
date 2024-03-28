@@ -299,7 +299,9 @@ const ClientFormComponent = () => {
                     <FormItem>
                       <FormLabel>CEP</FormLabel>
                       <FormControl>
-                        <Input placeholder="Digite CEP" {...field} onBlur={handleCepChange}/>
+                        <InputMasks
+                          mask="99999-999"
+                          placeholder="Digite CEP" {...field} onBlur={handleCepChange}/>
                       </FormControl>
                       <FormMessage />
                     </FormItem>
