@@ -41,7 +41,7 @@ const schema = z.object({
     .refine((value: string) => {
       if (typeof value !== 'string') return false;
       return ValidationCpforCnpj.validateCpfOrCnpj(value);
-    }, 'Digite um CPF ou CNPJ válido.'),
+    }, {message: 'Digite um CPF ou CNPJ válido.'}),
   nomefantasia: z.string()
     .max(100)
     .transform(nomefantasia => {
@@ -49,34 +49,31 @@ const schema = z.object({
         return word[0].toLocaleUpperCase().concat(word.substring(1));
       }).join(' ');
     }),
-  razao: z.string(),
-  ramo: z.string(),
-  status: z.string().min(1),
-  nomeContato: z.string(),
-  celular: z.string(), 
-  fixo: z.string(), 
-  email: z.string(), 
-  funcao: z.string(), 
-  cep: z.string(),
-  rua: z.string(),
-  cidade: z.string(),
-  uf: z.string(),
-  bairro: z.string(),
-  numero: z.string()
+  razao: z.optional(z.string()),
+  ramo: z.optional(z.string()),
+  status: z.optional(z.string()),
+  nomeContato: z.optional(z.string()),
+  celular: z.optional(z.string()), 
+  fixo: z.optional(z.string()), 
+  email: z.optional(z.string()), 
+  funcao: z.optional(z.string()), 
+  cep: z.optional(z.string()),
+  rua: z.optional(z.string()),
+  cidade: z.optional(z.string()),
+  uf: z.optional(z.string()),
+  bairro: z.optional(z.string()),
+  numero: z.optional(z.string())
 });
 
 type FormValues = z.infer<typeof schema>;
 
 const ClientFormComponent = () => {
-  // const formSchema = z.object({
-  //   cpfcnpj: z.string().min(2, {
-  //     message: 'Username must be at least 2 characters.',
-  //   }),
-  // });
 
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
   });
+
+  console.log(form);
 
   // function onSubmit(values: z.infer<typeof formSchema>) {
   //   console.log(values);
@@ -86,17 +83,33 @@ const ClientFormComponent = () => {
     e.target.value = CustomInputMask.cpfCnpj(value);
   };
 
-  // const {
-  //   register, 
-  //   handleSubmit,
-  //   setValue,
-  //   formState: { errors }
-  // } = useForm<FormValues>({
-  //   resolver: zodResolver(schema)
-  // });
+  const onSubmit = (data: z.infer<typeof schema>) => console.log(data);
+  const pesquisarCep = async (cep: any) => {
+    try {
+      const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+      const data = await response.json();
 
-  const onSubmit = (data: any) => console.log(data);
-  // const cpfCnpjRegister = register('cpfOrCnpj');
+      if (data.erro) {
+        throw new Error('CEP não encontrado.');
+      }
+
+      form.setValue('rua', data.logradouro);
+      form.setValue('bairro', data.bairro);
+      form.setValue('cidade', data.localidade);
+      form.setValue('uf', data.uf);
+    } catch (error) {
+      console.error('Erro ao buscar CEP:', error);
+      alert('Erro ao buscar CEP. Por favor, tente novamente');
+    }
+  };
+
+  const handleCepChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const cep = e.target.value.replace(/\D/g, ''); // Remove caracteres não númericos
+
+    if (cep.length === 8) {
+      pesquisarCep(cep);
+    }
+  };
 
   return (
     
@@ -127,7 +140,12 @@ const ClientFormComponent = () => {
                   <FormItem>
                     <FormLabel>CPF/CNPJ</FormLabel>
                     <FormControl>
-                      <Input placeholder="Digite CPF/CNPJ" {...field} />
+                      <Input 
+                        placeholder="Digite CPF/CNPJ"
+                        onChange={(e) => {
+                          cpfCNPJInputChange(e);
+                          field.onChange(e);
+                        }}  />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -171,9 +189,9 @@ const ClientFormComponent = () => {
                   <FormItem>
                     <FormLabel>Ramo Atividade</FormLabel>
                     <FormControl>
-                      <Select>
+                      <Select onValueChange={field.onChange} defaultValue={field.value}>
                         <SelectTrigger>
-                          <SelectValue placeholder="Selecione o ramo de atividade" />
+                          <SelectValue placeholder="Selecione o ramo de atividade"/>
                         </SelectTrigger>
                         <SelectContent>
                           <SelectGroup>
@@ -291,7 +309,7 @@ const ClientFormComponent = () => {
                     <FormItem>
                       <FormLabel>CEP</FormLabel>
                       <FormControl>
-                        <Input placeholder="Digite CPF/CNPJ" {...field} />
+                        <Input placeholder="Digite CEP" {...field} onBlur={handleCepChange}/>
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -351,9 +369,9 @@ const ClientFormComponent = () => {
                     <FormItem>
                       <FormLabel>UF</FormLabel>
                       <FormControl>
-                        <Select>
+                        <Select onValueChange={field.onChange} defaultValue={field.value}>
                           <SelectTrigger>
-                            <SelectValue placeholder="Selecione unidade federativa" />
+                            <SelectValue placeholder="Selecione unidade federativa" {...field}/>
                           </SelectTrigger>
                           <SelectContent>
                             <SelectGroup>
