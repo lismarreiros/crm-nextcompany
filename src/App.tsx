@@ -10,7 +10,7 @@ function App() {
         <div draggable='true'>
           <Routes>
             <Route path='/' element={<ClientForm/>} />
-            <Route path='/form' element={<DashboardPage />} />
+            <Route path='/dashboard' element={<DashboardPage />} />
           </Routes>
         </div>
       </header>
