@@ -345,7 +345,20 @@ const ClientFormComponent = () => {
                     <FormItem>
                       <FormLabel>UF</FormLabel>
                       <FormControl>
-                        <Input placeholder="Selecione UF" {...field} />
+                        <Select>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Selecione unidade federativa" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectGroup>
+                              {Constants.LISTA_DE_ESTADOS.map((estado) => (
+                                <SelectItem key={estado.sigla} value={estado.sigla}>
+                                  <SelectLabel>{`${estado.sigla} - ${estado.nome}`}</SelectLabel>
+                                </SelectItem>
+                              ))}
+                            </SelectGroup>
+                          </SelectContent>
+                        </Select>
                       </FormControl>
                       <FormMessage />
                     </FormItem>
