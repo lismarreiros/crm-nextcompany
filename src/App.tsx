@@ -8,7 +8,7 @@ function App() {
     <div>
       <header>
       </header>
-      <div className="h-[100vh]">
+      <div>
         <Routes>
           <Route path='/' element={<ClientForm/>} />
           <Route path='/dashboard' element={<DashboardPage />} />
