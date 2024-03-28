@@ -164,7 +164,6 @@ const ClientFormComponent = () => {
               />
 
               {/* Ramo Atividade */}
-              {/* todo: altera para um componente do tipo select */}
               <FormField
                 control={form.control}
                 name='ramo'
@@ -337,7 +336,6 @@ const ClientFormComponent = () => {
                 />
 
                 {/* UF */}
-                {/* todo: altera para um componente do tipo select */}
                 <FormField
                   control={form.control}
                   name='uf'
