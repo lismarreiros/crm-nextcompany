@@ -24,12 +24,12 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
 );
 Input.displayName = 'Input';
 
-type InputPhoneNumberProps = {
+type InputMasks = {
   className?: string;
   mask: string;
   [key: string]: any;
 }
-const InputPhoneNumber = ({className, ...props}: InputPhoneNumberProps) => {
+const InputMasks = ({className, ...props}: InputMasks) => {
   return (
     <InputMask
       {...props}
@@ -43,4 +43,4 @@ const InputPhoneNumber = ({className, ...props}: InputPhoneNumberProps) => {
   );
 };
 
-export { Input, InputPhoneNumber };
+export { Input, InputMasks };
