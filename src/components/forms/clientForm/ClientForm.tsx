@@ -369,9 +369,16 @@ const ClientFormComponent = () => {
                     <FormItem>
                       <FormLabel>UF</FormLabel>
                       <FormControl>
-                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <Select
+                          onValueChange={field.onChange}
+                          value={field.value}
+                          defaultValue={field.value}
+                        >
                           <SelectTrigger>
-                            <SelectValue placeholder="Selecione unidade federativa" {...field}/>
+                            <SelectValue
+                              placeholder="Selecione unidade federativa"
+                              {...field}
+                            />
                           </SelectTrigger>
                           <SelectContent>
                             <SelectGroup>
