@@ -5,15 +5,15 @@ import { Route, Routes } from 'react-router-dom';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <div draggable='true'>
-          <Routes>
-            <Route path='/' element={<ClientForm/>} />
-            <Route path='/dashboard' element={<DashboardPage />} />
-          </Routes>
-        </div>
+    <div>
+      <header>
       </header>
+      <div className="h-[100vh]">
+        <Routes>
+          <Route path='/' element={<ClientForm/>} />
+          <Route path='/dashboard' element={<DashboardPage />} />
+        </Routes>
+      </div>
     </div>
   );
 }
