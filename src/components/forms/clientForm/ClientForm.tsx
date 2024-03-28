@@ -38,27 +38,21 @@ const schema = z.object({
       if (typeof value !== 'string') return false;
       return ValidationCpforCnpj.validateCpfOrCnpj(value);
     }, {message: 'Digite um CPF ou CNPJ válido.'}),
-  nomefantasia: z.string()
-    .max(100)
-    .transform(nomefantasia => {
-      return nomefantasia.trim().split('').map(word => {
-        return word[0].toLocaleUpperCase().concat(word.substring(1));
-      }).join(' ');
-    }),
-  razao: z.optional(z.string()),
-  ramo: z.optional(z.string()),
-  status: z.optional(z.string()),
-  nomeContato: z.optional(z.string()),
-  celular: z.optional(z.string()), 
-  fixo: z.optional(z.string()), 
-  email: z.optional(z.string()), 
-  funcao: z.optional(z.string()), 
-  cep: z.optional(z.string()),
-  rua: z.optional(z.string()),
-  cidade: z.optional(z.string()),
-  uf: z.optional(z.string()),
-  bairro: z.optional(z.string()),
-  numero: z.optional(z.string())
+  nomefantasia: z.string().max(100),
+  razao: z.string().optional(),
+  ramo: z.string().optional(),
+  status: z.string().optional(),
+  nomeContato: z.string().optional(),
+  celular: z.string().optional(), 
+  fixo: z.string().optional(), 
+  email: z.string().optional(), 
+  funcao: z.string().optional(), 
+  cep: z.string().optional(),
+  rua: z.string().optional(),
+  cidade: z.string().optional(),
+  uf: z.string().optional(),
+  bairro: z.string().optional(),
+  numero: z.string().optional()
 });
 
 const ClientFormComponent = () => {
