@@ -53,7 +53,7 @@ const Container = ({
         </button>
       </div>
 
-        {children}
+      {children}
       <Button variant="ghost" onClick={onAddItem} className={clsx('hover:bg-blue-100 hover:text-blue-500')}>
         <div className="flex items-center gap-2">
           <Plus />
