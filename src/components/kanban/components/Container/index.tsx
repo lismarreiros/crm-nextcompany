@@ -4,6 +4,7 @@ import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import clsx from 'clsx';
 import { Button } from '../Button';
+import { Plus, Users } from 'lucide-react';
 
 const Container = ({
   id,
@@ -52,8 +53,11 @@ const Container = ({
       </div>
 
       {children}
-      <Button variant="ghost" onClick={onAddItem}>
-        Adicionar novo negócio
+      <Button variant="ghost" onClick={onAddItem} className={clsx('hover:bg-blue-100 hover:text-blue-500')}>
+        <div className="flex items-center gap-2">
+          <Plus />
+          <span>Adicionar novo negócio</span>
+        </div>
       </Button>
     </div>
   );
