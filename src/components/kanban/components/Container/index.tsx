@@ -4,7 +4,8 @@ import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import clsx from 'clsx';
 import { Button } from '../Button';
-import { Plus, Users } from 'lucide-react';
+import { Grip, Plus } from 'lucide-react';
+import { ScrollArea } from '@radix-ui/react-scroll-area';
 
 const Container = ({
   id,
@@ -35,7 +36,7 @@ const Container = ({
         transform: CSS.Translate.toString(transform),
       }}
       className={clsx(
-        'h-[70vh] p-4 bg-gray-50 rounded-xl flex flex-col gap-y-4 shadow-sm',
+        'h-[90vh] p-4 bg-gray-50 rounded-xl flex flex-col gap-y-4 shadow-sm',
         isDragging && 'opacity-50',
       )}
     >
@@ -45,14 +46,14 @@ const Container = ({
           <p className="text-gray-400 text-sm">{description}</p>
         </div>
         <button
-          className="border p-2 text-xs rounded-xl shadow-lg hover:shadow-xl"
+          className="text-xs rounded-xl"
           {...listeners}
         >
-          D
+          <Grip color="#4b5563"/>
         </button>
       </div>
 
-      {children}
+        {children}
       <Button variant="ghost" onClick={onAddItem} className={clsx('hover:bg-blue-100 hover:text-blue-500')}>
         <div className="flex items-center gap-2">
           <Plus />

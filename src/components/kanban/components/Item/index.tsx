@@ -3,6 +3,7 @@ import { useSortable } from '@dnd-kit/sortable';
 import React from 'react';
 import { CSS } from '@dnd-kit/utilities';
 import clsx from 'clsx';
+import { Grip } from 'lucide-react';
 
 type ItemsType = {
   id: UniqueIdentifier;
@@ -39,10 +40,10 @@ const Items = ({ id, title }: ItemsType) => {
       <div className="flex items-center justify-between">
         {title}
         <button
-          className="border p-2 text-xs rounded-xl shadow-lg hover:shadow-xl"
+          className="p-2 text-xs rounded-xl"
           {...listeners}
         >
-          Drag Handle
+          <Grip color="#4b5563"/>
         </button>
       </div>
     </div>
