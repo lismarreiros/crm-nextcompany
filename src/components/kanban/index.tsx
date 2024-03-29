@@ -29,6 +29,7 @@ import Items from '@/components/kanban/components/Item';
 import Modal from '@/components/kanban/components/Modal';
 import Input from '@/components/kanban/components/Input';
 import { Button } from '@/components/kanban/components/Button';
+import { Dialog, DialogContent } from '@/components/shadcn/ui/dialog';
 
 // const inter = Inter({ subsets: ['latin'] });
 
@@ -390,19 +391,21 @@ export default function Kanban() {
         </div>
       </Modal>
       {/* Add Item Modal */}
-      <Modal showModal={showAddItemModal} setShowModal={setShowAddItemModal}>
-        <div className="flex flex-col w-full items-start gap-y-4">
-          <h1 className="text-gray-800 text-3xl font-bold">Add Item</h1>
-          <Input
-            type="text"
-            placeholder="Item Title"
-            name="itemname"
-            value={itemName}
-            onChange={(e) => setItemName(e.target.value)}
-          />
-          <Button onClick={onAddItem}>Add Item</Button>
-        </div>
-      </Modal>
+      <Dialog open={showAddItemModal} onOpenChange={setShowAddItemModal}>
+        <DialogContent>
+          <div className="flex flex-col w-full items-start gap-y-4">
+            <h1 className="text-gray-800 text-3xl font-bold">Add Item</h1>
+            <Input
+              type="text"
+              placeholder="Item Title"
+              name="itemname"
+              value={itemName}
+              onChange={(e) => setItemName(e.target.value)}
+            />
+            <Button onClick={onAddItem}>Add Item</Button>
+          </div>
+        </DialogContent>
+      </Dialog>
       {/* <div className="flex items-center justify-between gap-y-2">
         <h1 className="text-gray-800 text-3xl font-bold">Dnd-kit Guide</h1>
         <Button onClick={() => setShowAddContainerModal(true)}>
