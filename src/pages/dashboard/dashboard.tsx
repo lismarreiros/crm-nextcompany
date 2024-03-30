@@ -10,7 +10,7 @@ export default function DashboardPage() {
       {/* kanban */}
       <Kanban />
       {/* barra de detalhes do card */}
-      <div className="bg-slate-900"></div>
+      <div className="bg-blue-200"></div>
     </div>
   );
 }
