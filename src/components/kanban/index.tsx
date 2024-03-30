@@ -412,7 +412,7 @@ export default function Kanban() {
           Add Container
         </Button>
       </div> */}
-      <div className="mt-8">
+      <div className="my-8">
         <div className="flex gap-x-4">
           <DndContext
             sensors={sensors}
