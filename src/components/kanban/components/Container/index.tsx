@@ -3,9 +3,8 @@ import ContainerProps from './container.type';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import clsx from 'clsx';
-import { Button } from '../Button';
+import { Button } from '@/components/shadcn/ui/button';
 import { Grip, Plus } from 'lucide-react';
-import { ScrollArea } from '@radix-ui/react-scroll-area';
 
 const Container = ({
   id,
@@ -36,11 +35,11 @@ const Container = ({
         transform: CSS.Translate.toString(transform),
       }}
       className={clsx(
-        'h-[90vh] p-4 bg-gray-50 rounded-xl flex flex-col gap-y-4 shadow-sm',
+        'h-[90vh] p-4 bg-gray-50 rounded-xl flex flex-col gap-y-2 shadow-sm',
         isDragging && 'opacity-50',
       )}
     >
-      <div className="flex items-center justify-between w-[240px] my-4">
+      <div className="flex items-center justify-between w-[340px] my-4">
         <div className="flex flex-col gap-y-1">
           <h1 className="text-gray-800 text-xl font-semibold">{title}</h1>
           <p className="text-gray-400 text-sm">{description}</p>
@@ -52,9 +51,8 @@ const Container = ({
           <Grip color="#4b5563"/>
         </button>
       </div>
-
       {children}
-      <Button variant="ghost" onClick={onAddItem} className={clsx('hover:bg-blue-100 hover:text-blue-500')}>
+      <Button onClick={onAddItem} className="p-8">
         <div className="flex items-center gap-2">
           <Plus />
           <span>Adicionar novo negócio</span>
