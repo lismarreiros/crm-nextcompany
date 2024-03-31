@@ -30,6 +30,7 @@ import Modal from '@/components/kanban/components/Modal';
 import Input from '@/components/kanban/components/Input';
 import { Button } from '@/components/kanban/components/Button';
 import { Dialog, DialogContent } from '@/components/shadcn/ui/dialog';
+import { set } from 'react-hook-form';
 
 // const inter = Inter({ subsets: ['latin'] });
 
@@ -39,38 +40,39 @@ type DNDType = {
   items: {
     id: UniqueIdentifier;
     title: string;
+    status: string;
   }[];
 };
 
 export default function Kanban() {
   const [containers, setContainers] = useState<DNDType[]>([
     {
-      id: `container-${uuidv4()}`,
+      id: 'container-1',
       title: 'Prospecção',
       items: [],
     },
     {
-      id: `container-${uuidv4()}`,
+      id: 'container-2',
       title: 'Qualificação',
       items: [],
     },
     {
-      id: `container-${uuidv4()}`,
+      id: 'container-3',
       title: 'Apresentação',
       items: [],
     },
     {
-      id: `container-${uuidv4()}`,
+      id: 'container-4',
       title: 'Proposta',
       items: [],
     },
     {
-      id: `container-${uuidv4()}`,
+      id: 'container-5',
       title: 'Negociação',
       items: [],
     },
     {
-      id: `container-${uuidv4()}`,
+      id: 'container-6',
       title: 'Conclusão',
       items: [],
     }
@@ -106,6 +108,7 @@ export default function Kanban() {
     container.items.push({
       id,
       title: itemName,
+      status: containers.filter((container) => container.id == currentContainerId)[0].title,
     });
     setContainers([...containers]);
     setItemName('');
@@ -268,6 +271,8 @@ export default function Kanban() {
       over &&
       active.id !== over.id
     ) {
+      const item = containers.find((container) => container.id === over.id);
+      console.log(item);
       // Find the index of the active and over container
       const activeContainerIndex = containers.findIndex(
         (container) => container.id === active.id,
@@ -435,7 +440,7 @@ export default function Kanban() {
                   <SortableContext items={container.items.map((i) => i.id)}>
                     <div className="flex items-start flex-col gap-y-4">
                       {container.items.map((i) => (
-                        <Items title={i.title} id={i.id} key={i.id} />
+                        <Items title={i.title} id={i.id} key={i.id} status={i.status} />
                       ))}
                     </div>
                   </SortableContext>
@@ -445,13 +450,13 @@ export default function Kanban() {
             <DragOverlay adjustScale={false}>
               {/* Drag Overlay For item Item */}
               {activeId && activeId.toString().includes('item') && (
-                <Items id={activeId} title={findItemTitle(activeId)} />
+                <Items id={activeId} title={findItemTitle(activeId)} status={findContainerTitle(activeId)} />
               )}
               {/* Drag Overlay For Container */}
               {activeId && activeId.toString().includes('container') && (
                 <Container id={activeId} title={findContainerTitle(activeId)}>
                   {findContainerItems(activeId).map((i) => (
-                    <Items key={i.id} title={i.title} id={i.id} />
+                    <Items key={i.id} title={i.title} id={i.id} status={findContainerTitle(activeId)}/>
                   ))}
                 </Container>
               )}
