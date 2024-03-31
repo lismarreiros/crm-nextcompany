@@ -8,9 +8,10 @@ import { Grip } from 'lucide-react';
 type ItemsType = {
   id: UniqueIdentifier;
   title: string;
+  status: string;
 };
 
-const Items = ({ id, title }: ItemsType) => {
+const Items = ({ id, title, status }: ItemsType) => {
   const {
     attributes,
     listeners,
@@ -37,14 +38,18 @@ const Items = ({ id, title }: ItemsType) => {
         isDragging && 'opacity-50',
       )}
     >
-      <div className="flex items-center justify-between">
-        {title}
-        <button
-          className="p-2 text-xs rounded-xl"
-          {...listeners}
-        >
-          <Grip color="#4b5563"/>
-        </button>
+      <div className="">
+        <div className="flex items-center justify-between">
+          {title}
+          <button className="p-2 text-xs rounded-xl"
+            {...listeners}
+          >
+            <Grip color="#4b5563"/>
+          </button>
+        </div>
+        <span className="text-sm text-slate-100 font-semibold bg-slate-600 p-2 rounded-lg">
+          {status}
+        </span>
       </div>
     </div>
   );
