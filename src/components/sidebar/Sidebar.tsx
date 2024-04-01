@@ -7,7 +7,7 @@ import {
 } from '@/components/shadcn/ui/accordion';
 import ClientForm from '../forms/clientForm/ClientForm';
 import { ProductForm } from '../forms/productForm/productForm';
-import { Box, Users } from 'lucide-react';
+import { Box, Users, ArrowUpRight} from 'lucide-react';
   
 const Sidebar = () => {
   return (
@@ -22,7 +22,10 @@ const Sidebar = () => {
             <AccordionTrigger> </AccordionTrigger>
           </div>
           <AccordionContent className='flex flex-col items-start'>
-           Visualizar Clientes {/** link para tela dos clientes */}
+            <div className='flex items-center gap-2'>
+              <ArrowUpRight size={16}/>
+              Visualizar Clientes {/** link para tela dos clientes */}
+            </div>
             <ClientForm />
           </AccordionContent>
         </AccordionItem>
@@ -36,7 +39,10 @@ const Sidebar = () => {
             <AccordionTrigger> </AccordionTrigger>
           </div>  
           <AccordionContent className='flex flex-col items-start'>
+            <div className='flex items-center gap-2'>
+              <ArrowUpRight size={16}/>
              Visualizar Produtos {/** link para tela dos produtos */}
+            </div>
             <ProductForm />
           </AccordionContent>
         </AccordionItem>

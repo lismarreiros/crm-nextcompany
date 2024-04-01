@@ -30,6 +30,8 @@ import Modal from '@/components/kanban/components/Modal';
 import Input from '@/components/kanban/components/Input';
 import { Button } from '@/components/kanban/components/Button';
 import { Dialog, DialogContent } from '@/components/shadcn/ui/dialog';
+import InputModal from '@/components/kanban/components/Input';
+import { CirclePlus } from 'lucide-react';
 
 // const inter = Inter({ subsets: ['latin'] });
 
@@ -416,33 +418,34 @@ export default function Kanban() {
 
       {/* Add Item Modal - NEGÓCIO */}
       <Dialog open={showAddItemModal} onOpenChange={setShowAddItemModal}>
-        <DialogContent>
-          <div className="flex flex-col w-full items-start gap-y-4 py-4">
+        <DialogContent className='h-[40%]'>
+          <div className="flex flex-col w-full items-start gap-y-4 py-6">
             {/* <h1 className="text-gray-800 text-3xl font-bold">Add Item</h1> */}
-            <Input
+            <InputModal
               type="text"
               placeholder="Descrição"
               name="itemname"
               value={itemName}
               onChange={(e) => setItemName(e.target.value)}
             />   
-            <Input
+            <InputModal
               type="text"
               placeholder="Número"
               name="itemname"
               value={itemName}
               onChange={(e) => setItemName(e.target.value)}
             />
-            <Button onClick={onAddItem}>Adicionar Negócio</Button>
+            <Button onClick={onAddItem}>Adicionar</Button>
           </div>
         </DialogContent>
       </Dialog>
 
       {/** Botão de Adicionar Novo Negócio */}
-      <div className="flex items-center justify-start gap-y-2 mt-10">
+      <div className="flex items-center justify-start mt-10">
         {/* <h1 className="text-gray-800 text-3xl font-bold">Dnd-kit Guide</h1> */}
-        <Button onClick={() => setShowAddItemModal(true)}>
-         Adicionar Novo Negócio
+        <Button onClick={() => setShowAddItemModal(true)} className='gap-2'>
+          <CirclePlus size={16}/>
+         Novo Negócio
         </Button>
       </div>
 

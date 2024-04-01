@@ -39,9 +39,9 @@ const Container = ({
         isDragging && 'opacity-50',
       )}
     >
-      <div className="flex items-center justify-between w-[210px] my-4">
-        <div className="flex flex-col gap-y-1">
-          <h1 className="text-gray-800 text-xl font-semibold">{title}</h1>
+      <div className="flex items-center justify-between w-[190px] my-2">
+        <div className="flex flex-col gap-y-1 ">
+          <h1 className="text-gray-800 text-lg font-semibold">{title}</h1>
           <p className="text-gray-400 text-sm">{description}</p>
         </div>
         {/** Button para drag e drop do container */}
