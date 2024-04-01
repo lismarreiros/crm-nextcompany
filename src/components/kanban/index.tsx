@@ -30,7 +30,6 @@ import Modal from '@/components/kanban/components/Modal';
 import Input from '@/components/kanban/components/Input';
 import { Button } from '@/components/kanban/components/Button';
 import { Dialog, DialogContent } from '@/components/shadcn/ui/dialog';
-import { set } from 'react-hook-form';
 
 // const inter = Inter({ subsets: ['latin'] });
 
@@ -418,11 +417,18 @@ export default function Kanban() {
       {/* Add Item Modal - NEGÓCIO */}
       <Dialog open={showAddItemModal} onOpenChange={setShowAddItemModal}>
         <DialogContent>
-          <div className="flex flex-col w-full items-start gap-y-4">
+          <div className="flex flex-col w-full items-start gap-y-4 py-4">
             {/* <h1 className="text-gray-800 text-3xl font-bold">Add Item</h1> */}
             <Input
               type="text"
               placeholder="Descrição"
+              name="itemname"
+              value={itemName}
+              onChange={(e) => setItemName(e.target.value)}
+            />   
+            <Input
+              type="text"
+              placeholder="Número"
               name="itemname"
               value={itemName}
               onChange={(e) => setItemName(e.target.value)}

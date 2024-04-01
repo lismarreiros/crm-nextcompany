@@ -102,10 +102,9 @@ const ClientFormComponent = () => {
   };
 
   return (
-    
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant='link'> 
+        <Button variant='link' size='sm' className='focus:ring-2'> 
           <Plus size={16}/> 
          Adicionar Cliente
         </Button>
