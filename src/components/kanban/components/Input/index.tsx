@@ -1,16 +1,17 @@
 import React from 'react';
 import InputProps from './input.type';
+import { Input } from '@/components/shadcn/ui/input';
 
-const Input = ({ name, value, placeholder, onChange }: InputProps) => {
+const InputModal = ({ name, type, value, placeholder, onChange }: InputProps) => {
   return (
-    <input
+    <Input
+      type={type}
       name={name}
       value={value}
       placeholder={placeholder}
       onChange={onChange}
-      className="border p-2 w-full rounded-lg shadow-lg hover:shadow-xl"
-    ></input>
+    ></Input>
   );
 };
 
-export default Input;
+export default InputModal;
