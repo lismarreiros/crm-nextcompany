@@ -6,7 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import ValidationCpforCnpj from '@/validations/cpfCnpj/validationCpfCnpj';
 import CustomInputMask from '@/utils/customInputMask';
 
-import { Users } from 'lucide-react';
+import { Users, Plus } from 'lucide-react';
 import { Button } from '@/components/shadcn/ui/button';
 import {
   Dialog,
@@ -105,7 +105,10 @@ const ClientFormComponent = () => {
     
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant='outline'>Adicionar Cliente</Button>
+        <Button variant='link'> 
+          <Plus size={16}/> 
+         Adicionar Cliente
+        </Button>
       </DialogTrigger> 
       <DialogContent className='w-4/5'> 
         <DialogHeader>

@@ -5,6 +5,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/shadcn/ui/accordion';
+import ClientForm from '../forms/clientForm/ClientForm';
   
 const Sidebar = () => {
   return (
@@ -13,17 +14,16 @@ const Sidebar = () => {
         <AccordionItem value="item-1">
           <AccordionTrigger> Clientes </AccordionTrigger>
           <AccordionContent>
-            Santa Lúcia
+            Clientes {/** link para tela dos clientes */}
+            <ClientForm/>
           </AccordionContent>
+     
         </AccordionItem>
 
         <AccordionItem value="item-2">
           <AccordionTrigger> Produtos </AccordionTrigger>
           <AccordionContent>
-             iCompany
-          </AccordionContent>
-          <AccordionContent>
-             wCompany
+             Produtos {/** link para tela dos produtos */}
           </AccordionContent>
         </AccordionItem>
       </Accordion>
