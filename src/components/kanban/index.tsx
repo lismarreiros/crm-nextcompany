@@ -419,10 +419,10 @@ export default function Kanban() {
       <Dialog open={showAddItemModal} onOpenChange={setShowAddItemModal}>
         <DialogContent>
           <div className="flex flex-col w-full items-start gap-y-4">
-            <h1 className="text-gray-800 text-3xl font-bold">Add Item</h1>
+            {/* <h1 className="text-gray-800 text-3xl font-bold">Add Item</h1> */}
             <Input
               type="text"
-              placeholder="Item Title"
+              placeholder="Descrição"
               name="itemname"
               value={itemName}
               onChange={(e) => setItemName(e.target.value)}
@@ -433,7 +433,7 @@ export default function Kanban() {
       </Dialog>
 
       {/** Botão de Adicionar Novo Negócio */}
-      <div className="flex items-center justify-between gap-y-2 mt-4">
+      <div className="flex items-center justify-start gap-y-2 mt-10">
         {/* <h1 className="text-gray-800 text-3xl font-bold">Dnd-kit Guide</h1> */}
         <Button onClick={() => setShowAddItemModal(true)}>
          Adicionar Novo Negócio
