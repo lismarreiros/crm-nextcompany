@@ -100,16 +100,35 @@ export default function Kanban() {
     setShowAddContainerModal(false);
   };
 
+  // Função de adicionar item em qualquer container - não está sendo utilizada no momento!
+  // const onAddItem = () => {
+  //   if (!itemName) return;
+  //   const id = `item-${uuidv4()}`;
+  //   const container = containers.find((item) => item.id === currentContainerId);
+  //   if (!container) return;
+  //   container.items.push({
+  //     id,
+  //     title: itemName,
+  //     status: containers.filter((container) => container.id == currentContainerId)[0].title,
+  //   });
+  //   setContainers([...containers]);
+  //   setItemName('');
+  //   setShowAddItemModal(false);
+  // };
+
+  // Nova função para adicionar item, sempre no primeiro container. 
   const onAddItem = () => {
     if (!itemName) return;
     const id = `item-${uuidv4()}`;
-    const container = containers.find((item) => item.id === currentContainerId);
-    if (!container) return;
-    container.items.push({
-      id,
+    const firstContainer = containers[0];
+    if (!firstContainer) return;
+
+    firstContainer.items.push({
+      id, 
       title: itemName,
-      status: containers.filter((container) => container.id == currentContainerId)[0].title,
+      status: firstContainer.title,
     });
+
     setContainers([...containers]);
     setItemName('');
     setShowAddItemModal(false);
@@ -378,7 +397,7 @@ export default function Kanban() {
 
   return (
     <div className="px-8 overflow-auto">
-      {/* Add Container Modal */}
+      {/* Add Container Modal - NÃO ESTÁ SENDO USADO */}
       <Modal
         showModal={showAddContainerModal}
         setShowModal={setShowAddContainerModal}
@@ -395,7 +414,8 @@ export default function Kanban() {
           <Button onClick={onAddContainer}>Add container</Button>
         </div>
       </Modal>
-      {/* Add Item Modal */}
+
+      {/* Add Item Modal - NEGÓCIO */}
       <Dialog open={showAddItemModal} onOpenChange={setShowAddItemModal}>
         <DialogContent>
           <div className="flex flex-col w-full items-start gap-y-4">
@@ -407,16 +427,19 @@ export default function Kanban() {
               value={itemName}
               onChange={(e) => setItemName(e.target.value)}
             />
-            <Button onClick={onAddItem}>Add Item</Button>
+            <Button onClick={onAddItem}>Adicionar Negócio</Button>
           </div>
         </DialogContent>
       </Dialog>
-      {/* <div className="flex items-center justify-between gap-y-2">
-        <h1 className="text-gray-800 text-3xl font-bold">Dnd-kit Guide</h1>
-        <Button onClick={() => setShowAddContainerModal(true)}>
-          Add Container
+
+      {/** Botão de Adicionar Novo Negócio */}
+      <div className="flex items-center justify-between gap-y-2 mt-4">
+        {/* <h1 className="text-gray-800 text-3xl font-bold">Dnd-kit Guide</h1> */}
+        <Button onClick={() => setShowAddItemModal(true)}>
+         Adicionar Novo Negócio
         </Button>
-      </div> */}
+      </div>
+
       <div className="my-8">
         <div className="flex gap-x-4">
           <DndContext

@@ -3,8 +3,8 @@ import ContainerProps from './container.type';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import clsx from 'clsx';
-import { Button } from '@/components/shadcn/ui/button';
-import { Grip, Plus } from 'lucide-react';
+//import { Button } from '@/components/shadcn/ui/button';
+//import { Grip, Plus } from 'lucide-react';
 
 const Container = ({
   id,
@@ -39,25 +39,27 @@ const Container = ({
         isDragging && 'opacity-50',
       )}
     >
-      <div className="flex items-center justify-between w-[340px] my-4">
+      <div className="flex items-center justify-between w-[210px] my-4">
         <div className="flex flex-col gap-y-1">
           <h1 className="text-gray-800 text-xl font-semibold">{title}</h1>
           <p className="text-gray-400 text-sm">{description}</p>
         </div>
-        <button
+        {/** Button para drag e drop do container */}
+        {/* <button
           className="text-xs rounded-xl"
           {...listeners}
         >
           <Grip color="#4b5563"/>
-        </button>
+        </button> */}
       </div>
       {children}
-      <Button onClick={onAddItem} className="p-8">
+      {/** Button para adicionar item direto no container */}
+      {/* <Button className="p-8">
         <div className="flex items-center gap-2">
           <Plus />
           <span>Adicionar novo negócio</span>
         </div>
-      </Button>
+      </Button> */}
     </div>
   );
 };
