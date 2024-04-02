@@ -1,5 +1,5 @@
 /* eslint-disable no-extra-boolean-cast */
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -25,16 +25,19 @@ const schema = z.object({
 });
 
 export const ProductForm = () => {
-
+  const [open, setOpen] = useState(false);
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
   });
 
-  const onSubmit = (data: z.infer<typeof schema>) => console.log(data);
+  const onSubmit = async (data: z.infer<typeof schema>) => {
+    console.log(data);
+    setOpen(false);
+  };
   
   return (
-    <Dialog>
-      <DialogTrigger asChild>
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger>
         <Button variant='link' size='sm'> 
           <Plus size={16}/> 
           Adicionar Produto
@@ -45,7 +48,7 @@ export const ProductForm = () => {
           <DialogTitle>
             <div className='flex items-center gap-2'>
               <Box  size={22} />
-                  Novo Produto
+                Novo Produto
             </div>
           </DialogTitle>
         </DialogHeader>

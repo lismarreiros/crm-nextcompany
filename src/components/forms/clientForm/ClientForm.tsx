@@ -1,5 +1,5 @@
 /* eslint-disable no-extra-boolean-cast */
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -38,20 +38,14 @@ const schema = z.object({
       if (typeof value !== 'string') return false;
       return ValidationCpforCnpj.validateCpfOrCnpj(value);
     }, {message: 'Digite um CPF ou CNPJ válido.'}),
-  nomefantasia: z.string()
-    .max(100)
-    .transform(nomefantasia => {
-      return nomefantasia.trim().split('').map(word => {
-        return word[0].toLocaleUpperCase().concat(word.substring(1));
-      }).join(' ');
-    }),
+  nomefantasia: z.string().max(100),
   razao: z.optional(z.string()),
   ramo: z.optional(z.string()),
   status: z.optional(z.string()),
   nomeContato: z.optional(z.string()),
   celular: z.optional(z.string()), 
   fixo: z.optional(z.string()), 
-  email: z.optional(z.string()), 
+  email: z.optional(z.string().email('Digite um email válido')), 
   funcao: z.optional(z.string()), 
   cep: z.optional(z.string()),
   rua: z.optional(z.string()),
@@ -62,7 +56,7 @@ const schema = z.object({
 });
 
 const ClientFormComponent = () => {
-
+  const [open, setOpen] = useState(false);
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
   });
@@ -72,7 +66,10 @@ const ClientFormComponent = () => {
     e.target.value = CustomInputMask.cpfCnpj(value);
   };
 
-  const onSubmit = (data: z.infer<typeof schema>) => console.log(data);
+  const onSubmit = async (data: z.infer<typeof schema>) => {
+    console.log(data); 
+    setOpen(false);
+  };
   
   const pesquisarCep = async (cep: any) => {
     try {
@@ -102,9 +99,9 @@ const ClientFormComponent = () => {
   };
 
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button variant='link' size='sm' className='focus:ring-2'> 
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger>
+        <Button variant='link' size='sm'> 
           <Plus size={16}/> 
          Adicionar Cliente
         </Button>
