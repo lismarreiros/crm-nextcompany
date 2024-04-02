@@ -1,3 +1,4 @@
+import Detail from '@/components/detailpanel/Detail';
 import Kanban from '@/components/kanban';
 import NavBar from '@/components/navbar/NavBar';
 import Sidebar from '@/components/sidebar/Sidebar';
@@ -8,7 +9,7 @@ export default function DashboardPage() {
       {/** navbar */}
       <NavBar />
     
-      <div className="grid grid-cols-[14vw_1fr_14vw] bg-slate-100">
+      <div className="grid grid-cols-[14vw_1fr_16vw] bg-slate-100">
         {/* barra de navegação esquerda */}
         <div className="bg-white rounded-md mt-10 h-full">
           <Sidebar />
@@ -19,9 +20,9 @@ export default function DashboardPage() {
         <Kanban />
 
         {/* barra de detalhes do card */}
-        <div className="bg-blue-200 h-full">
-
-        </div> 
+        <div className="bg-white rounded-md mt-10 h-full">
+          <Detail />
+        </div>
       </div> 
       
     </div>
