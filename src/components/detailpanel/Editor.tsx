@@ -41,7 +41,7 @@ const Editor: React.FC<EditorProps> = ({ initialData }) => {
         }
       }
     };
-  }, [initialData]);
+  }, []);
 
   return (
     <div className='flex flex-col m-5 border border-gray-300 rounded-lg p-5 bg-white'>

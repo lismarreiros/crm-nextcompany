@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Editor from './Editor';
 
 const Detail = () => {
@@ -7,7 +7,13 @@ const Detail = () => {
       {
         type: 'paragraph',
         data: {
-          text: 'Hello, this is the initial content loaded from JSON!',
+          text: '## Descrição',
+        },
+      },
+      {
+        type: 'paragraph',
+        data: {
+          text: '## Tarefas',
         },
       }
     ],
