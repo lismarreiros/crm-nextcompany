@@ -71,7 +71,7 @@ const ClientFormComponent = () => {
     setOpen(false);
   };
   
-  const pesquisarCep = async (cep: any) => {
+  const pesquisarCep = async (cep: string) => {
     try {
       const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
       const data = await response.json();

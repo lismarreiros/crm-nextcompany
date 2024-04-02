@@ -7,6 +7,8 @@ import { Input } from '@/components/shadcn/ui/input';
 
 import { Box, Plus } from 'lucide-react';
 import { Button } from '@/components/shadcn/ui/button';
+import CustomInputCurrencyMask from '../../../utils/customInputCurrencyMask';
+
 import {
   Dialog,
   DialogContent,
@@ -21,7 +23,7 @@ import { Form, FormControl, FormField, FormLabel, FormItem, FormMessage } from '
 const schema = z.object({
   nome: z.string(),
   codprod: z.string(),
-  valor: z.coerce.number()
+  valor: z.string()
 });
 
 export const ProductForm = () => {
@@ -34,7 +36,12 @@ export const ProductForm = () => {
     console.log(data);
     setOpen(false);
   };
-  
+
+  const currencyInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    e.target.value = CustomInputCurrencyMask.valor(value);
+  };
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger>
@@ -98,7 +105,11 @@ export const ProductForm = () => {
                   <FormItem>
                     <FormLabel>Valor</FormLabel>
                     <FormControl>
-                      <Input placeholder="Digite o valor" {...field} />
+                      <Input placeholder="Digite o valor"
+                        onChange={(e) => {
+                          currencyInputChange(e);
+                          field.onChange(e);
+                        }} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -116,4 +127,3 @@ export const ProductForm = () => {
   
   );
 };
-
