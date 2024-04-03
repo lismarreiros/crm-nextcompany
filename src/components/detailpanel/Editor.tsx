@@ -1,6 +1,7 @@
 // Import necessary modules
 import React, { useRef, useEffect } from 'react';
 import EditorJS, { OutputData } from '@editorjs/editorjs';
+import { Button } from '../shadcn/ui/button';
 
 interface EditorProps {
   initialData?: OutputData; // Optional initial data in JSON format
@@ -18,8 +19,18 @@ const Editor: React.FC<EditorProps> = ({ initialData }) => {
       onReady: () => {
         editorRef.current = editor;
       },
+      tools: {
+        
+        header: {
+          class: require('@editorjs/header'),
+          shortcut: 'CMD+SHIFT+H',
+        },
+        checklist: {
+          class: require('@editorjs/checklist'),
+          inlineToolbar: true,
+        }
+      },
       autofocus: true,
-      tools: {},
       data: initialData,
     });
   };
