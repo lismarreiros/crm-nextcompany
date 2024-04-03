@@ -5,16 +5,36 @@ const Detail = () => {
     time: new Date().getTime(),
     blocks: [
       {
-        type: 'paragraph',
+        type: 'header',
         data: {
-          text: '## Descrição',
+          text: 'Descrição do negócio',
+          level: 1,
         },
       },
       {
         type: 'paragraph',
         data: {
-          text: '## Tarefas',
+          text: '',
+          placeholder: 'Escreva algo...',
         },
+      },
+      {
+        type: 'header',
+        data: {
+          text: 'Tarefas',
+          level: 1,
+        },
+      },
+      {
+        type: 'checklist',
+        data: {
+          items: [
+            {
+              text: '',
+              checked: false,
+            },
+          ],
+        }
       }
     ],
     version: '2.8.1',
