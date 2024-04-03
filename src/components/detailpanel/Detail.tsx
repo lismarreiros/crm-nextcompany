@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
 import Editor from './Editor';
 
 const Detail = () => {
   const initialData = {
+    time: new Date().getTime(),
     blocks: [
       {
         type: 'paragraph',

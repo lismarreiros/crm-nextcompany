@@ -10,8 +10,20 @@ interface EditorProps {
 const Editor: React.FC<EditorProps> = ({ initialData }) => {
   // Create a ref to hold the EditorJS instance
   const editorRef = useRef<EditorJS | null>(null);
+  const effectRan = useRef(false);
 
-  // Function to handle saving the editor content
+  const initEditor = () => {
+    const editor = new EditorJS({
+      holder: 'editor-container',
+      onReady: () => {
+        editorRef.current = editor;
+      },
+      autofocus: true,
+      tools: {},
+      data: initialData,
+    });
+  };
+
   const handleSave = async () => {
     if (editorRef.current) {
       const outputData: OutputData = await editorRef.current.save();
@@ -19,27 +31,15 @@ const Editor: React.FC<EditorProps> = ({ initialData }) => {
     }
   };
 
-  // Initialize the editor when the component mounts
   useEffect(() => {
-    // Initialize EditorJS
-    editorRef.current = new EditorJS({
-      holder: 'editor-container', // Specify the container element by its id
-      autofocus: true, // Autofocus on the editor when it loads
-      onChange: (api, event) => {
-        console.log('Now I know that Editor\'s content changed!', event);
-      },
-      tools: {}, // Add your custom tools here
-      data: initialData, // Pass the initial data to the editor
-    });
+    if (!editorRef.current && !effectRan.current) {
+      initEditor();
+    }
 
-    // Cleanup function to destroy the editor when the component unmounts
     return () => {
-      if (editorRef.current) {
-        // Check if destroy method is available before calling it
-        if (typeof editorRef.current.destroy === 'function') {
-          editorRef.current.destroy();
-        }
-      }
+      editorRef.current?.destroy();
+      editorRef.current = null;
+      effectRan.current = true;
     };
   }, []);
 
