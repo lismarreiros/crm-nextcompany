@@ -18,16 +18,23 @@ const Editor: React.FC<EditorProps> = ({ initialData }) => {
       holder: 'editor-container',
       onReady: () => {
         editorRef.current = editor;
+        // títulos sem poder editar
+        const headerElements = document.querySelectorAll('.ce-header');
+        headerElements.forEach(element => {
+          element.setAttribute('contenteditable', 'false');
+        }
+        );
       },
       tools: {
         
         header: {
           class: require('@editorjs/header'),
           shortcut: 'CMD+SHIFT+H',
+          inlineToolbar: false,
         },
         checklist: {
           class: require('@editorjs/checklist'),
-          inlineToolbar: true,
+          // inlineToolbar: true,
         }
       },
       autofocus: true,
@@ -55,11 +62,13 @@ const Editor: React.FC<EditorProps> = ({ initialData }) => {
   }, []);
 
   return (
-    <div className='flex flex-col m-5 border border-gray-300 rounded-lg p-5 bg-white'>
-      <div id='editor-container' style={{ minHeight: '50px' }}></div>
-      <button onClick={handleSave}>
+    <div className='flex flex-col p-4 bg-white'>
+      <div id='editor-container' className='h-[230px]'>
+        
+      </div>
+      <Button onClick={handleSave}>
         Save
-      </button>
+      </Button>
     </div>
   );
 };
