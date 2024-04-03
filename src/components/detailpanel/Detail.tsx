@@ -49,6 +49,7 @@ const Detail = () => {
       </div>
 
       {/** editor (checklist, descrição e anexos) */}
+      <h1>Descrição</h1>
       <Editor initialData={initialData}/>
 
       {/** produtos adicionados */}

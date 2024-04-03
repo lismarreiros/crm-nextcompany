@@ -29,9 +29,15 @@ const Items = ({ id, title, status }: ItemsType) => {
       type: 'item',
     },
   });
+
+  const openDrawer = () => {
+    if (!isDragging) {
+      setOpenRight(true);  
+    }
+  };
+  
   return (
     <div
-      onClick={() => setOpenRight(!openRight)}
       ref={setNodeRef}
       {...attributes}
       style={{
@@ -39,15 +45,16 @@ const Items = ({ id, title, status }: ItemsType) => {
         transform: CSS.Translate.toString(transform),
       }}
       className={clsx(
-        'px-4 py-4 bg-white shadow rounded-xl w-full border border-transparent hover:border-gray-200 cursor-pointer',
+        'px-4 py-4 bg-white shadow rounded-xl h-[100px] w-full border border-transparent hover:border-gray-200 cursor-pointer',
         isDragging && 'opacity-50',
       )}
     >
-      <div className="">
+      <div className=''>
         <div className="flex items-center justify-between">
           {title}
           <button className="p-2 text-xs rounded-xl"
-            {...listeners} >
+            {...listeners}
+          >
             <Grip size={16} color="#4b5563"/>
           </button>
         </div>
@@ -55,9 +62,16 @@ const Items = ({ id, title, status }: ItemsType) => {
       <Badge >
         {status}
       </Badge>
-      <Drawer open={openRight} side="right" setOpen={setOpenRight}>
-        <Detail/>
-      </Drawer>
+      <button className='p-2 bg-red-300' onClick={openDrawer}>
+        aperte aqui
+      </button>
+     
+      {openRight && !isDragging && (
+        <Drawer open={openRight} side="right" setOpen={setOpenRight}>
+          <Detail />
+        </Drawer>
+      )}
+ 
     </div>
   );
 };
