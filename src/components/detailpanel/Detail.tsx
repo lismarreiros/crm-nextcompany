@@ -41,7 +41,7 @@ const Detail = () => {
   };
 
   return (
-    <div className='p-2'>
+    <div className='p-4 h-full w-full scroll-auto bg-transparent'>
       <h1>Négocio #000</h1>
       {/** clientes adicionados */}
       <div className='flex flex-col h-[45px] px-2 mt-4 bg-slate-100 justify-center rounded border-dashed border-2'>

@@ -1,10 +1,12 @@
 import { UniqueIdentifier } from '@dnd-kit/core';
 import { useSortable } from '@dnd-kit/sortable';
-import React from 'react';
+import React, { useState } from 'react';
 import { CSS } from '@dnd-kit/utilities';
 import clsx from 'clsx';
 import { Grip } from 'lucide-react';
 import { Badge } from '../../../shadcn/ui/badge';
+import Drawer from '@/components/detailpanel/Drawer';
+import Detail from '@/components/detailpanel/Detail';
 
 type ItemsType = {
   id: UniqueIdentifier;
@@ -13,6 +15,7 @@ type ItemsType = {
 };
 
 const Items = ({ id, title, status }: ItemsType) => {
+  const [openRight, setOpenRight] = useState(false);
   const {
     attributes,
     listeners,
@@ -28,6 +31,7 @@ const Items = ({ id, title, status }: ItemsType) => {
   });
   return (
     <div
+      onClick={() => setOpenRight(!openRight)}
       ref={setNodeRef}
       {...attributes}
       style={{
@@ -51,6 +55,9 @@ const Items = ({ id, title, status }: ItemsType) => {
       <Badge >
         {status}
       </Badge>
+      <Drawer open={openRight} side="right" setOpen={setOpenRight}>
+        <Detail/>
+      </Drawer>
     </div>
   );
 };

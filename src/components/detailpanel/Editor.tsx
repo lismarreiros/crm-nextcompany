@@ -14,6 +14,7 @@ const Editor: React.FC<EditorProps> = ({ initialData }) => {
   const effectRan = useRef(false);
 
   const initEditor = () => {
+    
     const editor = new EditorJS({
       holder: 'editor-container',
       onReady: () => {
@@ -22,8 +23,8 @@ const Editor: React.FC<EditorProps> = ({ initialData }) => {
         const headerElements = document.querySelectorAll('.ce-header');
         headerElements.forEach(element => {
           element.setAttribute('contenteditable', 'false');
-        }
-        );
+          
+        });
       },
       tools: {
         
@@ -62,11 +63,9 @@ const Editor: React.FC<EditorProps> = ({ initialData }) => {
   }, []);
 
   return (
-    <div className='flex flex-col p-4 bg-white'>
-      <div id='editor-container' className='h-[230px]'>
-        
-      </div>
-      <Button onClick={handleSave}>
+    <div className='flex flex-col m-4 p-4 bg-slate-200 absolute'>
+      <div id='editor-container' className='min-h-100 max-w-52'></div>
+      <Button className='sticky' onClick={handleSave}>
         Save
       </Button>
     </div>
