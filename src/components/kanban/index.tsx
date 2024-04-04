@@ -397,7 +397,7 @@ export default function Kanban() {
   }
 
   return (
-    <div className="px-8 overflow-auto">
+    <div className='px-8 mt-10 h-full bg-slate-100 overflow-auto'>
       {/* Add Container Modal - NÃO ESTÁ SENDO USADO */}
       <Modal
         showModal={showAddContainerModal}
@@ -419,7 +419,7 @@ export default function Kanban() {
       {/* Add Item Modal - NEGÓCIO */}
       <Dialog open={showAddItemModal} onOpenChange={setShowAddItemModal}>
         <DialogContent className='h-[40%]'>
-          <div className="flex flex-col w-full items-start gap-y-4 py-6">
+          <div className="flex flex-col w-full items-start gap-y-4 py-6 static">
             {/* <h1 className="text-gray-800 text-3xl font-bold">Add Item</h1> */}
             <InputModal
               type="text"
@@ -441,11 +441,11 @@ export default function Kanban() {
       </Dialog>
 
       {/** Botão de Adicionar Novo Negócio */}
-      <div className="flex items-center justify-start mt-10">
+      <div className="flex items-center justify-start absolute">
         {/* <h1 className="text-gray-800 text-3xl font-bold">Dnd-kit Guide</h1> */}
         <Button onClick={() => setShowAddItemModal(true)} className='gap-2'>
           <CirclePlus size={16}/>
-         Novo Negócio
+        Novo Negócio
         </Button>
       </div>
 

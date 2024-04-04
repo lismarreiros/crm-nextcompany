@@ -63,9 +63,9 @@ const Editor: React.FC<EditorProps> = ({ initialData }) => {
   }, []);
 
   return (
-    <div className='flex flex-col m-4 p-4 bg-slate-200 absolute'>
-      <div id='editor-container' className='min-h-100 max-w-52'></div>
-      <Button className='sticky' onClick={handleSave}>
+    <div className='bg-slate-100 rounded border-2 w-full h-[25vh] px-4'>
+      <div id='editor-container' className='pt-2 h-[18vh]'></div>
+      <Button className='bg-transparent text-black hover:bg-white' onClick={handleSave}>
         Save
       </Button>
     </div>

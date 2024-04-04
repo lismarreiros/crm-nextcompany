@@ -69,7 +69,7 @@ const Items = ({ id, title, status }: ItemsType) => {
       </div>
      
       {openRight && !isDragging && (
-        <Drawer open={openRight} side="right" setOpen={setOpenRight}>
+        <Drawer open={openRight} setOpen={setOpenRight}>
           <Detail />
         </Drawer>
       )}

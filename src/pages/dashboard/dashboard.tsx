@@ -8,7 +8,7 @@ export default function DashboardPage() {
       {/** navbar */}
       <NavBar />
     
-      <div className="grid grid-cols-[14vw_1fr] bg-slate-100">
+      <div className="grid grid-cols-[14vw_1fr] bg-slate-100 pr-2">
         {/* barra de navegação esquerda */}
         <div className="bg-white rounded-md mt-10 h-full">
           <Sidebar />
