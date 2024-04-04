@@ -22,7 +22,7 @@ const Detail = () => {
   };
 
   return (
-    <div className='p-4 h-full w-full scroll-auto bg-transparent'>
+    <div className='p-4 h-full w-full overflow-y-auto bg-transparent mb-10'>
       <h1 className='font-medium'>Négocio #000</h1>
       {/** clientes adicionados */}
       <div className='flex items-center h-[45px] px-2 mt-4 bg-slate-100 rounded border-dashed border-2'>
@@ -39,7 +39,7 @@ const Detail = () => {
       </div>
 
       {/** editor */}
-      <div className='mt-20'>
+      <div className='mt-20 flex flex-col'>
         <h1 className='p-1 font-medium'>Tarefas</h1>  
         <Editor initialData={initialData}/>
       </div>

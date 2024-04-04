@@ -63,8 +63,8 @@ const Editor: React.FC<EditorProps> = ({ initialData }) => {
   }, []);
 
   return (
-    <div className='bg-slate-100 rounded border-2 w-full h-[25vh] px-4'>
-      <div id='editor-container' className='pt-2 h-[18vh]'></div>
+    <div className='bg-slate-100 rounded border-2 w-full px-4 flex flex-col'>
+      <div id='editor-container' className='pt-2 font-light grow'></div>
       <Button className='bg-transparent text-black hover:bg-white' onClick={handleSave}>
         Save
       </Button>

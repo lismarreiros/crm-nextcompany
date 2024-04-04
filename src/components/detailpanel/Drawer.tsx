@@ -40,7 +40,7 @@ const Drawer: React.FC<DrawerProps> = ({ open, setOpen, children, }) => {
             >
               <div
                 className={clsx(
-                  'flex flex-col mt-10 h-[100%] w-[20vw] overflow-y-scroll bg-white shadow-xl rounded-lg'
+                  'flex flex-col mt-10 h-[100%] w-[22vw] overflow-y-scroll bg-white shadow-xl rounded-lg'
                 )}
               >
                 {children}
