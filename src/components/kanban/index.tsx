@@ -32,6 +32,7 @@ import { Button } from '@/components/kanban/components/Button';
 import { Dialog, DialogContent } from '@/components/shadcn/ui/dialog';
 import InputModal from '@/components/kanban/components/Input';
 import { CirclePlus } from 'lucide-react';
+import { InputMasks } from '../shadcn/ui/input';
 
 // const inter = Inter({ subsets: ['latin'] });
 
@@ -421,19 +422,21 @@ export default function Kanban() {
         <DialogContent className='h-[40%]'>
           <div className="flex flex-col w-full items-start gap-y-4 py-6 static">
             {/* <h1 className="text-gray-800 text-3xl font-bold">Add Item</h1> */}
+            <h1 className='text-lg font-medium'>Novo Négocio</h1>
+            <label className='text-sm font-medium'>Descrição</label>
             <InputModal
               type="text"
               placeholder="Descrição"
               name="itemname"
               value={itemName}
               onChange={(e) => setItemName(e.target.value)}
-            />   
-            <InputModal
+            />
+            <label className='text-sm font-medium'>Número do Contato</label>   
+            <InputMasks
+              mask='(99) 99999-9999'
               type="text"
               placeholder="Número"
               name="itemname"
-              value={itemName}
-              onChange={(e) => setItemName(e.target.value)}
             />
             <Button onClick={onAddItem}>Adicionar</Button>
           </div>

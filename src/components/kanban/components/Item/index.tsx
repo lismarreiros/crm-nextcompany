@@ -3,7 +3,7 @@ import { useSortable } from '@dnd-kit/sortable';
 import React, { useState } from 'react';
 import { CSS } from '@dnd-kit/utilities';
 import clsx from 'clsx';
-import { Grip, Eye } from 'lucide-react';
+import { Grip, LayoutList, Pencil } from 'lucide-react';
 import { Badge } from '../../../shadcn/ui/badge';
 import Drawer from '@/components/detailpanel/Drawer';
 import Detail from '@/components/detailpanel/Detail';
@@ -59,12 +59,16 @@ const Items = ({ id, title, status }: ItemsType) => {
           </button>
         </div>
       </div> 
-      <div className='flex justify-between mt-2 pr-2'>
+      <div className='flex items-center justify-between mt-2 pr-2 gap-2'>
         <Badge className='w-[6vw]'>
           {status}
-        </Badge>
+        </Badge> 
+        <button>
+          <Pencil size={16} color="#4b5569" />
+        </button>
         <button onClick={openDrawer}>
-          <Eye size={16} color="#4b5563"/>
+          <LayoutList size={16} color="#4b5563"/>
+        
         </button>
       </div>
      

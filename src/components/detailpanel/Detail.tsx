@@ -1,5 +1,5 @@
-import { Textarea } from '../shadcn/ui/textarea';
-import { Users, Box, AtSign } from 'lucide-react';
+// import { Textarea } from '../shadcn/ui/textarea';
+// import { Users, Box, AtSign } from 'lucide-react';
 import Editor from './Editor';
 
 const Detail = () => {
@@ -22,29 +22,29 @@ const Detail = () => {
   };
 
   return (
-    <div className='p-4 h-full w-full overflow-y-auto bg-transparent mb-10'>
-      <h1 className='font-medium'>Négocio #000</h1>
+    <div className='px-4 h-full w-full overflow-y-auto bg-transparent mb-10'>
+      <h1 className='mt-4 font-medium'>Négocio #000</h1>
       {/** clientes adicionados */}
-      <div className='flex items-center h-[45px] px-2 mt-4 bg-slate-100 rounded border-dashed border-2'>
+      {/* <div className='flex items-center h-[45px] px-2 mt-4 bg-slate-100 rounded border-dashed border-2'>
         <h1 className='font-light flex items-center gap-2'>
           <Users size={16}/>
           Cliente x
         </h1>
-      </div>
+      </div> * */}
 
-      {/** descrição */}
+      {/* * descrição
       <div className='h-[45px] mt-4 mb-4'>
         <h1 className='p-1 font-medium'>Descrição</h1>
         <Textarea className='bg-slate-100 font-light ' />
-      </div>
+      </div> */}
 
       {/** editor */}
-      <div className='mt-20 flex flex-col'>
-        <h1 className='p-1 font-medium'>Tarefas</h1>  
+      <div className='mt-4 flex flex-col'>
+        <h1 className='p-1 font-light'>Anotações</h1>  
         <Editor initialData={initialData}/>
       </div>
 
-      {/** produtos */}
+      {/* * produtos
       <div className='flex items-center h-[45px] px-2 mt-4 bg-slate-100 rounded border-dashed border-2'>
         <h1 className='font-light flex items-center gap-2'>
           <Box size={16}/>
@@ -53,12 +53,12 @@ const Detail = () => {
       </div>
 
       {/** participantes */}
-      <div className='flex items-center h-[45px] px-2 mt-4 bg-slate-100 rounded border-dashed border-2'>
+      {/* <div className='flex items-center h-[45px] px-2 mt-4 bg-slate-100 rounded border-dashed border-2'>
         <h1 className='flex font-light items-center gap-2'>
           <AtSign size={16}/>
           ParceiroY
         </h1>
-      </div>
+      </div>  */}
     </div>
   );
 };
