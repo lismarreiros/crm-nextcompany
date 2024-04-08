@@ -419,7 +419,7 @@ export default function Kanban() {
 
       {/* Add Item Modal - NEGÓCIO */}
       <Dialog open={showAddItemModal} onOpenChange={setShowAddItemModal}>
-        <DialogContent className='h-[40%]'>
+        <DialogContent className='h-[60%]'>
           <div className="flex flex-col w-full items-start gap-y-4 py-6 static">
             {/* <h1 className="text-gray-800 text-3xl font-bold">Add Item</h1> */}
             <h1 className='text-lg font-medium'>Novo Négocio</h1>

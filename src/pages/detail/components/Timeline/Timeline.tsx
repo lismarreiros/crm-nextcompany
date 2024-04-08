@@ -1,6 +1,6 @@
 import { Button } from '@/components/shadcn/ui/button';
 import { Command, CommandInput } from '@/components/shadcn/ui/command';
-import { ArrowLeftRight, CalendarCheck2, CalendarPlus, CheckSquare, MessageSquare, SquarePen, Trash2 } from 'lucide-react';
+import { ArrowLeftRight, CalendarCheck2, CalendarPlus, CheckSquare, Eye, MessageSquare, SquarePen, Trash2 } from 'lucide-react';
 import {
   Dialog,
   DialogContent,
@@ -25,7 +25,7 @@ function Timeline() {
             <DialogTrigger>
               <Button>Adicionar Tarefa</Button>
             </DialogTrigger>
-            <DialogContent className='w-4/5'>
+            <DialogContent className='h-[80%]'>
               <FormTarefa/>
             </DialogContent>
           </Dialog>
@@ -33,7 +33,7 @@ function Timeline() {
             <DialogTrigger>
               <Button>Adicionar Comentário</Button>
             </DialogTrigger>
-            <DialogContent className='w-4/5'>
+            <DialogContent className='w-4/5 h-[40%]'>
               <FormComentario />
             </DialogContent>
           </Dialog>
@@ -56,7 +56,12 @@ function Timeline() {
             {/** ícones */}
             <div className='flex gap-1 px-2'>
               {/* <SquarePen size={16} /> */}
-              <Trash2 size={16}/>
+              <button title='Excluir'>
+                <Trash2 size={16}/>
+              </button>
+              <button title='Mostrar detalhes'>
+                <Eye size={16}/>
+              </button>
             </div>
         
           </div>
@@ -103,9 +108,18 @@ function Timeline() {
 
             {/** ícones */}
             <div className='flex gap-1 px-2'>
-              <SquarePen size={16} />
-              <CheckSquare size={16} />
-              <Trash2 size={16}/>
+              <button title='Editar'>
+                <SquarePen size={16} />
+              </button>
+              <button title='Marcar como concluída'>
+                <CheckSquare size={16} />
+              </button>
+              <button title='Excluir'>
+                <Trash2 size={16}/>
+              </button>
+              <button title='Mostrar detalhes'>
+                <Eye size={16} />
+              </button>
             </div>
         
           </div>
@@ -129,7 +143,12 @@ function Timeline() {
             {/** ícones */}
             <div className='flex gap-1 px-2'>
               {/* <SquarePen size={16} /> */}
-              <Trash2 size={16}/>
+              <button title='Excluir'>
+                <Trash2 size={16}/>
+              </button>
+              <button title='Mostrar detalhes'>
+                <Eye size={16}/>
+              </button>
             </div>
         
           </div>
