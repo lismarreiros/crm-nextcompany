@@ -8,7 +8,7 @@ const DetailPage = () => {
       <div className='flex h-full px-4 items-end justify-between'>
         <div className='py-4 flex items-end gap-16'>
           <h1 className='text-lg font-semibold'>Negócio #ID</h1>
-          <p>Fase: Qualificação</p>
+          <p className='text-sm font-light'>Fase: Qualificação</p>
         </div>
         
         <div className='flex gap-12 mr-[33.5px]'>
@@ -40,11 +40,11 @@ const DetailPage = () => {
 
       <div className='grid grid-cols-[1fr_27vw]'>
         {/** Timeline */}
-        <div className='bg-slate-100'>
+        <div className='bg-slate-100 rounded'>
           <Timeline />
         </div>
         {/** Formulário de Detalhes */}
-        <div className='border-l-2 bg-slate-100 p-2'>
+        <div className='border-l-2 bg-slate-100 p-2 rounded'>
           <FormDetalhe/>
         </div>
       </div>
