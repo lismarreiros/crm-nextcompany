@@ -1,7 +1,13 @@
 import { Button } from '@/components/shadcn/ui/button';
 import { Command, CommandInput } from '@/components/shadcn/ui/command';
 import { ArrowLeftRight, CalendarCheck2, CalendarPlus, CheckSquare, MessageSquare, SquarePen, Trash2 } from 'lucide-react';
-import React from 'react';
+import {
+  Dialog,
+  DialogContent,
+  DialogTrigger,
+} from '@/components/shadcn/ui/dialog';
+import FormTarefa from './FormTarefa';
+import FormComentario from './FormComentario';
 
 function Timeline() {
   return (
@@ -15,8 +21,22 @@ function Timeline() {
           <Command>
             <CommandInput placeholder='Digite para pesquisar...'/>
           </Command>
-          <Button>Adicionar Tarefa</Button>
-          <Button>Adicionar Comentário</Button>
+          <Dialog>
+            <DialogTrigger>
+              <Button>Adicionar Tarefa</Button>
+            </DialogTrigger>
+            <DialogContent className='w-4/5'>
+              <FormTarefa/>
+            </DialogContent>
+          </Dialog>
+          <Dialog>
+            <DialogTrigger>
+              <Button>Adicionar Comentário</Button>
+            </DialogTrigger>
+            <DialogContent className='w-4/5'>
+              <FormComentario />
+            </DialogContent>
+          </Dialog>
         </div>
       </div>
 
