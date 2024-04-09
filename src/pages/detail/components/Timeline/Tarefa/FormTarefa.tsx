@@ -15,31 +15,38 @@ import { Input } from '@/components/shadcn/ui/input';
 import { RadioGroup, RadioGroupItem } from '@/components/shadcn/ui/radio-group';
 import { Switch } from '@/components/shadcn/ui/switch';
 
+type FormTarefaProps = {
+  onTaskSubmit: (descricao: string) => void;
+};
+
 const schema = z.object({
-  titulo: z.string(),
-  tipo: z.string(),
+  titulo: z.string().optional(),
+  tipo: z.string().optional(),
   descricao: z.string(),
-  responsavel: z.string(),
-  participantes: z.string(),
-  dtinicio: z.date(),
-  dtconclusao: z.date(),
-  prioridade: z.string(),
-  notificacao: z.boolean()
+  responsavel: z.string().optional(),
+  participantes: z.string().optional(),
+  dtinicio: z.date().optional(),
+  dtconclusao: z.date().optional(),
+  prioridade: z.string().optional(),
+  notificacao: z.boolean().optional()
 });
   
-const onSubmit = async (data: z.infer<typeof schema>) => {
-  console.log(data);
-};
-  
-function FormTarefa() {
+const FormTarefa: React.FC<FormTarefaProps> = ({ onTaskSubmit }) => {
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
   });
 
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = form.getValues();
+    console.log(formData.descricao);
+    onTaskSubmit(formData.descricao);
+  };
+
   return (
     <div>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className='py-2 flex flex-col gap-2'>
+        <form onSubmit={handleSubmit} className='py-2 flex flex-col gap-2'>
           {/** Título */}
           <FormField
             control={form.control}
@@ -291,6 +298,6 @@ function FormTarefa() {
       </Form>
     </div>
   );
-}
+};
 
 export default FormTarefa;

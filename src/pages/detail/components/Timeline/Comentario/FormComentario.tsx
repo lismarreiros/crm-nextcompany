@@ -10,22 +10,30 @@ import { Form,
 } from '@/components/shadcn/ui/form';
 import { Button } from '@/components/shadcn/ui/button';
 
+type FormComentarioProps = {
+  onCommentSubmit: (comment: string) => void;
+};
+
 const schema = z.object({
   comentario: z.string()
 });
 
-const onSubmit = async (data: z.infer<typeof schema>) => {
-  console.log(data);
-};
+const FormComentario: React.FC<FormComentarioProps> = ({ onCommentSubmit }) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const comentario = formData.get('comentario') as string;
+    onCommentSubmit(comentario);
+  };
 
-function FormComentario() {
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
   });
+
   return (
     <div className='py-4'>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className='py-2 flex flex-col gap-2'>
+        <form onSubmit={handleSubmit} className='py-2 flex flex-col gap-2'>
           <FormField
             control={form.control}
             name="comentario"
@@ -46,6 +54,6 @@ function FormComentario() {
       </Form>
     </div>
   );
-}
+};
 
 export default FormComentario;
