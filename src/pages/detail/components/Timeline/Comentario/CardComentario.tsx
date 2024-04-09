@@ -1,12 +1,13 @@
-import { Eye, MessageSquare, Trash2 } from 'lucide-react';
+import { MessageSquare, SquarePen, Trash2 } from 'lucide-react';
 import React from 'react';
 
 type ComentarioCardProps = {
     comment: string;
     onDelete: () => void;
+    onReopenModal: () => void;
 };
 
-const CardComentario: React.FC<ComentarioCardProps> = ({ comment, onDelete }) => {
+const CardComentario: React.FC<ComentarioCardProps> = ({ comment, onDelete, onReopenModal }) => {
   return (
     <div className='relative w-[1000px] h-[110px] border-l-2 border-slate-700	self-center my-4'>
       <div className='absolute  flex items-center size-8 -top-3 -left-4 bg-slate-700 py-1 px-2 rounded-full'>
@@ -22,12 +23,11 @@ const CardComentario: React.FC<ComentarioCardProps> = ({ comment, onDelete }) =>
 
           {/** ícones */}
           <div className='flex gap-1 px-2'>
-            {/* <SquarePen size={16} /> */}
             <button title='Excluir' onClick={onDelete}>
               <Trash2 size={16}/>
             </button>
-            <button title='Mostrar detalhes'>
-              <Eye size={16}/>
+            <button title='Mostrar detalhes' onClick={onReopenModal}>
+              <SquarePen size={16} />
             </button>
           </div>
     

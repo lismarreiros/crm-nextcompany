@@ -1,12 +1,13 @@
-import { CalendarCheck2, CalendarPlus, CheckSquare, Eye, SquarePen, Trash2 } from 'lucide-react';
+import { CalendarCheck2, CalendarPlus, CheckSquare, SquarePen, Trash2 } from 'lucide-react';
 import React, { useState } from 'react';
 
 type TarefaCardProps = {
     task: string;
     onDelete: () => void;
+    onReopenModal: () => void;
 };
 
-const CardTarefa: React.FC<TarefaCardProps> = ({ task, onDelete }) => {
+const CardTarefa: React.FC<TarefaCardProps> = ({ task, onDelete, onReopenModal }) => {
   const [cardTitle, setCardTitle] = useState('Tarefa Adicionada');
   const [icon, setIcon] = useState(<CalendarPlus size={18} color='white' />);
   const [bgColor, setBgColor] = useState('bg-slate-700');
@@ -34,7 +35,7 @@ const CardTarefa: React.FC<TarefaCardProps> = ({ task, onDelete }) => {
 
           {/** ícones */}
           <div className='flex gap-1 px-2'>
-            <button title='Editar'>
+            <button title='Editar' onClick={onReopenModal}>
               <SquarePen size={16} />
             </button>
             { !isCompleted && (
@@ -44,9 +45,6 @@ const CardTarefa: React.FC<TarefaCardProps> = ({ task, onDelete }) => {
             )}
             <button title='Excluir' onClick={onDelete}>
               <Trash2 size={16}/>
-            </button>
-            <button title='Mostrar detalhes'>
-              <Eye size={16} />
             </button>
           </div>
     

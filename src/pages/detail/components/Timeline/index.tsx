@@ -1,5 +1,5 @@
 import { Button } from '@/components/shadcn/ui/button';
-import { Command, CommandInput } from '@/components/shadcn/ui/command';
+import { Command, CommandInput, } from '@/components/shadcn/ui/command';
 import { ArrowLeftRight } from 'lucide-react';
 import {
   Dialog,
@@ -13,15 +13,19 @@ import React, { useState } from 'react';
 import CardTarefa from './Tarefa/CardTarefa';
 
 const Timeline: React.FC = () => {
+  const [openT, setOpenT] = useState(false);
+  const [openC, setOpenC] = useState(false);
   const [comments, setComments] = useState<string[]>([]);
   const [tasks, setTasks] = useState<string[]>([]);
 
   const handleCommentSubmit = (newComment: string) => {
     setComments([newComment, ...comments]);
+    setOpenC(!openC);
   };
 
   const handleTaskSubmit = (newTask: string) => {
     setTasks([newTask, ...tasks]);
+    setOpenT(!openT);
   };
   
   const handleCommentDelete = (index: number) => {
@@ -36,18 +40,34 @@ const Timeline: React.FC = () => {
     setTasks(newTasks);
   };
 
+  {/** será usado futuramente para Update do formulário! */}
+  const handleReopenModal = (index: number) => {
+    const reopenedComment = comments[index];
+    console.log(reopenedComment);
+    setOpenC((openC) => !openC);
+  };
+
+  const handleReopenModalTask = (index: number) => {
+    const reopenedTask = tasks[index];
+    console.log(reopenedTask);
+    setOpenT((openT) => !openT);
+  };
+
   return (
     <div className='flex flex-col'>
       <div className='flex p-2 items-center justify-between'>
         <div>
           <h1 className='text-lg p-4 font-light'>Timeline</h1>
         </div>
-        {/** barra de pesquisa + botões */}
+        {/** barra de pesquisa (sem funcionar ainda!) + botões */}
         <div className='flex gap-4'>
           <Command>
-            <CommandInput placeholder='Digite para pesquisar...'/>
+            <CommandInput placeholder='Digite para pesquisar...' />
+            {/* <CommandList>
+              <CommandEmpty>Resultados não encontrados.</CommandEmpty>
+            </CommandList> */}
           </Command>
-          <Dialog>
+          <Dialog open={openT} onOpenChange={setOpenT}>
             <DialogTrigger>
               <Button>Adicionar Tarefa</Button>
             </DialogTrigger>
@@ -55,7 +75,8 @@ const Timeline: React.FC = () => {
               <FormTarefa onTaskSubmit={handleTaskSubmit}/>
             </DialogContent>
           </Dialog>
-          <Dialog>
+
+          <Dialog open={openC} onOpenChange={setOpenC}>
             <DialogTrigger>
               <Button>Adicionar Comentário</Button>
             </DialogTrigger>
@@ -68,12 +89,19 @@ const Timeline: React.FC = () => {
 
       {/** Card Comentário */}
       {comments.map((comment, index) => (
-        <CardComentario key={index} comment={comment} onDelete={() => handleCommentDelete(index)} />
+        <CardComentario key={index} 
+          comment={comment} 
+          onDelete={() => handleCommentDelete(index)} 
+          onReopenModal={() => handleReopenModal(index)} />
       ))}
 
       {/** Tarefa Adicionada */}
       {tasks.map((task, index) => (
-        <CardTarefa key={index} task={task} onDelete={() => handleTaskDelete(index)} />
+        <CardTarefa key={index} 
+          task={task} 
+          onDelete={() => handleTaskDelete(index)} 
+          onReopenModal={() => handleReopenModalTask(index)}
+        />
       ))}
       
       {/** Troca de fase */}

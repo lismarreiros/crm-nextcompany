@@ -3,10 +3,11 @@ import { useSortable } from '@dnd-kit/sortable';
 import React, { useState } from 'react';
 import { CSS } from '@dnd-kit/utilities';
 import clsx from 'clsx';
-import { Grip, LayoutList, Pencil } from 'lucide-react';
+import { Grip, Pencil } from 'lucide-react';
 import { Badge } from '../../../shadcn/ui/badge';
 import Drawer from '@/components/detailpanel/Drawer';
 import Detail from '@/components/detailpanel/Detail';
+import { Link } from 'react-router-dom';
 
 type ItemsType = {
   id: UniqueIdentifier;
@@ -30,11 +31,11 @@ const Items = ({ id, title, status }: ItemsType) => {
     },
   });
 
-  const openDrawer = () => {
-    if (!isDragging) {
-      setOpenRight(true);  
-    }
-  };
+  // const openDrawer = () => {
+  //   if (!isDragging) {
+  //     setOpenRight(true);  
+  //   }
+  // };
   
   return (
     <div
@@ -63,13 +64,13 @@ const Items = ({ id, title, status }: ItemsType) => {
         <Badge className='w-[6vw]'>
           {status}
         </Badge> 
-        <button>
+        <Link to='/detalhe'>
           <Pencil size={16} color="#4b5569" />
-        </button>
-        <button onClick={openDrawer}>
+        </Link>
+        {/* <button onClick={openDrawer}>
           <LayoutList size={16} color="#4b5563"/>
         
-        </button>
+        </button> */}
       </div>
      
       {openRight && !isDragging && (
