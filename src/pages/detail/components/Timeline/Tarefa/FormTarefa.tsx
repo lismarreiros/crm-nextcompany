@@ -11,6 +11,7 @@ import { CalendarIcon } from 'lucide-react';
 import { Calendar } from '@/components/shadcn/ui/calendar';
 import { cn } from '@/lib/utils';
 import { format } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
 import { Input } from '@/components/shadcn/ui/input';
 import { RadioGroup, RadioGroupItem } from '@/components/shadcn/ui/radio-group';
 import { Switch } from '@/components/shadcn/ui/switch';
@@ -32,6 +33,7 @@ const schema = z.object({
 });
   
 const FormTarefa: React.FC<FormTarefaProps> = ({ onTaskSubmit }) => {
+
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
   });
@@ -102,7 +104,7 @@ const FormTarefa: React.FC<FormTarefaProps> = ({ onTaskSubmit }) => {
                           )}
                         >
                           {field.value ? (
-                            format(field.value, 'PPP')
+                            format(field.value, 'PPP',  {locale: ptBR})
                           ) : (
                             <span>Escolha um data</span>
                           )}
@@ -115,10 +117,9 @@ const FormTarefa: React.FC<FormTarefaProps> = ({ onTaskSubmit }) => {
                         mode="single"
                         selected={field.value}
                         onSelect={field.onChange}
-                        disabled={(date) =>
-                          date < new Date() 
-                        }
+                        disabled={(date) => date < new Date()}
                         initialFocus
+                        locale={ptBR}
                       />
                     </PopoverContent>
                   </Popover>
@@ -145,7 +146,7 @@ const FormTarefa: React.FC<FormTarefaProps> = ({ onTaskSubmit }) => {
                           )}
                         >
                           {field.value ? (
-                            format(field.value, 'PPP')
+                            format(field.value, 'PPP', {locale: ptBR})
                           ) : (
                             <span>Escolha uma data</span>
                           )}
@@ -158,10 +159,9 @@ const FormTarefa: React.FC<FormTarefaProps> = ({ onTaskSubmit }) => {
                         mode="single"
                         selected={field.value}
                         onSelect={field.onChange}
-                        disabled={(date) =>
-                          date < new Date()
-                        }
+                        disabled={(date) => date < new Date()}
                         initialFocus
+                        locale={ptBR}
                       />
                     </PopoverContent>
                   </Popover>
