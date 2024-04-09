@@ -21,7 +21,7 @@ const CardTarefa: React.FC<TarefaCardProps> = ({ task, onDelete, onReopenModal }
   };
 
   return (
-    <div className='relative w-[1000px] h-[110px] border-l-2 border-slate-700 self-center my-4'>
+    <div className='relative lg:w-[1000px] h-[110px] md:w-[800px]  border-l-2 border-slate-700 self-center my-4'>
       <div className={`absolute  flex items-center size-8 -top-3 -left-4 ${bgColor} py-1 px-2 rounded-full`}>
         {icon}
       </div>

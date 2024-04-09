@@ -4,7 +4,7 @@ import FormDetalhe from './components/Form';
 
 const DetailPage = () => {
   return (
-    <div className='h-[70px] border-t-2 px-4'>
+    <div className='md:h-[70px] border-t-2 px-4'>
       <div className='flex h-full px-4 items-end justify-between'>
         <div className='py-4 flex items-end gap-16'>
           <h1 className='text-lg font-semibold'>Negócio #ID</h1>
@@ -38,7 +38,7 @@ const DetailPage = () => {
         </div>
       </div>
 
-      <div className='grid grid-cols-[1fr_27vw]'>
+      <div className='grid lg:grid-cols-[1fr_27vw] md:grid-cols-1'>
         {/** Timeline */}
         <div className='bg-slate-100 rounded'>
           <Timeline />

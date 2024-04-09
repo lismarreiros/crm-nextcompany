@@ -44,7 +44,7 @@ function FormDetalhe() {
   });
 
   return (
-    <div className='bg-white m-2 p-4 border border-2 rounded'>
+    <div className='bg-white m-2 p-4 border border-2 rounded lg'>
       <h1 className='text-md font-semibold'>Dados básicos</h1>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className='py-2 flex flex-col gap-2'>
