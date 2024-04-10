@@ -1,12 +1,9 @@
 import { UniqueIdentifier } from '@dnd-kit/core';
 import { useSortable } from '@dnd-kit/sortable';
-import React, { useState } from 'react';
 import { CSS } from '@dnd-kit/utilities';
 import clsx from 'clsx';
 import { Grip, Pencil } from 'lucide-react';
 import { Badge } from '../../../shadcn/ui/badge';
-import Drawer from '@/components/detailpanel/Drawer';
-import Detail from '@/components/detailpanel/Detail';
 import { Link } from 'react-router-dom';
 
 type ItemsType = {
@@ -16,7 +13,6 @@ type ItemsType = {
 };
 
 const Items = ({ id, title, status }: ItemsType) => {
-  const [openRight, setOpenRight] = useState(false);
   const {
     attributes,
     listeners,
@@ -31,12 +27,6 @@ const Items = ({ id, title, status }: ItemsType) => {
     },
   });
 
-  // const openDrawer = () => {
-  //   if (!isDragging) {
-  //     setOpenRight(true);  
-  //   }
-  // };
-  
   return (
     <div
       ref={setNodeRef}
@@ -67,18 +57,8 @@ const Items = ({ id, title, status }: ItemsType) => {
         <Link to='/detalhe'>
           <Pencil size={16} color="#4b5569" />
         </Link>
-        {/* <button onClick={openDrawer}>
-          <LayoutList size={16} color="#4b5563"/>
-        
-        </button> */}
       </div>
-     
-      {openRight && !isDragging && (
-        <Drawer open={openRight} setOpen={setOpenRight}>
-          <Detail />
-        </Drawer>
-      )}
- 
+
     </div>
   );
 };
