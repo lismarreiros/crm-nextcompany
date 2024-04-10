@@ -105,7 +105,7 @@ const Timeline: React.FC = () => {
       ))}
       
       {/** Troca de fase */}
-      <div className='relative lg:w-[1000px] h-[110px] md:w-[800px] border-l-2 border-slate-700	self-center mr-4'>
+      <div className='relative lg:w-[1000px] h-[110px] md:w-[800px] border-l-2 border-slate-700	self-center my-4'>
         <div className='absolute  flex items-center size-8 -top-3 -left-4 bg-slate-700 py-1 px-2 rounded-full'>
           <ArrowLeftRight color='white'/>
         </div>
