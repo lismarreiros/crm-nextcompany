@@ -106,7 +106,7 @@ const ClientFormComponent = () => {
          Adicionar Cliente
         </Button>
       </DialogTrigger> 
-      <DialogContent className='w-4/5'> 
+      <DialogContent className='max-w-[54vw]'> 
         <DialogHeader>
           <DialogTitle>
             <div className='flex items-center gap-2'>

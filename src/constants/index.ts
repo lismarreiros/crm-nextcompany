@@ -115,4 +115,22 @@ export default class Constants {
       nome: 'Tocantins',
     },
   ];
+
+  static readonly LISTA_COLUNAS_CLIENTES = [
+    'CPF/CNPJ',
+    'Nome/Fantasia',
+    'Razão Social',
+    'Ramo',
+    'Contato',
+    'Telefone',
+    'Celular',
+    'Email',
+    'Função',
+    'CEP',
+    'Bairro',
+    'Rua',
+    'Cidade',
+    'UF',
+    'Número'
+  ];
 }

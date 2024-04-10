@@ -8,6 +8,7 @@ import {
 import ClientForm from '../forms/clientForm/ClientForm';
 import { ProductForm } from '../forms/productForm/productForm';
 import { Box, Users, ArrowUpRight} from 'lucide-react';
+import ClientDialog from '../clients/ClientDialog';
   
 const Sidebar = () => {
   return (
@@ -22,10 +23,7 @@ const Sidebar = () => {
             <AccordionTrigger> </AccordionTrigger>
           </div>
           <AccordionContent className='flex flex-col items-start'>
-            <div className='flex items-center gap-2'>
-              <ArrowUpRight size={16}/>
-              Visualizar Clientes {/** link para tela dos clientes */}
-            </div>
+            <ClientDialog />
             <ClientForm />
           </AccordionContent>
         </AccordionItem>
