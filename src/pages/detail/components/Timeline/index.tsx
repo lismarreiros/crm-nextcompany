@@ -1,6 +1,6 @@
 import { Button } from '@/components/shadcn/ui/button';
 import { Command, CommandInput, } from '@/components/shadcn/ui/command';
-import { ArrowLeftRight } from 'lucide-react';
+import { ArrowLeftRightIcon } from 'lucide-react';
 import {
   Dialog,
   DialogContent,
@@ -69,7 +69,7 @@ const Timeline: React.FC = () => {
           </Command>
           <Dialog open={openT} onOpenChange={setOpenT}>
             <DialogTrigger>
-              <Button>Adicionar Tarefa</Button>
+              <Button className='bg-indigo-700'>Adicionar Tarefa</Button>
             </DialogTrigger>
             <DialogContent className='h-[80%]'>
               <FormTarefa onTaskSubmit={handleTaskSubmit}/>
@@ -78,7 +78,7 @@ const Timeline: React.FC = () => {
 
           <Dialog open={openC} onOpenChange={setOpenC}>
             <DialogTrigger>
-              <Button>Adicionar Comentário</Button>
+              <Button className='bg-indigo-700'>Adicionar Comentário</Button>
             </DialogTrigger>
             <DialogContent className='w-4/5 h-[40%]'>
               <FormComentario onCommentSubmit={handleCommentSubmit} />
@@ -105,12 +105,12 @@ const Timeline: React.FC = () => {
       ))}
       
       {/** Troca de fase */}
-      <div className='relative lg:w-[1000px] h-[110px] md:w-[800px] border-l-2 border-slate-700	self-center my-4'>
-        <div className='absolute  flex items-center size-8 -top-3 -left-4 bg-slate-700 py-1 px-2 rounded-full'>
-          <ArrowLeftRight color='white'/>
+      <div className='relative lg:w-[1000px] h-[110px] md:w-[800px] self-center my-1'>
+        <div className='absolute  flex items-center size-8 -top-3 -left-4 bg-indigo-500 py-1 px-2 rounded-full'>
+          <ArrowLeftRightIcon color='white'/>
         </div>
 
-        <div className='flex flex-col m-6 px-2 py-2 bg-white rounded border-2'>
+        <div className='flex flex-col my-2 px-2 py-2 bg-white rounded border-2'>
           <div className='flex items-center justify-between'>
             <div className='flex items-center'>
               <h1 className='text-md px-2 py-2'>Troca de Fase | </h1>

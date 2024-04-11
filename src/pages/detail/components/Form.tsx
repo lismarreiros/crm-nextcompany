@@ -235,7 +235,7 @@ function FormDetalhe() {
               </FormItem>
             )}
           />
-          <Button type='submit' className='mt-2 w-4/6 self-center'>Salvar Alterações</Button>
+          <Button type='submit' className='mt-2 w-4/6 self-center bg-indigo-700'>Salvar Alterações</Button>
         </form>
       </Form>
     </div>

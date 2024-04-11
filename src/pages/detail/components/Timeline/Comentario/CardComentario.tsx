@@ -1,4 +1,4 @@
-import { MessageSquare, SquarePen, Trash2 } from 'lucide-react';
+import { MessageSquare, MessageSquareIcon, SquarePenIcon, Trash2Icon } from 'lucide-react';
 import React from 'react';
 
 type ComentarioCardProps = {
@@ -9,12 +9,12 @@ type ComentarioCardProps = {
 
 const CardComentario: React.FC<ComentarioCardProps> = ({ comment, onDelete, onReopenModal }) => {
   return (
-    <div className='relative lg:w-[1000px] h-[110px] md:w-[700px]  border-l-2 border-slate-700	self-center my-4'>
-      <div className='absolute  flex items-center size-8 -top-3 -left-4 bg-slate-700 py-1 px-2 rounded-full'>
-        <MessageSquare size={18} color='white' />
+    <div className='relative lg:w-[1000px] h-[110px] md:w-[800px] self-center my-1'>
+      <div className='absolute flex items-center size-8 -top-3 -left-4 bg-indigo-500 py-1 px-2 rounded-full'>
+        <MessageSquareIcon size={20} color='white' />
       </div>
 
-      <div className='flex flex-col m-6 px-2 py-2 bg-white rounded border-2'>
+      <div className='flex flex-col my-2 px-2 py-2 bg-white rounded border-2'>
         <div className='flex items-center justify-between'>
           <div className='flex items-center'>
             <h1 className='text-md px-2 py-2'> Comentário | </h1>
@@ -24,10 +24,10 @@ const CardComentario: React.FC<ComentarioCardProps> = ({ comment, onDelete, onRe
           {/** ícones */}
           <div className='flex gap-1 px-2'>
             <button title='Excluir' onClick={onDelete}>
-              <Trash2 size={16}/>
+              <Trash2Icon size={26} className='hover:bg-indigo-200 rounded-md p-1' />
             </button>
             <button title='Mostrar detalhes' onClick={onReopenModal}>
-              <SquarePen size={16} />
+              <SquarePenIcon size={26} className='hover:bg-indigo-200 rounded-md p-1'  />
             </button>
           </div>
     

@@ -5,7 +5,7 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Input } from '@/components/shadcn/ui/input';
 
-import { Box, Plus } from 'lucide-react';
+import { BoxIcon, PlusIcon } from 'lucide-react';
 import { Button } from '@/components/shadcn/ui/button';
 import CustomInputCurrencyMask from '../../../utils/customInputCurrencyMask';
 
@@ -45,8 +45,8 @@ export const ProductForm = () => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger>
-        <Button variant='link' size='sm'> 
-          <Plus size={16}/> 
+        <Button variant='ghost' size='default' className='gap-1'> 
+          <PlusIcon size={12}/> 
           Adicionar Produto
         </Button>
       </DialogTrigger> 
@@ -54,7 +54,7 @@ export const ProductForm = () => {
         <DialogHeader>
           <DialogTitle>
             <div className='flex items-center gap-2'>
-              <Box  size={22} />
+              <BoxIcon  size={22} />
                 Novo Produto
             </div>
           </DialogTitle>
@@ -118,7 +118,7 @@ export const ProductForm = () => {
 
             </div>
             <DialogFooter>
-              <Button type='submit' variant='default'>Cadastrar Produto</Button>
+              <Button type='submit' className='bg-indigo-700'>Cadastrar Produto</Button>
             </DialogFooter>
           </form>
         </Form> 

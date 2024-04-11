@@ -43,7 +43,7 @@ const Items = ({ id, title, status }: ItemsType) => {
       <div className=''>
         <div className="flex items-center justify-between">
           {title}
-          <button className="p-2 text-xs rounded-xl"
+          <button title='Mover' className="p-2 text-xs rounded-xl"
             {...listeners}
           >
             <Grip size={16} color="#4b5563"/>
@@ -51,10 +51,10 @@ const Items = ({ id, title, status }: ItemsType) => {
         </div>
       </div> 
       <div className='flex items-center justify-between mt-2 pr-2 gap-2'>
-        <Badge className='w-[6vw]'>
+        <Badge className='w-[6vw]' variant={'secondary'}>
           {status}
         </Badge> 
-        <Link to='/detalhe'>
+        <Link to='/detalhe' title='Ir para detalhes'>
           <Pencil size={16} color="#4b5569" />
         </Link>
       </div>

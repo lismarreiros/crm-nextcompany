@@ -1,4 +1,4 @@
-import { CalendarCheck2, CalendarPlus, CheckSquare, SquarePen, Trash2 } from 'lucide-react';
+import {  CalendarCheck2Icon, CalendarPlusIcon, CheckSquareIcon, SquarePenIcon, Trash2Icon } from 'lucide-react';
 import React, { useState } from 'react';
 
 type TarefaCardProps = {
@@ -9,24 +9,24 @@ type TarefaCardProps = {
 
 const CardTarefa: React.FC<TarefaCardProps> = ({ task, onDelete, onReopenModal }) => {
   const [cardTitle, setCardTitle] = useState('Tarefa Adicionada');
-  const [icon, setIcon] = useState(<CalendarPlus size={18} color='white' />);
-  const [bgColor, setBgColor] = useState('bg-slate-700');
+  const [icon, setIcon] = useState(<CalendarPlusIcon size={20} color='white' />);
+  const [bgColor, setBgColor] = useState('bg-indigo-500');
   const [isCompleted, setIsCompleted] = useState(false);
 
   const handleTaskComplete = () => {
     setCardTitle('Tarefa Concluída');
-    setIcon(<CalendarCheck2 size={18} color='white' />);
-    setBgColor('bg-green-700');
+    setIcon(<CalendarCheck2Icon size={20} color='white' />);
+    setBgColor('bg-green-500');
     setIsCompleted(true);
   };
 
   return (
-    <div className='relative lg:w-[1000px] h-[110px] md:w-[800px]  border-l-2 border-slate-700 self-center my-4'>
+    <div className='relative lg:w-[1000px] h-[110px] md:w-[800px] self-center my-1'>
       <div className={`absolute  flex items-center size-8 -top-3 -left-4 ${bgColor} py-1 px-2 rounded-full`}>
         {icon}
       </div>
 
-      <div className='flex flex-col m-6 px-2 py-2 bg-white rounded border-2'>
+      <div className='flex flex-col my-2 px-2 py-2 bg-white rounded border-2'>
         <div className='flex items-center justify-between'>
           <div className='flex items-center'>
             <h1 className='text-md px-2 py-2'>{cardTitle} | </h1>
@@ -35,17 +35,17 @@ const CardTarefa: React.FC<TarefaCardProps> = ({ task, onDelete, onReopenModal }
 
           {/** ícones */}
           <div className='flex gap-1 px-2'>
+            <button title='Excluir' onClick={onDelete}>
+              <Trash2Icon size={26} className='hover:bg-indigo-200 rounded-md p-1' />
+            </button>
             <button title='Editar' onClick={onReopenModal}>
-              <SquarePen size={16} />
+              <SquarePenIcon size={26} className='hover:bg-indigo-200 rounded-md p-1' />
             </button>
             { !isCompleted && (
               <button title='Marcar como concluída' onClick={handleTaskComplete}>
-                <CheckSquare size={16} />
+                <CheckSquareIcon size={26} className='hover:bg-indigo-200 rounded-md p-1'  />
               </button>
             )}
-            <button title='Excluir' onClick={onDelete}>
-              <Trash2 size={16}/>
-            </button>
           </div>
     
         </div>

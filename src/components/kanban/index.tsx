@@ -398,7 +398,7 @@ export default function Kanban() {
   }
 
   return (
-    <div className='px-8 mt-10 h-full bg-slate-100 overflow-auto'>
+    <div className='px-8 mt-10 h-full bg-inherit overflow-auto'>
       {/* Add Container Modal - NÃO ESTÁ SENDO USADO */}
       <Modal
         showModal={showAddContainerModal}
@@ -438,7 +438,7 @@ export default function Kanban() {
               placeholder="Número"
               name="itemname"
             />
-            <Button onClick={onAddItem}>Adicionar</Button>
+            <Button className='bg-indigo-900 hover:bg-indigo-700' onClick={onAddItem}>Adicionar</Button>
           </div>
         </DialogContent>
       </Dialog>
@@ -446,7 +446,7 @@ export default function Kanban() {
       {/** Botão de Adicionar Novo Negócio */}
       <div className="flex items-center justify-start absolute">
         {/* <h1 className="text-gray-800 text-3xl font-bold">Dnd-kit Guide</h1> */}
-        <Button onClick={() => setShowAddItemModal(true)} className='gap-2'>
+        <Button onClick={() => setShowAddItemModal(true)} className='gap-2 bg-indigo-900'>
           <CirclePlus size={16}/>
         Novo Negócio
         </Button>
