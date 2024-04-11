@@ -8,7 +8,6 @@ import {
 import ClientForm from '../forms/clientForm/ClientForm';
 import { ProductForm } from '../forms/productForm/productForm';
 import { Box, Users, ArrowUpRight} from 'lucide-react';
-import ClientDialog from '../clients/ClientDialog';
   
 const Sidebar = () => {
   return (
@@ -23,7 +22,6 @@ const Sidebar = () => {
             <AccordionTrigger> </AccordionTrigger>
           </div>
           <AccordionContent className='flex flex-col items-start'>
-            <ClientDialog />
             <ClientForm />
           </AccordionContent>
         </AccordionItem>

@@ -101,8 +101,8 @@ const ClientFormComponent = () => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger>
-        <Button variant='link' size='sm'> 
-          <Plus size={16}/> 
+        <Button variant='ghost' size='default'> 
+          <Plus size={12}/> 
          Adicionar Cliente
         </Button>
       </DialogTrigger> 

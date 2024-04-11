@@ -117,20 +117,25 @@ export default class Constants {
   ];
 
   static readonly LISTA_COLUNAS_CLIENTES = [
-    'CPF/CNPJ',
     'Nome/Fantasia',
+    'CPF/CNPJ',
     'Razão Social',
-    'Ramo',
-    'Contato',
+    'Ramo Atividade',
+  ];
+
+  static readonly LISTA_COLUNAS_CLIENTES_CONTATO = [
+    'Nome',
     'Telefone',
     'Celular',
     'Email',
     'Função',
+  ];
+
+  static readonly LISTA_COLUNAS_CLIENTES_ENDEREÇO = [
     'CEP',
     'Bairro',
     'Rua',
-    'Cidade',
-    'UF',
+    'Cidade/UF',
     'Número'
   ];
 }

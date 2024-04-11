@@ -3,6 +3,7 @@ import React from 'react';
 import DashboardPage from './pages/dashboard/dashboard';
 import { Route, Routes } from 'react-router-dom';
 import DetailPage from './pages/detail';
+import ClientPage from './pages/clients/ClientPage';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           {/* <Route path='/' element={<ClientForm/>} /> */}
           <Route path='/' element={<DashboardPage />} />
           <Route path='/detalhe' element={<DetailPage/>} />
+          <Route path='/clientes' element={<ClientPage/>} />
         </Routes>
       </div>
     </div>
