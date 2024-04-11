@@ -129,6 +129,7 @@ export default class Constants {
     'Celular',
     'Email',
     'Função',
+    '' //botoes
   ];
 
   static readonly LISTA_COLUNAS_CLIENTES_ENDEREÇO = [
@@ -136,6 +137,7 @@ export default class Constants {
     'Bairro',
     'Rua',
     'Cidade/UF',
-    'Número'
+    'Número',
+    ''//botoes
   ];
 }

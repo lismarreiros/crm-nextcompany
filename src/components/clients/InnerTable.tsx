@@ -8,7 +8,8 @@ const InnerTable = () => {
     '(99) 9999-9999',
     '(99) 9999-9999',
     'maria@gmail.com',
-    'Dona'
+    'Dona',
+    ''
   ];
 
   const endereço = [
@@ -16,7 +17,8 @@ const InnerTable = () => {
     'Jardins',
     'Rua Oscar Freire',
     'São Paulo-SP',
-    '1111'
+    '1111',
+    '',
   ];
 
   return (
