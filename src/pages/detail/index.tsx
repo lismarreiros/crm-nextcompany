@@ -4,14 +4,14 @@ import FormDetalhe from './components/Form';
 
 const DetailPage = () => {
   return (
-    <div className='md:h-[70px] border-t-2'>
+    <div className='w-screen md:h-[70px] border-t-2'>
       <div className='flex h-full px-4 items-end justify-between'>
         <div className='py-4 flex items-end gap-16'>
           <h1 className='text-lg font-semibold text-slate-900'>Negócio #ID</h1>
-          <p className='text-sm font-light text-slate-900'>Fase: Qualificação</p>
+          <p className='text-sm font-light text-slate-900 mr-2'>Fase: Qualificação</p>
         </div>
         
-        <div className='flex gap-12 mr-[33.5px]'>
+        <div className='flex gap-4 mr-2'>
           {/** Data da Ultima alteração */}
           <div className='flex flex-col border-l-2 border-indigo-200 px-2 text-slate-900'>
             <h2 className='text-md font-medium'>Última alteração</h2>

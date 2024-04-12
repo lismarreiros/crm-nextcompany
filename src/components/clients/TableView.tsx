@@ -17,9 +17,9 @@ const TableView = () => {
     <div className='m-4 rounded-md sm:border'>
       <Table>
         <TableHeader>
-          <TableRow>
+          <TableRow className=''>
             {Constants.LISTA_COLUNAS_CLIENTES.map((coluna) => (
-              <TableHead key={coluna}>{coluna}</TableHead>
+              <TableHead className='h-10' key={coluna}>{coluna}</TableHead>
             ))}
             <TableHead></TableHead>
             <TableHead></TableHead>

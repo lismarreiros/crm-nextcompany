@@ -36,15 +36,15 @@ import { Command,
 import { useState } from 'react';
 
 const clients = [
-  { label: 'English', value: 'en' },
-  { label: 'French', value: 'fr' },
-  { label: 'German', value: 'de' },
-  { label: 'Spanish', value: 'es' },
-  { label: 'Portuguese', value: 'pt' },
-  { label: 'Russian', value: 'ru' },
-  { label: 'Japanese', value: 'ja' },
-  { label: 'Korean', value: 'ko' },
-  { label: 'Chinese', value: 'zh' },
+  { label: 'Empresa A', value: 'en' },
+  { label: 'Empresa B', value: 'fr' },
+  { label: 'Empresa C', value: 'de' },
+  { label: 'Empresa D', value: 'es' },
+  { label: 'Empresa E', value: 'pt' },
+  { label: 'Empresa F', value: 'ru' },
+  { label: 'Empresa G', value: 'ja' },
+  { label: 'Empresa H', value: 'ko' },
+  { label: 'Empresa I', value: 'zh' },
 ] as const;
 
 const schema = z.object({
@@ -63,6 +63,7 @@ const onSubmit = async (data: z.infer<typeof schema>) => {
 };
 
 function FormDetalhe() {
+  const [open, setOpen] = useState(false);
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
   });
@@ -80,10 +81,11 @@ function FormDetalhe() {
             render={({ field }) => (
               <FormItem className='flex flex-col'>
                 <FormLabel>Cliente</FormLabel>
-                <Popover>
+                <Popover open={open} onOpenChange={setOpen}>
                   <PopoverTrigger asChild>
                     <FormControl>
                       <Button
+                        aria-expanded={open}
                         variant='outline' 
                         role='combobox'
                         className={cn('w-full justify-between',
@@ -111,7 +113,7 @@ function FormDetalhe() {
                               key={client.value}
                               onSelect={() => {
                                 form.setValue('client', client.value);
-                                
+                                setOpen(false);
                               }}
                             >
                               <Check
@@ -229,6 +231,7 @@ function FormDetalhe() {
                       }
                       initialFocus
                       locale={ptBR}
+                      
                     />
                   </PopoverContent>
                 </Popover>
@@ -278,7 +281,7 @@ function FormDetalhe() {
             name='situacao'
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Produto</FormLabel>
+                <FormLabel>Situação</FormLabel>
                 <Select onValueChange={field.onChange} defaultValue={field.value}>
                   <FormControl>
                     <SelectTrigger>

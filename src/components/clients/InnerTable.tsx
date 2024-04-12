@@ -25,14 +25,14 @@ const InnerTable = () => {
     <>
       {/** Parte de Contato do Cliente */}
       {/** colunas */}
-      <TableRow>
+      <TableRow className='mr-10 border-b-0'>
         <TableCell rowSpan={2} className='bg-slate-100 text-xs font-medium px-4'>Contato</TableCell>
         {Constants.LISTA_COLUNAS_CLIENTES_CONTATO.map((coluna) => (
           <TableCell key={coluna} className='bg-slate-100 text-xs font-medium'>{coluna}</TableCell>
         ))}
       </TableRow>
       {/** dados */}
-      <TableRow>
+      <TableRow >
         {contato.map((data) => (
           <TableCell key={data} className='bg-slate-100 text-xs'>{data}</TableCell>
         ))}
@@ -40,17 +40,17 @@ const InnerTable = () => {
 
       {/** Parte do Endereço do Cliente */}
       {/** colunas */}
-      <TableRow>
-        <TableCell rowSpan={2} className='bg-slate-50 text-xs font-medium px-4'>Endereço</TableCell>
+      <TableRow className='border-b-0'>
+        <TableCell rowSpan={2} className='bg-slate-100 text-xs font-medium px-4'>Endereço</TableCell>
         {Constants.LISTA_COLUNAS_CLIENTES_ENDEREÇO.map((coluna) => (
-          <TableCell key={coluna} className='bg-slate-50 text-xs font-medium'>{coluna}</TableCell>
+          <TableCell key={coluna} className='bg-slate-100 text-xs font-medium'>{coluna}</TableCell>
         ))}
       </TableRow>
 
       {/** dados */}
       <TableRow>
         {endereço.map((data) => (
-          <TableCell key={data} className='bg-slate-50 text-xs'>{data}</TableCell>
+          <TableCell key={data} className='bg-slate-100 text-xs border-b-0'>{data}</TableCell>
         ))}
       </TableRow>
     </>

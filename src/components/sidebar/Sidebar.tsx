@@ -16,7 +16,7 @@ const Sidebar = () => {
       <div>
         <Link to='/clientes' className='flex items-center gap-2 font-medium hover:bg-slate-100 rounded p-2' title='Ir para clientes'>
           <UsersIcon size={20}/>
-          Clientes
+          <p className='hidden lg:block'>Clientes</p>
         </Link>
       </div>
      
@@ -27,7 +27,7 @@ const Sidebar = () => {
             <AccordionTrigger className='gap-2'> 
               <div className='flex flex-start items-center gap-2'>
                 <BoxIcon size={20}/>
-                <h1>Produtos</h1>
+                <h1 className='hidden md:block'>Produtos</h1>
               </div>  
             </AccordionTrigger>
           </div>  

@@ -9,7 +9,7 @@ type ComentarioCardProps = {
 
 const CardComentario: React.FC<ComentarioCardProps> = ({ comment, onDelete, onReopenModal }) => {
   return (
-    <div className='relative lg:w-[1000px] h-[110px] md:w-[800px] self-center my-1 mb-8'>
+    <div className='relative lg:w-[1200px] h-[110px] md:w-[800px] self-center my-1 mb-8 md:ml-8 md:mr-8'>
       <div className='absolute flex items-center size-8 -top-3 -left-4 bg-indigo-500 py-1 px-2 rounded-full'>
         <MessageSquareIcon size={20} color='white' />
       </div>
