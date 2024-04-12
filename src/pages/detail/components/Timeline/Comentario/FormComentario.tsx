@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form';
 import { Form, 
   FormControl, 
   FormField, 
-  FormItem, 
+  FormItem,
 } from '@/components/shadcn/ui/form';
 import { Button } from '@/components/shadcn/ui/button';
 
@@ -15,7 +15,7 @@ type FormComentarioProps = {
 };
 
 const schema = z.object({
-  comentario: z.string()
+  comentario: z.string().max(100, { message: 'Limite de caracteres atingido' }),
 });
 
 const FormComentario: React.FC<FormComentarioProps> = ({ onCommentSubmit }) => {

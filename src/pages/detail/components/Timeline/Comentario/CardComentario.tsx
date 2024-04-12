@@ -1,4 +1,4 @@
-import { MessageSquare, MessageSquareIcon, SquarePenIcon, Trash2Icon } from 'lucide-react';
+import { MessageSquareIcon, SquarePenIcon, Trash2Icon } from 'lucide-react';
 import React from 'react';
 
 type ComentarioCardProps = {
@@ -9,7 +9,7 @@ type ComentarioCardProps = {
 
 const CardComentario: React.FC<ComentarioCardProps> = ({ comment, onDelete, onReopenModal }) => {
   return (
-    <div className='relative lg:w-[1000px] h-[110px] md:w-[800px] self-center my-1'>
+    <div className='relative lg:w-[1000px] h-[110px] md:w-[800px] self-center my-1 mb-8'>
       <div className='absolute flex items-center size-8 -top-3 -left-4 bg-indigo-500 py-1 px-2 rounded-full'>
         <MessageSquareIcon size={20} color='white' />
       </div>
@@ -32,7 +32,10 @@ const CardComentario: React.FC<ComentarioCardProps> = ({ comment, onDelete, onRe
           </div>
     
         </div>
-        <h1 className='px-2 py-1 text-sm font-light'>{ comment }</h1>
+        <div className='flex-wrap'>
+
+          <p className='px-2 py-1 text-sm font-light break-words'>{ comment }</p>
+        </div>
       </div>
     </div>
   );

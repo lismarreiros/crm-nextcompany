@@ -1,7 +1,12 @@
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import { Form, FormControl, FormField, FormLabel, FormItem, FormMessage } from '@/components/shadcn/ui/form';
+import { Form, 
+  FormControl, 
+  FormField, 
+  FormLabel, 
+  FormItem, 
+  FormMessage } from '@/components/shadcn/ui/form';
 import {
   Select,
   SelectTrigger,
@@ -12,7 +17,7 @@ import {
 import { Textarea } from '@/components/shadcn/ui/textarea';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
-import { CalendarIcon } from 'lucide-react';
+import { CalendarIcon, Check, ChevronsUpDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/shadcn/ui/button';
 import { Calendar } from '@/components/shadcn/ui/calendar';
@@ -22,9 +27,28 @@ import {
   PopoverTrigger,
 } from '@/components/shadcn/ui/popover';
 import { Input, InputMasks } from '@/components/shadcn/ui/input';
+import { Command, 
+  CommandInput, 
+  CommandGroup, 
+  CommandEmpty, 
+  CommandItem, 
+  CommandList } from '@/components/shadcn/ui/command';
+import { useState } from 'react';
+
+const clients = [
+  { label: 'English', value: 'en' },
+  { label: 'French', value: 'fr' },
+  { label: 'German', value: 'de' },
+  { label: 'Spanish', value: 'es' },
+  { label: 'Portuguese', value: 'pt' },
+  { label: 'Russian', value: 'ru' },
+  { label: 'Japanese', value: 'ja' },
+  { label: 'Korean', value: 'ko' },
+  { label: 'Chinese', value: 'zh' },
+] as const;
 
 const schema = z.object({
-  cliente: z.string(),
+  client: z.string(),
   produto: z.string(),
   tel: z.string(),
   descricao: z.string(),
@@ -52,23 +76,59 @@ function FormDetalhe() {
           {/** Cliente */}
           <FormField
             control={form.control}
-            name='cliente'
+            name='client'
             render={({ field }) => (
-              <FormItem>
+              <FormItem className='flex flex-col'>
                 <FormLabel>Cliente</FormLabel>
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Selecione um cliente" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    <SelectItem value="Julian">Casablancas</SelectItem>
-                    <SelectItem value="Axl">Rose</SelectItem>
-                    <SelectItem value="Alex">Turner</SelectItem>
-                  </SelectContent>
-                </Select>
-                <FormMessage />
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <FormControl>
+                      <Button
+                        variant='outline' 
+                        role='combobox'
+                        className={cn('w-full justify-between',
+                          !field.value && 'text-muted-foreground font-light'
+                        )}>
+                        {field.value 
+                          ? clients.find(
+                            (client) => client.value === field.value
+                          )?.label
+                          : 'Selecione um Cliente'
+                        }
+                        <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
+                      </Button>
+                    </FormControl>
+                  </PopoverTrigger>
+                  <PopoverContent className='w-inherit p-0'>
+                    <Command>
+                      <CommandInput placeholder='Procure um cliente' />
+                      <CommandEmpty>Não encontrado</CommandEmpty>
+                      <CommandList>
+                        <CommandGroup>
+                          {clients.map((client) => (
+                            <CommandItem 
+                              value={client.label}
+                              key={client.value}
+                              onSelect={() => {
+                                form.setValue('client', client.value);
+                                
+                              }}
+                            >
+                              <Check
+                                className={cn('mr-2 h-4 w-4',
+                                  client.value === field.value
+                                    ? 'opacity-100'
+                                    : 'opacity-0'
+                                )}
+                              />
+                              <span>{client.label}</span>
+                            </CommandItem>
+                          ))}
+                        </CommandGroup>
+                      </CommandList>
+                    </Command>
+                  </PopoverContent>
+                </Popover>
               </FormItem>
             )}
           />
