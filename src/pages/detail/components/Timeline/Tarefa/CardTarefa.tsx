@@ -30,7 +30,7 @@ const CardTarefa: React.FC<TarefaCardProps> = ({ task, onDelete, onReopenModal }
   };
 
   return (
-    <div className={`relative lg:w-[1200px] h-[110px] md:w-[800px] self-center my-1 md:ml-8 md:mr-8 ${marginBottom}`}>
+    <div className={`relative lg:w-[1200px] h-[110px] md:w-[800px] sm:w-[500px] self-center my-1 md:ml-8 md:mr-8 ${marginBottom}`}>
       <div className={`absolute  flex items-center size-8 -top-3 -left-4 ${bgColor} py-1 px-2 rounded-full`}>
         {icon}
       </div>
@@ -65,7 +65,7 @@ const CardTarefa: React.FC<TarefaCardProps> = ({ task, onDelete, onReopenModal }
             >{ task }</AccordionTrigger>
 
             <AccordionContent>
-              <div className='flex items-center px-2 py-2 font-light text-xs gap-2'>
+              <div className='flex sm:flex-wrap md:flex-wrap items-center px-2 py-2 font-light text-xs gap-2'>
                 <p className='font-medium'>Responsável:</p>
                 <p>Fulano</p>
                 <p className='font-medium'>Data Ínicio:</p>
