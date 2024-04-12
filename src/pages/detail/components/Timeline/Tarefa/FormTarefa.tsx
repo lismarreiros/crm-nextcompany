@@ -21,9 +21,8 @@ type FormTarefaProps = {
 };
 
 const schema = z.object({
-  titulo: z.string().optional(),
   tipo: z.string().optional(),
-  descricao: z.string(),
+  descricao: z.string().max(100),
   responsavel: z.string().optional(),
   participantes: z.string().optional(),
   dtinicio: z.date().optional(),
@@ -49,16 +48,16 @@ const FormTarefa: React.FC<FormTarefaProps> = ({ onTaskSubmit }) => {
     <div>
       <Form {...form}>
         <form onSubmit={handleSubmit} className='py-2 flex flex-col gap-2'>
-          {/** Título */}
+          {/** Descrição */}
           <FormField
             control={form.control}
-            name="titulo"
+            name="descricao"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Título</FormLabel>
+                <FormLabel>Descrição</FormLabel>
                 <FormControl>
-                  <Input
-                    placeholder=""
+                  <Textarea
+                    placeholder="Descrição da tarefa"
                     className="resize-none"
                     {...field}
                   />
@@ -191,24 +190,6 @@ const FormTarefa: React.FC<FormTarefaProps> = ({ onTaskSubmit }) => {
                   </SelectContent>
                 </Select>
                 <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          {/** Descrição */}
-          <FormField
-            control={form.control}
-            name="descricao"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Descrição</FormLabel>
-                <FormControl>
-                  <Textarea
-                    placeholder="Descrição da tarefa"
-                    className="resize-none"
-                    {...field}
-                  />
-                </FormControl>
               </FormItem>
             )}
           />
