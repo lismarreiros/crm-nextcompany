@@ -30,6 +30,10 @@ import {
 } from '@/components/shadcn/ui/select';
 
 import Constants from '@/constants';
+type ClientFormProps = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  onClientSubmit: (data: any) => void;
+};
 
 {/* validação */}
 const schema = z.object({
@@ -55,7 +59,7 @@ const schema = z.object({
   numero: z.optional(z.string())
 });
 
-const ClientFormComponent = () => {
+const ClientForm: React.FC<ClientFormProps> = ({ onClientSubmit } ) => {
   const [open, setOpen] = useState(false);
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
@@ -66,8 +70,11 @@ const ClientFormComponent = () => {
     e.target.value = CustomInputMask.cpfCnpj(value);
   };
 
-  const onSubmit = async (data: z.infer<typeof schema>) => {
-    console.log(data); 
+  const handleSubmit =  (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const data = form.getValues();
+    console.log(data);
+    onClientSubmit(data);
     setOpen(false);
   };
   
@@ -118,7 +125,7 @@ const ClientFormComponent = () => {
 
         {/* Começo do Formulário */}
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          <form onSubmit={handleSubmit} className="space-y-8">
             <div className='grid gap-4 pt-2'>
 
               {/* CPF/CNPJ */}
@@ -413,11 +420,4 @@ const ClientFormComponent = () => {
   );
 };
 
-export default function ClientForm()  {
-  
-  return (
-    <div>
-      <ClientFormComponent />  
-    </div>
-  );
-}
+export default ClientForm;

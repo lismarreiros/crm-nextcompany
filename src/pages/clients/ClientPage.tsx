@@ -3,8 +3,33 @@ import TableView from '@/components/clients/TableView';
 import ClientForm from '@/components/forms/clientForm/ClientForm';
 import { Command, CommandInput } from 'cmdk';
 import { Search } from 'lucide-react';
+import { useState } from 'react';
+
+interface ClientFormData {
+  cpfOrCnpj: string;
+  nomefantasia: string;
+  razao: string;
+  ramo: string;
+  nomeConato: string;
+  celular: string;
+  fixo: string;
+  email: string;
+  funcao: string;
+  cep: string;
+  rua: string;
+  cidade: string;
+  uf: string;
+  bairro: string;
+  numero: string;
+}
 
 const ClientPage = () => {
+  const [clients, setClient] = useState<ClientFormData[]>([]);
+
+  const handleClientSubmit = (data: ClientFormData) => {
+    setClient([data, ...clients]);
+  };
+  
   return (
     <div>
       <div className="h-screen bg-indigo-200 py-8 mb-8">
@@ -12,7 +37,7 @@ const ClientPage = () => {
           <div className='flex m-2 justify-between items-center pr-2'>
             <h1 className='m-4 text-md font-medium'>Clientes Cadastrados</h1>
             <div className='flex gap-6'>
-              <ClientForm/>
+              <ClientForm onClientSubmit={handleClientSubmit}/>
               <Command className='flex items-center rounded-lg border-2 p-1 gap-1'>
                 <Search size={14} color='#D2D2D2' />
                 <CommandInput placeholder="Pesquisar..."/>
@@ -20,7 +45,13 @@ const ClientPage = () => {
             </div>
           </div>
           <div>
-            <TableView/>
+          {clients.map((data, index) => (
+          <TableView
+            key={index} 
+            data={data} 
+          // onDelete={() => handleTaskDelete(index)} 
+           />
+          ))}
           </div>
         </div>
       </div>

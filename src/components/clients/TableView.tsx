@@ -5,7 +5,29 @@ import InnerTable from './InnerTable';
 import { ChevronDownIcon, Edit, EditIcon, Trash2Icon } from 'lucide-react';
 import Constants from '@/constants';
 
-const TableView = () => {
+interface ClientFormData {
+  cpfOrCnpj: string;
+  nomefantasia: string;
+  razao: string;
+  ramo: string;
+  nomeConato: string;
+  celular: string;
+  fixo: string;
+  email: string;
+  funcao: string;
+  cep: string;
+  rua: string;
+  cidade: string;
+  uf: string;
+  bairro: string;
+  numero: string;
+}
+
+type TableViewProps = {
+  data: ClientFormData;
+}
+
+const TableView: React.FC<TableViewProps> = ({ data }) => {
   const dados = [
     'Empresa Abc',
     '111.111.111.11/1111',

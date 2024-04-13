@@ -12,19 +12,31 @@ import CardComentario from './Comentario/CardComentario';
 import React, { useState } from 'react';
 import CardTarefa from './Tarefa/CardTarefa';
 
+interface TaskFormData {
+  id: string;
+  descricao: string;
+  tipo?: string;
+  responsavel?: string;
+  participantes?: string;
+  dtinicio?: string;
+  dtconclusao?: string;
+  prioridade?: string;
+  notificacao?: boolean;
+}
+
 const Timeline: React.FC = () => {
   const [openT, setOpenT] = useState(false);
   const [openC, setOpenC] = useState(false);
   const [comments, setComments] = useState<string[]>([]);
-  const [tasks, setTasks] = useState<string[]>([]);
+  const [tasks, setTasks] = useState<TaskFormData[]>([]);
 
   const handleCommentSubmit = (newComment: string) => {
     setComments([newComment, ...comments]);
     setOpenC(!openC);
   };
 
-  const handleTaskSubmit = (newTask: string) => {
-    setTasks([newTask, ...tasks]);
+  const handleTaskSubmit = (formData: TaskFormData) => {
+    setTasks([formData, ...tasks]);
     setOpenT(!openT);
   };
   
@@ -96,9 +108,10 @@ const Timeline: React.FC = () => {
       ))}
 
       {/** Tarefa Adicionada */}
-      {tasks.map((task, index) => (
-        <CardTarefa key={index} 
-          task={task} 
+      {tasks.map((formData, index) => (
+        <CardTarefa 
+          key={index} 
+          formData={formData} 
           onDelete={() => handleTaskDelete(index)} 
           onReopenModal={() => handleReopenModalTask(index)}
         />

@@ -17,10 +17,12 @@ import { RadioGroup, RadioGroupItem } from '@/components/shadcn/ui/radio-group';
 import { Switch } from '@/components/shadcn/ui/switch';
 
 type FormTarefaProps = {
-  onTaskSubmit: (descricao: string) => void;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  onTaskSubmit: (formData: any) => void;
 };
 
 const schema = z.object({
+  id: z.string(),
   tipo: z.string().optional(),
   descricao: z.string().max(100),
   responsavel: z.string().optional(),
@@ -40,8 +42,8 @@ const FormTarefa: React.FC<FormTarefaProps> = ({ onTaskSubmit }) => {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = form.getValues();
-    console.log(formData.descricao);
-    onTaskSubmit(formData.descricao);
+    onTaskSubmit(formData);
+    console.log(formData);
   };
 
   return (
@@ -184,9 +186,9 @@ const FormTarefa: React.FC<FormTarefaProps> = ({ onTaskSubmit }) => {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="reuniao">Reunião</SelectItem>
-                    <SelectItem value="conferencia">Conferência Online</SelectItem>
-                    <SelectItem value="outros">Outros</SelectItem>
+                    <SelectItem value="Reunião">Reunião</SelectItem>
+                    <SelectItem value="Conferência">Conferência Online</SelectItem>
+                    <SelectItem value="Outros">Outros</SelectItem>
                   </SelectContent>
                 </Select>
                 <FormMessage />
@@ -227,7 +229,7 @@ const FormTarefa: React.FC<FormTarefaProps> = ({ onTaskSubmit }) => {
                   >
                     <FormItem className="flex items-center space-x-2 space-y-0">
                       <FormControl>
-                        <RadioGroupItem value="baixa" />
+                        <RadioGroupItem value="Baixa" />
                       </FormControl>
                       <FormLabel className="font-normal">
                         Baixa
@@ -235,7 +237,7 @@ const FormTarefa: React.FC<FormTarefaProps> = ({ onTaskSubmit }) => {
                     </FormItem>
                     <FormItem className="flex items-center space-x-2 space-y-0">
                       <FormControl>
-                        <RadioGroupItem value="normal" />
+                        <RadioGroupItem value="Normal" />
                       </FormControl>
                       <FormLabel className="font-normal">
                         Normal
@@ -243,7 +245,7 @@ const FormTarefa: React.FC<FormTarefaProps> = ({ onTaskSubmit }) => {
                     </FormItem>
                     <FormItem className="flex items-center space-x-2 space-y-0">
                       <FormControl>
-                        <RadioGroupItem value="alta" />
+                        <RadioGroupItem value="Alta" />
                       </FormControl>
                       <FormLabel className="font-normal">
                         Alta

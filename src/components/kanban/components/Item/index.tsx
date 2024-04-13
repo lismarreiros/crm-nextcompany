@@ -51,8 +51,10 @@ const Items = ({ id, title, status }: ItemsType) => {
         </div>
       </div> 
       <div className='flex items-center justify-between mt-2 pr-2 gap-2'>
-        <Badge className='w-[6vw]' variant={'secondary'}>
-          {status}
+        <Badge className='w-[6vw] lg:bg-indigo-50 sm:bg-transparent' variant={'secondary'}>
+          <p className='sm:'>
+            {status}
+          </p>
         </Badge> 
         <Link to='/detalhe' title='Ir para detalhes'>
           <Pencil size={16} color="#4b5569" />
