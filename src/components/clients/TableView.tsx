@@ -28,28 +28,28 @@ type TableViewProps = {
 }
 
 const TableView: React.FC<TableViewProps> = ({ data }) => {
+  // const dados = [
+  //   'Empresa A',
+  //   'Empresa A ltda',
+  //   '1111111111',
+  //   'Serviços'
+  // ];
   const dados = [
-    'Empresa A',
-    'Empresa A ltda',
-    '1111111111',
-    'Serviços'
+    { nomefantasia: data.nomefantasia },
+    { cpfOrcnpj: data.cpfOrCnpj },
+    { razao: data.razao },
+    { nome: data.nomeContato },
+    // { celular: data.celular },
+    // { fixo: data.fixo },
+    // { email: data.email },
+    // { funcao: data.funcao },
+    // { cep: data.cep },
+    // { rua: data.rua },
+    // { cidade: data.cidade },
+    // { uf: data.uf },
+    // { bairro: data.bairro },
+    // { numero: data.numero }
   ];
-  // const dados = {
-  //   cpfOrcnpj: data.cpfOrCnpj,
-  //   nomefantasia: data.nomefantasia,
-  //   razao: data.razao,
-  //   nome: data.nomeContato,
-  //   celular: data.celular,
-  //   fixo: data.fixo,
-  //   email: data.email,
-  //   funcao: data.funcao,
-  //   cep: data.cep,
-  //   rua: data.rua,
-  //   cidade: data.cidade,
-  //   uf: data.uf,
-  //   bairro: data.bairro,
-  //   numero: data.numero
-  // };
 
   return (
     <div className='m-4 rounded-md sm:border'>
@@ -69,8 +69,10 @@ const TableView: React.FC<TableViewProps> = ({ data }) => {
           <Collapsible asChild>
             <>
               <TableRow>
-                {dados.map((dado) => (
-                  <TableCell key={dado}>{dado}</TableCell>
+                {dados.map((dado, index) => (
+                  Object.entries(dado).map(([key, value]) => (
+                    <TableCell key={key}>{value}</TableCell>
+                  ))
                 ))}
                 <TableCell colSpan={2}>
                   <CollapsibleTrigger asChild title='Mostrar Detalhes'>
@@ -100,8 +102,10 @@ const TableView: React.FC<TableViewProps> = ({ data }) => {
           <Collapsible asChild>
             <>
               <TableRow>
-                {dados.map((index, dado) => (
-                  <TableCell key={index}>{dado}</TableCell>
+                {dados.map((dado, index) => (
+                  Object.entries(dado).map(([key, value]) => (
+                    <TableCell key={key}>{value}</TableCell>
+                  ))
                 ))}
                 <TableCell colSpan={2}>
                   <CollapsibleTrigger asChild>
@@ -126,8 +130,10 @@ const TableView: React.FC<TableViewProps> = ({ data }) => {
           <Collapsible asChild>
             <>
               <TableRow>
-                {dados.map((dado) => (
-                  <TableCell key={dado}>{dado}</TableCell>
+                {dados.map((dado, index) => (
+                  Object.entries(dado).map(([key, value]) => (
+                    <TableCell key={key}>{value}</TableCell>
+                  ))
                 ))}
                 <TableCell colSpan={2}>
                   <CollapsibleTrigger asChild>
@@ -152,9 +158,10 @@ const TableView: React.FC<TableViewProps> = ({ data }) => {
           <Collapsible asChild>
             <>
               <TableRow>
-                {dados.map((dado) => (
-                  <TableCell key={dado}>{dado}</TableCell>
-
+                {dados.map((dado, index) => (
+                  Object.entries(dado).map(([key, value]) => (
+                    <TableCell key={key}>{value}</TableCell>
+                  ))
                 ))}
                 <TableCell colSpan={2}>
                   <CollapsibleTrigger asChild>
