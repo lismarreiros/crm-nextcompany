@@ -10,7 +10,7 @@ interface ClientFormData {
   nomefantasia: string;
   razao: string;
   ramo: string;
-  nomeConato: string;
+  nomeContato: string;
   celular: string;
   fixo: string;
   email: string;
