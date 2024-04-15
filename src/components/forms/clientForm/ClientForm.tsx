@@ -30,6 +30,7 @@ import {
 } from '@/components/shadcn/ui/select';
 
 import Constants from '@/constants';
+
 type ClientFormProps = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onClientSubmit: (data: any) => void;
@@ -41,7 +42,7 @@ const schema = z.object({
     .refine((value: string) => {
       if (typeof value !== 'string') return false;
       return ValidationCpforCnpj.validateCpfOrCnpj(value);
-    }, {message: 'Digite um CPF ou CNPJ válido.'}),
+    }, { message: 'Digite um CPF ou CNPJ válido.'} ),
   nomefantasia: z.string().max(100),
   razao: z.optional(z.string()),
   ramo: z.optional(z.string()),

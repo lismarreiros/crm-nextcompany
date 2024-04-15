@@ -18,22 +18,30 @@ import {
   DialogTrigger,
 } from '@/components/shadcn/ui/dialog';
 import { Form, FormControl, FormField, FormLabel, FormItem, FormMessage } from '@/components/shadcn/ui/form';
+import { Textarea } from '@/components/shadcn/ui/textarea';
 
-{/* validação */}
+type ProductFormProps = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  onProductSubmit: (data: any) => void;
+};
+
 const schema = z.object({
   nome: z.string(),
   codprod: z.string(),
-  valor: z.string()
+  valor: z.string(),
+  descricao: z.string()
 });
 
-export const ProductForm = () => {
+export const ProductForm: React.FC<ProductFormProps> = ({ onProductSubmit }) => {
   const [open, setOpen] = useState(false);
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
   });
 
-  const onSubmit = async (data: z.infer<typeof schema>) => {
-    console.log(data);
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const data = form.getValues();
+    onProductSubmit(data); 
     setOpen(false);
   };
 
@@ -45,10 +53,12 @@ export const ProductForm = () => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger>
-        <Button variant='ghost' size='default' className='gap-1'> 
-          <PlusIcon size={12}/> 
+        <div className='relative -top-2 border-l-2 border-indigo-100 rounded-b m-2 px-2'>
+          <Button variant='ghost' className='gap-1 mt-2 hover:bg-indigo-100'> 
+            <PlusIcon size={12}/> 
           Adicionar Produto
-        </Button>
+          </Button>
+        </div>
       </DialogTrigger> 
       <DialogContent className='w-4/5 h-[60%]'> 
         <DialogHeader>
@@ -62,7 +72,7 @@ export const ProductForm = () => {
 
         {/* Começo do Formulário */}
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          <form onSubmit={handleSubmit} className="space-y-8">
             <div className='grid gap-4 pt-2'>
 
               {/* nome */}
@@ -83,20 +93,24 @@ export const ProductForm = () => {
                 )}
               />
 
-              {/* codigo */}
+              {/* descrição */}
               <FormField
                 control={form.control}
-                name='codprod'
+                name='descricao'
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Código do Produto</FormLabel>
+                    <FormLabel>Descrição</FormLabel>
                     <FormControl>
-                      <Input placeholder="Digite o código" {...field} />
+                      <Textarea 
+                        placeholder="Digite o nome"
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
+
               {/* valor */}
               <FormField
                 control={form.control}

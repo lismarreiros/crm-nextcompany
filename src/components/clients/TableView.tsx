@@ -48,7 +48,7 @@ const TableView: React.FC<TableViewProps> = ({ data }) => {
                 <TableRow>
                   <CollapsibleTrigger asChild title='Mostrar Detalhes'>
                     <div className='px-2 flex items-center space-x-1 [&[data-state=open]>svg.chevron]:rotate-180'>
-                      <ChevronDownIcon size={26} className="h-4 w-4 bg-indigo-50 hover:bg-indigo-200 rounded text-muted-foreground shrink-0 transition-transform duration-200 ease-in-out chevron" />
+                      <ChevronDownIcon className="h-4 w-4 bg-indigo-50 hover:bg-indigo-200 rounded text-muted-foreground shrink-0 transition-transform duration-200 ease-in-out chevron" />
                       <TableCell>{cliente.nomefantasia}</TableCell>
                     </div> 
                   </CollapsibleTrigger>
