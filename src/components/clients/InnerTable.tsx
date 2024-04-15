@@ -2,56 +2,99 @@ import React from 'react';
 import { TableCell, TableRow } from '../shadcn/ui/table';
 import Constants from '@/constants';
 
-const InnerTable = () => {
+interface ClientFormDataContato {
+  nomeContato: string;
+  celular: string;
+  fixo: string;
+  email: string;
+  funcao: string;
+  cep: string;
+  rua: string;
+  cidade: string;
+  uf: string;
+  bairro: string;
+  numero: string;
+}
+
+type InnerTableProps = {
+  dataContato: ClientFormDataContato;
+}
+
+const InnerTable: React.FC<InnerTableProps> = ({ dataContato }) => {
   const contato = [
-    'Maria',
-    '(99) 9999-9999',
-    '(99) 9999-9999',
-    'maria@gmail.com',
-    'Dona',
-    ''
+    { nomeContato: dataContato.nomeContato },
+    { celular: dataContato.celular },
+    { fixo: dataContato.fixo },
+    { email: dataContato.email },
+    { funcao: dataContato.funcao },
+    { botao: '' }
   ];
 
   const endereço = [
-    '699999-99',
-    'Jardins',
-    'Rua Oscar Freire',
-    'São Paulo-SP',
-    '1111',
-    '',
+    { cep: dataContato.cep },
+    { rua: dataContato.rua },
+    { bairro: dataContato.bairro },
+    { cidade: dataContato.cidade && dataContato.uf},
+    { numero: dataContato.numero },
+    { botao: '' }
   ];
 
   return (
     <>
       {/** Parte de Contato do Cliente */}
-      {/** colunas */}
-      <TableRow className='mr-10 border-b-0'>
-        <TableCell rowSpan={2} className='bg-slate-100 text-xs font-medium px-4'>Contato</TableCell>
-        {Constants.LISTA_COLUNAS_CLIENTES_CONTATO.map((coluna) => (
-          <TableCell key={coluna} className='bg-slate-100 text-xs font-medium'>{coluna}</TableCell>
-        ))}
-      </TableRow>
       {/** dados */}
-      <TableRow >
-        {contato.map((data) => (
-          <TableCell key={data} className='bg-slate-100 text-xs'>{data}</TableCell>
-        ))}
-      </TableRow>
+      <TableRow className='relative bg-slate-100'>
+        <TableCell colSpan={5}>
+            
+          <div className='relative grid grid-cols-1 mt-4 mx-4 px-4 pt-4 gap-4 -top-6 border-l-2 border-indigo-200'>
 
-      {/** Parte do Endereço do Cliente */}
-      {/** colunas */}
-      <TableRow className='border-b-0'>
-        <TableCell rowSpan={2} className='bg-slate-100 text-xs font-medium px-4'>Endereço</TableCell>
-        {Constants.LISTA_COLUNAS_CLIENTES_ENDEREÇO.map((coluna) => (
-          <TableCell key={coluna} className='bg-slate-100 text-xs font-medium'>{coluna}</TableCell>
-        ))}
-      </TableRow>
+            {/** Contato */}
+            <div className='flex flex-col gap-2'>
+              <h1>Contato</h1>
+              <div className='flex gap-4'>
+                <p className='font-extralight'>Contato</p>
+                <p>Brooke Davis</p>
+              </div>
+              <div className='flex gap-4'>
+                <p className='font-extralight'>Celular</p>
+                <p>(86) 9999-9999</p>
+              </div>
+              <div className='flex gap-4'>
+                <p className='font-extralight'>Fixo</p>
+                <p>(86) 9999-9999</p>
+              </div>
+              <div className='flex gap-4'>
+                <p className='font-extralight'>Função</p>
+                <p>Sócia</p>
+              </div>
+            </div>
 
-      {/** dados */}
-      <TableRow>
-        {endereço.map((data) => (
-          <TableCell key={data} className='bg-slate-100 text-xs border-b-0'>{data}</TableCell>
-        ))}
+            {/** Endereço */}
+            <div className='flex flex-col gap-2'>
+              <h1>Endereço</h1>
+              <div className='flex gap-4'>
+                <p className='font-extralight'>CEP</p>
+                <p>64049-528</p>
+              </div>
+              <div className='flex gap-4'>
+                <p className='font-extralight'>Rua</p>
+                <p>Rua Abc</p>
+              </div>
+              <div className='flex gap-4'>
+                <p className='font-extralight'>Bairro</p>
+                <p>Ininga</p>
+              </div>
+              <div className='flex gap-4'>
+                <p className='font-extralight'>Cidade/Estado</p>
+                <p>Teresina/Piauí</p>
+              </div>
+              <div className='flex gap-4'>
+                <p className='font-extralight'>Número</p>
+                <p>1111</p>
+              </div>
+            </div>
+          </div>
+        </TableCell>
       </TableRow>
     </>
   );

@@ -45,13 +45,10 @@ const ClientPage = () => {
             </div>
           </div>
           <div>
-          {clients.map((data, index) => (
           <TableView
-            key={index} 
-            data={data} 
+          data={clients}
           // onDelete={() => handleTaskDelete(index)} 
            />
-          ))}
           </div>
         </div>
       </div>
