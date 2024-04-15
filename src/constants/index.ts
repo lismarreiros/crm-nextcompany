@@ -123,21 +123,4 @@ export default class Constants {
     'Ramo Atividade',
   ];
 
-  static readonly LISTA_COLUNAS_CLIENTES_CONTATO = [
-    'Nome',
-    'Telefone',
-    'Celular',
-    'Email',
-    'Função',
-    '' //botoes
-  ];
-
-  static readonly LISTA_COLUNAS_CLIENTES_ENDEREÇO = [
-    'CEP',
-    'Bairro',
-    'Rua',
-    'Cidade/UF',
-    'Número',
-    ''//botoes
-  ];
 }
