@@ -5,6 +5,11 @@ export default class Constants {
     'Serviços',
   ];
 
+  static readonly LISTA_STATUS = [
+    'Ativo',
+    'Inativo',
+  ];
+
   static readonly LISTA_DE_ESTADOS = [
     {
       sigla: 'AC',
@@ -121,6 +126,7 @@ export default class Constants {
     'CPF/CNPJ',
     'Razão Social',
     'Ramo Atividade',
+    'Status',
   ];
 
 }

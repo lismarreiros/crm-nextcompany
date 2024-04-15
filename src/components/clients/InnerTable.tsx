@@ -26,7 +26,7 @@ const InnerTable: React.FC<InnerTableProps> = ({ dataContato }) => {
       {/** Parte de Contato do Cliente */}
       {/** dados */}
       <TableRow className='relative bg-slate-50 hover:bg-indigo-100'>
-        <TableCell colSpan={5}>
+        <TableCell colSpan={6}>
             
           <div className='relative grid grid-cols-1 mt-4 mx-4 px-4 pt-4 gap-4 -top-6 border-l-2 border-indigo-200'>
 

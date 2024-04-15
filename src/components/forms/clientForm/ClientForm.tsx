@@ -73,7 +73,7 @@ const ClientForm: React.FC<ClientFormProps> = ({ onClientSubmit } ) => {
   const handleSubmit =  (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = form.getValues();
-    console.log(data);
+    // console.log(data);
     onClientSubmit(data);
     setOpen(false);
   };
@@ -194,6 +194,33 @@ const ClientForm: React.FC<ClientFormProps> = ({ onClientSubmit } ) => {
                             {Constants.LISTA_DE_RAMO_DE_ATIVIDADE.map((ramo) => (
                               <SelectItem key={ramo} value={ramo}>
                                 <SelectLabel>{ramo}</SelectLabel>
+                              </SelectItem>
+                            ))}
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name='status'
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Status</FormLabel>
+                    <FormControl>
+                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <SelectTrigger>
+                          <SelectValue placeholder=""/>
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectGroup>
+                            {Constants.LISTA_STATUS.map((status) => (
+                              <SelectItem key={status} value={status}>
+                                <SelectLabel>{status}</SelectLabel>
                               </SelectItem>
                             ))}
                           </SelectGroup>
