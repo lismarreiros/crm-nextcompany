@@ -54,7 +54,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({ onProductSubmit }) => 
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger>
         <div className='relative -top-2 border-l-2 border-indigo-100 rounded-b m-2 px-2'>
-          <Button variant='ghost' className='gap-1 mt-2 hover:bg-indigo-100'> 
+          <Button variant='ghost' className='gap-1 mt-2 bg-indigo-50 hover:bg-indigo-100'> 
             <PlusIcon size={12}/> 
           Adicionar Produto
           </Button>

@@ -56,7 +56,7 @@ const TableView: React.FC<TableViewProps> = ({ data }) => {
                   <TableCell>{cliente.razao}</TableCell>
                   <TableCell>{cliente.ramo}</TableCell>
                   <TableCell> 
-                    <Badge className={cliente.status === 'Ativo' ? 'text-green-600 font-light bg-green-200 hover:bg-green-300' : 'text-red-600 font-light bg-red-200 hover:bg-red-300'}>{cliente.status}</Badge>
+                    <Badge className={cliente.status === 'Ativo' ? 'text-green-600 font-light bg-green-200 hover:bg-green-200' : 'text-red-600 font-light bg-red-200 hover:bg-red-200'}>{cliente.status}</Badge>
                   </TableCell>
                   <TableCell>
                     <div className='flex gap-2'>

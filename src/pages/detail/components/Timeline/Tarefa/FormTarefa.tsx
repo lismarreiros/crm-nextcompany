@@ -49,7 +49,7 @@ const FormTarefa: React.FC<FormTarefaProps> = ({ onTaskSubmit }) => {
   return (
     <div>
       <Form {...form}>
-        <form onSubmit={handleSubmit} className='py-2 flex flex-col gap-2'>
+        <form onSubmit={handleSubmit} className='py-2 flex flex-col gap-4'>
           {/** Descrição */}
           <FormField
             control={form.control}

@@ -10,7 +10,7 @@ export default function DashboardPage() {
     
       <div className="grid grid-cols-[14vw_1fr] bg-gradient-to-r from-indigo-300 to-indigo-100 pr-2">
         {/* barra de navegação esquerda */}
-        <div className="bg-white rounded-md mt-10 h-full">
+        <div className="bg-white rounded mt-8 h-full">
           <Sidebar />
         </div>
         

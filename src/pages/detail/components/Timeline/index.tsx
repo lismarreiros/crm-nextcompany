@@ -67,7 +67,7 @@ const Timeline: React.FC = () => {
 
   return (
     <div className='flex flex-col'>
-      <div className='flex p-2 items-center justify-between'>
+      <div className='flex py-2 px-8 items-center justify-between'>
         <div>
           <h1 className='text-lg p-4 font-light'>Timeline</h1>
         </div>
@@ -115,10 +115,10 @@ const Timeline: React.FC = () => {
           onDelete={() => handleTaskDelete(index)} 
           onReopenModal={() => handleReopenModalTask(index)}
         />
-      ))}
+      ))} 
       
       {/** Troca de fase */}
-      <div className='relative  lg:w-[1200px] h-[110px] md:w-[800px] sm:w-[500px] self-center my-1 md:ml-8 md:mr-8'>
+      <div className='relative  lg:w-[55vw] h-[110px] md:w-[600px] sm:w-[500px] self-center my-1 md:ml-8 md:mr-8'>
         <div className='absolute  flex items-center size-8 -top-3 -left-4 bg-indigo-500 py-1 px-2 rounded-full'>
           <ArrowLeftRightIcon color='white'/>
         </div>
