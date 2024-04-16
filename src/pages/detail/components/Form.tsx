@@ -17,7 +17,7 @@ import {
 import { Textarea } from '@/components/shadcn/ui/textarea';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
-import { CalendarIcon, Check, ChevronsUpDown } from 'lucide-react';
+import { CalendarIcon, Check, ChevronsUpDown, MinusIcon, PlusIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/shadcn/ui/button';
 import { Calendar } from '@/components/shadcn/ui/calendar';
@@ -34,6 +34,7 @@ import { Command,
   CommandItem, 
   CommandList } from '@/components/shadcn/ui/command';
 import { useState } from 'react';
+import CustomInputCurrencyMask from '@/utils/customInputCurrencyMask';
 
 const clients = [
   { label: 'Empresa A', value: 'en' },
@@ -56,10 +57,18 @@ const schema = z.object({
   participantes: z.string(),
   idindicador: z.string(),
   situacao: z.string(),
+  quantidadeprod: z.string(),
+  descontoprod: z.string(),
+  total: z.string()
 });
 
 const onSubmit = async (data: z.infer<typeof schema>) => {
   console.log(data);
+};
+
+const currencyInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const { value } = e.target;
+  e.target.value = CustomInputCurrencyMask.valor(value);
 };
 
 function FormDetalhe() {
@@ -78,7 +87,7 @@ function FormDetalhe() {
             <p className='text-sm font-medium'>12/12/2022</p>
           </div>
           <div className='gap-2 items-end'>
-            <p className='text-xs text-end'>Valor</p>
+            <p className='text-xs text-end'>Total</p>
             <p className='text-sm font-medium'>R$ 00.00</p>
           </div>
         </div>
@@ -149,23 +158,23 @@ function FormDetalhe() {
               )}
             />
 
-            {/** Produtos */}
+            {/** Situação */}
             <FormField
               control={form.control}
-              name='produto'
+              name='situacao'
               render={({ field }) => (
-                <FormItem className='flex flex-col'>
-                  <FormLabel className='text-slate-900 pb-2.5'>Produto</FormLabel>
+                <FormItem className='w-[15vw]'>
+                  <FormLabel className='text-slate-900'>Situação</FormLabel>
                   <Select onValueChange={field.onChange} defaultValue={field.value}>
                     <FormControl>
-                      <SelectTrigger className='min-w-[15vw] bg-slate-50 hover:bg-slate-100 focus:bg-white hover:text-slate-900 text-muted-foreground'>
-                        <SelectValue placeholder="Selecione um produto" />
+                      <SelectTrigger className='bg-slate-50 hover:bg-slate-100 hover:text-slate-900 focus:bg-white text-muted-foreground'>
+                        <SelectValue placeholder="Selecione a situação" />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      <SelectItem value="wCompany">wCompany</SelectItem>
-                      <SelectItem value="iCompany">iCompany</SelectItem>
-                      <SelectItem value="xPDV">xPDV</SelectItem>
+                      <SelectItem value="Aberta">Aberta</SelectItem>
+                      <SelectItem value="Perdeu">Perdeu</SelectItem>
+                      <SelectItem value="Ganhou">Ganhou</SelectItem>
                     </SelectContent>
                   </Select>
                   <FormMessage />
@@ -211,7 +220,6 @@ function FormDetalhe() {
                         }
                         initialFocus
                         locale={ptBR}
-                      
                       />
                     </PopoverContent>
                   </Popover>
@@ -258,25 +266,26 @@ function FormDetalhe() {
               </FormItem>
             )}
           />
-          {/** Participantes */}
-          <FormField
-            control={form.control}
-            name="participantes"
-            render={({ field }) => (
-              <FormItem className='w-[32vw]'>
-                <FormLabel className='text-slate-900'>Participantes</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder=""
-                    className="resize-none text-muted-foreground bg-slate-50 hover:bg-slate-100 hover:text-slate-900  focus:bg-white"
-                    {...field}
-                  />
-                </FormControl>
-              </FormItem>
-            )}
-          />
 
           <div className='flex items-center gap-6'>
+            {/** Participantes */}
+            <FormField
+              control={form.control}
+              name="participantes"
+              render={({ field }) => (
+                <FormItem className='w-[15vw]'>
+                  <FormLabel className='text-slate-900'>Participantes</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder=""
+                      className="resize-none text-muted-foreground bg-slate-50 hover:bg-slate-100 hover:text-slate-900  focus:bg-white"
+                      {...field}
+                    />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+
             {/** Origem */}
             <FormField
               control={form.control}
@@ -286,7 +295,6 @@ function FormDetalhe() {
                   <FormLabel className='text-slate-900'>Origem</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder=""
                       className="resize-none bg-slate-50 hover:bg-slate-100 focus:bg-white hover:text-slate-900 text-muted-foreground"
                       {...field}
                     />
@@ -294,31 +302,85 @@ function FormDetalhe() {
                 </FormItem>
               )}
             />
+          </div>
 
-            {/** Situação */}
+          {/** Produtos */}
+          <FormField
+            control={form.control}
+            name='produto'
+            render={({ field }) => (
+              <FormItem className='flex flex-col'>
+                <FormLabel className='text-slate-900 pb-2.5'>Produto</FormLabel>
+                <Select onValueChange={field.onChange} 
+                  defaultValue={field.value}>
+                  <FormControl>
+                    <SelectTrigger className='w-[32vw] bg-slate-50 hover:bg-slate-100 focus:bg-white hover:text-slate-900 text-muted-foreground'>
+                      <SelectValue placeholder="Selecione um produto" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value="wCompany">wCompany</SelectItem>
+                    <SelectItem value="iCompany">iCompany</SelectItem>
+                    <SelectItem value="xPDV">xPDV</SelectItem>
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <div className='flex items-center gap-6'>
+            {/** Quantidade de Produto */}
             <FormField
               control={form.control}
-              name='situacao'
+              name='quantidadeprod'
               render={({ field }) => (
-                <FormItem className='w-[15vw]'>
-                  <FormLabel className='text-slate-900'>Situação</FormLabel>
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
-                    <FormControl>
-                      <SelectTrigger className='bg-slate-50 hover:bg-slate-100 hover:text-slate-900 focus:bg-white text-muted-foreground'>
-                        <SelectValue placeholder="Selecione a situação" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      <SelectItem value="Aberta">Aberta</SelectItem>
-                      <SelectItem value="Perdeu">Perdeu</SelectItem>
-                      <SelectItem value="Ganhou">Ganhou</SelectItem>
-                    </SelectContent>
-                  </Select>
+                <FormItem className='flex flex-col'>
+                  <FormLabel className='text-slate-900 pb-2.5'>Quantidade</FormLabel>
+                  <FormControl>
+                    <div
+                      className='flex bg-slate-50 items-center border rounded-md h-10 w-[12vw] hover:bg-slate-100 hover:text-slate-900 text-muted-foreground'>
+                      <div className='w-full h-full flex items-center justify-around'>
+                        <button className='w-1/4 border-r-2 py-2 px-4 hover:bg-slate-200 h-full'>
+                          <MinusIcon size={12} />
+                        </button>
+                        <input
+                          placeholder='0'
+                          className='bg-slate-50 w-2/4 h-full text-center focus:bg-slate-100 focus:outline-none focus:ring-0 hover:bg-slate-100 caret-invisible'
+                          {...field}
+                        />
+                        <button className='w-1/4 border-l-2 py-2 px-4 hover:bg-slate-200 h-full'>
+                          <PlusIcon size={12}/>
+                        </button>
+                      </div>
+                    </div>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            {/** Desconto */}
+            <FormField
+              control={form.control}
+              name='descontoprod'
+              render={({ field }) => (
+                <FormItem className='flex flex-col w-[15vw]'>
+                  <FormLabel className='text-slate-900 pb-2.5'>Desconto</FormLabel>
+                  <FormControl>
+                    <Input 
+                      placeholder="Digite o valor"
+                      className='bg-slate-50 text-muted-foreground hover:bg-slate-100 hover:placeholder:text-slate-900 hover:text-slate-900 focus:bg-white'
+                      onChange={(e) => {
+                        currencyInputChange(e);
+                        field.onChange(e);
+                      }} />
+                  </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
           </div>
+
           {/* <Button type='submit' className='mt-2 w-4/6 self-center bg-indigo-700'>Salvar Alterações</Button> */}
         </form>
       </Form>
