@@ -69,8 +69,8 @@ function FormDetalhe() {
   });
 
   return (
-    <div className='bg-slate-50 p-4 border border-2 rounded lg'>
-      <div className='flex gap-1 items-center border-b-2 mb-4 justify-between p-2'>
+    <div className='bg-inherit p-4'>
+      <div className='flex items-center border-b-2 border-indigo-50 mb-4 justify-between py-2'>
         <p className='text-md font-medium'>Detalhes</p>
         <div className='flex gap-6 px-2'>
           <div className='gap-2 items-end'>
@@ -85,7 +85,7 @@ function FormDetalhe() {
       </div> 
 
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className='py-2 flex flex-col gap-6'>
+        <form onSubmit={form.handleSubmit(onSubmit)} className='py-2 flex flex-col gap-4'>
 
           {/** Cliente */}
           <div className='flex items-center justify-start gap-6'>
@@ -102,7 +102,7 @@ function FormDetalhe() {
                           aria-expanded={open}
                           variant='outline' 
                           role='combobox'
-                          className={cn('w-full h-10 justify-between bg-slate-50 focus:bg-white text-muted-foreground',
+                          className={cn('w-full h-10 justify-between bg-slate-50 focus:bg-white text-muted-foreground font-normal',
                             !field.value && 'text-muted-foreground font-normal'
                           )}>
                           {field.value 
@@ -219,6 +219,7 @@ function FormDetalhe() {
                 </FormItem>
               )}
             />
+            
             {/** Número do telefone */}
             <FormField
               control={form.control}
@@ -262,7 +263,7 @@ function FormDetalhe() {
             control={form.control}
             name="participantes"
             render={({ field }) => (
-              <FormItem>
+              <FormItem className='w-[32vw]'>
                 <FormLabel className='text-slate-900'>Participantes</FormLabel>
                 <FormControl>
                   <Input
@@ -275,47 +276,49 @@ function FormDetalhe() {
             )}
           />
 
-          {/** Origem */}
-          <FormField
-            control={form.control}
-            name="idindicador"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className='text-slate-900'>Origem</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder=""
-                    className="resize-none bg-slate-50 hover:bg-slate-100 focus:bg-white hover:text-slate-900 text-muted-foreground"
-                    {...field}
-                  />
-                </FormControl>
-              </FormItem>
-            )}
-          />
-
-          {/** Situação */}
-          <FormField
-            control={form.control}
-            name='situacao'
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className='text-slate-900'>Situação</FormLabel>
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
+          <div className='flex items-center gap-6'>
+            {/** Origem */}
+            <FormField
+              control={form.control}
+              name="idindicador"
+              render={({ field }) => (
+                <FormItem className='w-[15vw]'>
+                  <FormLabel className='text-slate-900'>Origem</FormLabel>
                   <FormControl>
-                    <SelectTrigger className='bg-slate-50 hover:bg-slate-100 hover:text-slate-900 focus:bg-white text-muted-foreground'>
-                      <SelectValue placeholder="Selecione a situação" />
-                    </SelectTrigger>
+                    <Input
+                      placeholder=""
+                      className="resize-none bg-slate-50 hover:bg-slate-100 focus:bg-white hover:text-slate-900 text-muted-foreground"
+                      {...field}
+                    />
                   </FormControl>
-                  <SelectContent>
-                    <SelectItem value="Aberta">Aberta</SelectItem>
-                    <SelectItem value="Perdeu">Perdeu</SelectItem>
-                    <SelectItem value="Ganhou">Ganhou</SelectItem>
-                  </SelectContent>
-                </Select>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+                </FormItem>
+              )}
+            />
+
+            {/** Situação */}
+            <FormField
+              control={form.control}
+              name='situacao'
+              render={({ field }) => (
+                <FormItem className='w-[15vw]'>
+                  <FormLabel className='text-slate-900'>Situação</FormLabel>
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <FormControl>
+                      <SelectTrigger className='bg-slate-50 hover:bg-slate-100 hover:text-slate-900 focus:bg-white text-muted-foreground'>
+                        <SelectValue placeholder="Selecione a situação" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="Aberta">Aberta</SelectItem>
+                      <SelectItem value="Perdeu">Perdeu</SelectItem>
+                      <SelectItem value="Ganhou">Ganhou</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
           {/* <Button type='submit' className='mt-2 w-4/6 self-center bg-indigo-700'>Salvar Alterações</Button> */}
         </form>
       </Form>
