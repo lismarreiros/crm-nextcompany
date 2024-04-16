@@ -6,7 +6,7 @@ import { Form,
   FormField, 
   FormLabel, 
   FormItem, 
-  FormMessage } from '@/components/shadcn/ui/form';
+} from '@/components/shadcn/ui/form';
 import {
   Select,
   SelectTrigger,
@@ -35,6 +35,7 @@ import { Command,
   CommandList } from '@/components/shadcn/ui/command';
 import { useState } from 'react';
 import CustomInputCurrencyMask from '@/utils/customInputCurrencyMask';
+import { FancyMultiSelect } from '@/utils/customMultipleSelect';
 
 const clients = [
   { label: 'Empresa A', value: 'en' },
@@ -83,7 +84,7 @@ function FormDetalhe() {
         <p className='text-md font-medium'>Detalhes</p>
         <div className='flex gap-6 px-2'>
           <div className='gap-2 items-end'>
-            <p className='text-xs text-end'>Ínicio</p>
+            <p className='text-xs text-end'>Início</p>
             <p className='text-sm font-medium'>12/12/2022</p>
           </div>
           <div className='gap-2 items-end'>
@@ -94,7 +95,7 @@ function FormDetalhe() {
       </div> 
 
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className='py-2 flex flex-col gap-4'>
+        <form onSubmit={form.handleSubmit(onSubmit)} className='py-2 px-2 flex flex-col gap-4'>
 
           {/** Cliente */}
           <div className='flex items-center justify-start gap-6'>
@@ -177,7 +178,6 @@ function FormDetalhe() {
                       <SelectItem value="Ganhou">Ganhou</SelectItem>
                     </SelectContent>
                   </Select>
-                  <FormMessage />
                 </FormItem>
               )}
             />
@@ -223,7 +223,6 @@ function FormDetalhe() {
                       />
                     </PopoverContent>
                   </Popover>
-                  <FormMessage />
                 </FormItem>
               )}
             />
@@ -243,7 +242,6 @@ function FormDetalhe() {
                       placeholder="Digite o número"
                     />
                   </FormControl>
-                  <FormMessage />
                 </FormItem>
               )}
             />
@@ -309,6 +307,18 @@ function FormDetalhe() {
             control={form.control}
             name='produto'
             render={({ field }) => (
+              <FormItem>
+                <FormLabel className='text-slate-900'>Produto</FormLabel>
+                <FormControl>
+                  <FancyMultiSelect  />
+                </FormControl>
+              </FormItem>
+            )}
+          />
+          {/* <FormField
+            control={form.control}
+            name='produto'
+            render={({ field }) => (
               <FormItem className='flex flex-col'>
                 <FormLabel className='text-slate-900 pb-2.5'>Produto</FormLabel>
                 <Select onValueChange={field.onChange} 
@@ -327,7 +337,7 @@ function FormDetalhe() {
                 <FormMessage />
               </FormItem>
             )}
-          />
+          /> */}
           <div className='flex items-center gap-6'>
             {/** Quantidade de Produto */}
             <FormField
@@ -345,7 +355,7 @@ function FormDetalhe() {
                         </button>
                         <input
                           placeholder='0'
-                          className='bg-slate-50 w-2/4 h-full text-center focus:bg-slate-100 focus:outline-none focus:ring-0 hover:bg-slate-100 caret-invisible'
+                          className='bg-slate-50 w-2/4 h-full text-center text-sm focus:bg-slate-100 focus:outline-none focus:ring-0 hover:bg-slate-100 caret-invisible'
                           {...field}
                         />
                         <button className='w-1/4 border-l-2 py-2 px-4 hover:bg-slate-200 h-full'>
@@ -354,7 +364,6 @@ function FormDetalhe() {
                       </div>
                     </div>
                   </FormControl>
-                  <FormMessage />
                 </FormItem>
               )}
             />
@@ -375,12 +384,11 @@ function FormDetalhe() {
                         field.onChange(e);
                       }} />
                   </FormControl>
-                  <FormMessage />
                 </FormItem>
               )}
             />
           </div>
-
+          
           {/* <Button type='submit' className='mt-2 w-4/6 self-center bg-indigo-700'>Salvar Alterações</Button> */}
         </form>
       </Form>

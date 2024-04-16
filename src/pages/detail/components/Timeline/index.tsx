@@ -1,5 +1,5 @@
 import { Button } from '@/components/shadcn/ui/button';
-import { Command, CommandInput, } from '@/components/shadcn/ui/command';
+import { Command, CommandGroup, CommandInput, CommandList, } from '@/components/shadcn/ui/command';
 import { ArrowLeftRightIcon } from 'lucide-react';
 import {
   Dialog,
@@ -75,9 +75,11 @@ const Timeline: React.FC = () => {
         <div className='flex gap-4'>
           <Command>
             <CommandInput placeholder='Digite para pesquisar...' />
-            {/* <CommandList>
-              <CommandEmpty>Resultados não encontrados.</CommandEmpty>
-            </CommandList> */}
+            <CommandList>
+              <CommandGroup>
+                {/* <CommandEmpty>Resultados não encontrados.</CommandEmpty> */}
+              </CommandGroup>
+            </CommandList>
           </Command>
           <Dialog open={openT} onOpenChange={setOpenT}>
             <DialogTrigger>
