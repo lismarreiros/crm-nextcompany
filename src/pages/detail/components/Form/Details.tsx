@@ -27,13 +27,13 @@ const clients = [
 ] as const;
   
 const Details = () => {
-  const { control, handleSubmit } = useFormContext();
+  const { control, getValues } = useFormContext();
   const [open, setOpen] = useState(false);
 
   return (
     <div>
       {/** Descrição */}
-      <form onSubmit={handleSubmit((data) => console.log(data))} className='py-2 px-2 flex flex-col gap-4'>
+      <form className='py-2 px-2 flex flex-col gap-4'>
         <FormField
           control={control}
           name="descricao"
@@ -258,7 +258,11 @@ const Details = () => {
             </FormItem>
           )}
         />
-        <Button type='submit' className='mt-2 w-4/6 self-center bg-indigo-700'>Salvar Alterações</Button>
+        <Button onClick={(e) => {
+          e.preventDefault();
+          const values = getValues();
+          console.log(values);
+        }} type='submit' className='mt-2 w-4/6 self-center bg-indigo-700'>Salvar Alterações</Button>
       </form>
     </div>
   );
