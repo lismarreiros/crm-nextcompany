@@ -1,6 +1,6 @@
 import React from 'react';
 import Timeline from './components/Timeline';
-import FormDetalhe from './components/Form';
+import FormDetalhe from './components/Form/Form';
 
 const DetailPage = () => {
   return (
