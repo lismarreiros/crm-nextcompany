@@ -49,7 +49,7 @@ const FormTarefa: React.FC<FormTarefaProps> = ({ onTaskSubmit }) => {
   return (
     <div>
       <Form {...form}>
-        <form onSubmit={handleSubmit} className='py-2 flex flex-col gap-4'>
+        <form onSubmit={handleSubmit} className='py-2 flex flex-col gap-6'>
           {/** Descrição */}
           <FormField
             control={form.control}
@@ -87,13 +87,13 @@ const FormTarefa: React.FC<FormTarefaProps> = ({ onTaskSubmit }) => {
           />
 
           {/** Data de Ínicio */}
-          <div className='w-full flex mt-1 gap-8 justify-items-stretch'>
+          <div className='w-full flex mt-1 gap-10 justify-start'>
             <FormField
               control={form.control}
               name="dtinicio"
               render={({ field }) => (
-                <FormItem className="flex flex-col">
-                  <FormLabel>Data de Ínicio</FormLabel>
+                <FormItem className="flex flex-col ">
+                  <FormLabel className='py-1'>Data de Ínicio</FormLabel>
                   <Popover>
                     <PopoverTrigger asChild>
                       <FormControl>
@@ -135,7 +135,7 @@ const FormTarefa: React.FC<FormTarefaProps> = ({ onTaskSubmit }) => {
               name="dtconclusao"
               render={({ field }) => (
                 <FormItem className="flex flex-col">
-                  <FormLabel>Data de Conclusão</FormLabel>
+                  <FormLabel className='py-1'>Data de Conclusão</FormLabel>
                   <Popover>
                     <PopoverTrigger asChild>
                       <FormControl>

@@ -60,7 +60,7 @@ const schema = z.object({
   numero: z.optional(z.string())
 });
 
-const ClientForm: React.FC<ClientFormProps> = ({ onClientSubmit } ) => {
+const ClientForm: React.FC<ClientFormProps> = ({ onClientSubmit }) => {
   const [open, setOpen] = useState(false);
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
@@ -194,7 +194,7 @@ const ClientForm: React.FC<ClientFormProps> = ({ onClientSubmit } ) => {
                           <SelectGroup>
                             {Constants.LISTA_DE_RAMO_DE_ATIVIDADE.map((ramo) => (
                               <SelectItem key={ramo} value={ramo}>
-                                <SelectLabel>{ramo}</SelectLabel>
+                                <SelectLabel className='p-2 font-normal'>{ramo}</SelectLabel>
                               </SelectItem>
                             ))}
                           </SelectGroup>
@@ -221,7 +221,7 @@ const ClientForm: React.FC<ClientFormProps> = ({ onClientSubmit } ) => {
                           <SelectGroup>
                             {Constants.LISTA_STATUS.map((status) => (
                               <SelectItem key={status} value={status}>
-                                <SelectLabel>{status}</SelectLabel>
+                                <SelectLabel className='p-2 font-normal'>{status}</SelectLabel>
                               </SelectItem>
                             ))}
                           </SelectGroup>
@@ -277,7 +277,7 @@ const ClientForm: React.FC<ClientFormProps> = ({ onClientSubmit } ) => {
                   name='celular'
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Celular</FormLabel>
+                      <FormLabel>Telefone 2</FormLabel>
                       <FormControl>
                         <InputMasks
                           {...field}
@@ -410,7 +410,7 @@ const ClientForm: React.FC<ClientFormProps> = ({ onClientSubmit } ) => {
                             <SelectGroup>
                               {Constants.LISTA_DE_ESTADOS.map((estado) => (
                                 <SelectItem key={estado.sigla} value={estado.sigla}>
-                                  <SelectLabel>{`${estado.sigla} - ${estado.nome}`}</SelectLabel>
+                                  <SelectLabel className='p-2 font-normal'>{`${estado.sigla} - ${estado.nome}`}</SelectLabel>
                                 </SelectItem>
                               ))}
                             </SelectGroup>

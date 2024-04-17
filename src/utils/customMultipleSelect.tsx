@@ -10,43 +10,44 @@ import {
 } from '@/components/shadcn/ui/command';
 import { Command as CommandPrimitive } from 'cmdk';
 
-type Framework = Record<'value' | 'label', string>;
+type Item = Record<'value' | 'label', string>;
 
-const FRAMEWORKS = [
-  {
-    value: 'wCompany',
-    label: 'wCompany',
-  },
-  {
-    value: 'iCompany',
-    label: 'iCompany',
-  },
-  {
-    value: 'xPDV',
-    label: 'xPDV',
-  },
-] satisfies Framework[];
+interface FancyMultiSelectProps {
+  selectedItems: Item[];
+  selectables: Item[];
+  onChange: (selected: Item[]) => void;
+}
+// const FRAMEWORKS = [
+//   {
+//     value: 'wCompany',
+//     label: 'wCompany',
+//   },
+//   {
+//     value: 'iCompany',
+//     label: 'iCompany',
+//   },
+//   {
+//     value: 'xPDV',
+//     label: 'xPDV',
+//   },
+// ] satisfies Framework[];
 
-export function FancyMultiSelect() {
+export function FancyMultiSelect({ selectedItems, selectables, onChange}: FancyMultiSelectProps ) {
   const inputRef = React.useRef<HTMLInputElement>(null);
   const [open, setOpen] = React.useState(false);
-  const [selected, setSelected] = React.useState<Framework[]>([]);
+  // const [selected, setSelected] = React.useState<Value[]>([]);
   const [inputValue, setInputValue] = React.useState('');
 
-  const handleUnselect = React.useCallback((framework: Framework) => {
-    setSelected(prev => prev.filter(s => s.value !== framework.value));
-  }, []);
+  const handleUnselect = React.useCallback((item: Item) => {
+    onChange(selectedItems.filter(s => s.value !== item.value));
+  }, [selectedItems, onChange]);
 
   const handleKeyDown = React.useCallback((e: React.KeyboardEvent<HTMLDivElement>) => {
     const input = inputRef.current;
     if (input) {
       if (e.key === 'Delete' || e.key === 'Backspace') {
         if (input.value === '') {
-          setSelected(prev => {
-            const newSelected = [...prev];
-            newSelected.pop();
-            return newSelected;
-          });
+          onChange(selectedItems.slice(0, -1));
         }
       }
       // This is not a default behaviour of the <input /> field
@@ -54,9 +55,9 @@ export function FancyMultiSelect() {
         input.blur();
       }
     }
-  }, []);
+  }, [onChange, selectedItems]);
 
-  const selectables = FRAMEWORKS.filter(framework => !selected.includes(framework));
+  // const selectables = FRAMEWORKS.filter(framework => !selected.includes(framework));
 
   return (
     <Command onKeyDown={handleKeyDown} className="overflow-visible bg-transparent">
@@ -64,22 +65,22 @@ export function FancyMultiSelect() {
         className="group border border-input px-2 py-2 text-sm ring-offset-background rounded-md focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2"
       >
         <div className="flex gap-1 flex-wrap">
-          {selected.map((framework) => {
+          {selectedItems.map((item) => {
             return (
-              <Badge key={framework.value} variant="secondary" className='font-light'>
-                {framework.label}
+              <Badge key={item.value} variant="secondary" className='font-light'>
+                {item.label}
                 <button
                   className="ml-1 ring-offset-background rounded-full outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
                   onKeyDown={(e) => {
                     if (e.key === 'Enter') {
-                      handleUnselect(framework);
+                      handleUnselect(item);
                     }
                   }}
                   onMouseDown={(e) => {
                     e.preventDefault();
                     e.stopPropagation();
                   }}
-                  onClick={() => handleUnselect(framework)}
+                  onClick={() => handleUnselect(item)}
                 >
                   <X className="h-3 w-3 text-muted-foreground hover:text-foreground" />
                 </button>
@@ -93,7 +94,7 @@ export function FancyMultiSelect() {
             onValueChange={setInputValue}
             onBlur={() => setOpen(false)}
             onFocus={() => setOpen(true)}
-            placeholder="Selecione um ou mais produtos"
+            placeholder=""
             className="ml-2 bg-transparent outline-none placeholder:text-muted-foreground flex-1"
           />
         </div>
@@ -103,22 +104,22 @@ export function FancyMultiSelect() {
           <div className="absolute w-full z-10 top-0 rounded-md border bg-popover text-popover-foreground shadow-md outline-none animate-in">
             <CommandList>
               <CommandGroup className="overflow-auto">
-                {selectables.map((framework) => {
+                {selectables.map((item) => {
                   return (
                     <CommandItem
-                      key={framework.value}
+                      key={item.value}
                       onMouseDown={(e) => {
                         e.preventDefault();
                         e.stopPropagation();
                       }}
                       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                      onSelect={(value) => {
+                      onSelect={() => {
                         setInputValue('');
-                        setSelected(prev => [...prev, framework]);
+                        onChange([...selectedItems, item]);
                       }}
                       className={'cursor-pointer'}
                     >
-                      {framework.label}
+                      {item.label}
                     </CommandItem>
                   );
                 })}

@@ -28,28 +28,28 @@ const InnerTable: React.FC<InnerTableProps> = ({ dataContato }) => {
       <TableRow className='relative bg-slate-50 hover:bg-indigo-50'>
         <TableCell colSpan={6}>
             
-          <div className='w-[200px] max-w-[500px] relative grid grid-cols-1 mt-4 mx-2 px-4 pt-4 gap-4 -top-6 border-l-2 border-indigo-200'>
+          <div className='w-[400px] max-w-[500px] relative grid grid-cols-1 mt-4 mx-2 px-4 pt-4 gap-4 -top-6 border-l-2 border-indigo-200'>
 
             {/** Contato */}
             <div className='flex flex-col gap-2'>
               <h2 className='text-xs font-extralight'>Contato</h2>
-              <div className='flex gap-4 items-center justify-between'>
+              <div className='flex gap-4 items-center'>
                 <p className='text-xs font-extralight'>Nome</p>
                 <p className='place-self-end'>{dataContato.nomeContato}</p>
               </div>
-              <div className='flex items-center justify-between'>
-                <p className='text-xs font-extralight'>Celular</p>
+              <div className='flex items-center gap-4'>
+                <p className='text-xs font-extralight'>Telefone</p>
                 <p>{dataContato.celular}</p>
               </div>
-              <div className='flex items-center justify-between'>
-                <p className='text-xs font-extralight'>Fixo</p>
+              <div className='flex items-center gap-4'>
+                <p className='text-xs font-extralight'>Telefone 2</p>
                 <p>{dataContato.fixo}</p>
               </div>
-              <div className='flex items-center justify-between'>
+              <div className='flex items-center gap-4'>
                 <p className='text-xs font-extralight'>Email</p>
                 <p>{dataContato.email}</p>
               </div>
-              <div className='flex items-center justify-between'>
+              <div className='flex items-center gap-4'>
                 <p className='text-xs font-extralight'>Função</p>
                 <p>{dataContato.funcao}</p>
               </div>
@@ -58,23 +58,23 @@ const InnerTable: React.FC<InnerTableProps> = ({ dataContato }) => {
             {/** Endereço */}
             <div className='flex flex-col gap-2'>
               <h2 className='text-xs font-extralight'>Endereço</h2>
-              <div className='flex items-center justify-between'>
+              <div className='flex items-center gap-4'>
                 <p className='text-xs font-extralight'>CEP</p>
                 <p>{dataContato.cep}</p>
               </div>
-              <div className='flex items-center justify-between'>
+              <div className='flex items-center gap-4'>
                 <p className='text-xs font-extralight'>Rua</p>
                 <p>{dataContato.rua}</p>
               </div>
-              <div className='flex items-center justify-between'>
+              <div className='flex items-center gap-4'>
                 <p className='text-xs font-extralight'>Bairro</p>
                 <p>{dataContato.bairro}</p>
               </div>
-              <div className='flex items-center justify-between'>
+              <div className='flex items-center gap-4'>
                 <p className='text-xs font-extralight'>Cidade/Estado</p>
                 <p>{dataContato.cidade} - {dataContato.uf}</p>
               </div>
-              <div className='flex items-center justify-between'>
+              <div className='flex items-center gap-4'>
                 <p className='text-xs font-extralight'>Número</p>
                 <p>{dataContato.numero}</p>
               </div>

@@ -33,7 +33,7 @@ import { Command,
   CommandEmpty, 
   CommandItem, 
   CommandList } from '@/components/shadcn/ui/command';
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import CustomInputCurrencyMask from '@/utils/customInputCurrencyMask';
 import { FancyMultiSelect } from '@/utils/customMultipleSelect';
 
@@ -49,6 +49,12 @@ const clients = [
   { label: 'Empresa I', value: 'zh' },
 ] as const;
 
+const productsList = [
+  {label: 'wCompany', value:'wCompany'},
+  {label: 'iCompany', value: 'iCompany'},
+  {label: 'xPDV', value: 'xPDV'}
+] as const;
+
 const schema = z.object({
   client: z.string(),
   produto: z.string(),
@@ -58,14 +64,10 @@ const schema = z.object({
   participantes: z.string(),
   idindicador: z.string(),
   situacao: z.string(),
-  quantidadeprod: z.string(),
+  quantidadeprod: z.number(),
   descontoprod: z.string(),
   total: z.string()
 });
-
-const onSubmit = async (data: z.infer<typeof schema>) => {
-  console.log(data);
-};
 
 const currencyInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
   const { value } = e.target;
@@ -74,9 +76,33 @@ const currencyInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 
 function FormDetalhe() {
   const [open, setOpen] = useState(false);
+  const [quantity, setQuantity] = useState(0);
+
+  const changedQuantity = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue =parseInt(e.target.value) || 0;
+    setQuantity(newValue);
+  };
+
+  const incrementQuantity = () => {
+    const newValue = quantity + 1;
+    setQuantity(newValue);
+  };
+
+  const decrementQuantity = () => {
+    if (quantity > 0) {
+      setQuantity(prevQuantity => prevQuantity - 1);
+    }
+  };
+
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
   });
+  
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const data = form.getValues();
+    console.log(data);
+  };
 
   return (
     <div className='bg-inherit p-4'>
@@ -95,7 +121,7 @@ function FormDetalhe() {
       </div> 
 
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className='py-2 px-2 flex flex-col gap-4'>
+        <form onSubmit={handleSubmit} className='py-2 px-2 flex flex-col gap-4'>
 
           {/** Cliente */}
           <div className='flex items-center justify-start gap-6'>
@@ -237,7 +263,7 @@ function FormDetalhe() {
                   <FormControl>
                     <InputMasks
                       {...field}
-                      className='bg-slate-50 text-muted-foreground hover:bg-slate-100 hover:placeholder:text-slate-900 hover:text-slate-900 focus:bg-white'
+                      className='bg-slate-50 text-muted-foreground hover:bg-slate-100 hover:text-slate-900 hover:text-slate-900 focus:bg-white'
                       mask="(99) 99999-9999"
                       placeholder="Digite o número"
                     />
@@ -310,34 +336,15 @@ function FormDetalhe() {
               <FormItem>
                 <FormLabel className='text-slate-900'>Produto</FormLabel>
                 <FormControl>
-                  <FancyMultiSelect  />
+                  <FancyMultiSelect 
+                    selectedItems={field.value ? field.value.split(',').map(value => ({ label: value, value })) : []} 
+                    selectables={productsList.map(item => ({ label: item.label, value: item.value }))}
+                    onChange={(selected) => field.onChange(selected.map(item => item.value).join(','))}  />
                 </FormControl>
               </FormItem>
             )}
           />
-          {/* <FormField
-            control={form.control}
-            name='produto'
-            render={({ field }) => (
-              <FormItem className='flex flex-col'>
-                <FormLabel className='text-slate-900 pb-2.5'>Produto</FormLabel>
-                <Select onValueChange={field.onChange} 
-                  defaultValue={field.value}>
-                  <FormControl>
-                    <SelectTrigger className='w-[32vw] bg-slate-50 hover:bg-slate-100 focus:bg-white hover:text-slate-900 text-muted-foreground'>
-                      <SelectValue placeholder="Selecione um produto" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    <SelectItem value="wCompany">wCompany</SelectItem>
-                    <SelectItem value="iCompany">iCompany</SelectItem>
-                    <SelectItem value="xPDV">xPDV</SelectItem>
-                  </SelectContent>
-                </Select>
-                <FormMessage />
-              </FormItem>
-            )}
-          /> */}
+
           <div className='flex items-center gap-6'>
             {/** Quantidade de Produto */}
             <FormField
@@ -350,15 +357,25 @@ function FormDetalhe() {
                     <div
                       className='flex bg-slate-50 items-center border rounded-md h-10 w-[12vw] hover:bg-slate-100 hover:text-slate-900 text-muted-foreground'>
                       <div className='w-full h-full flex items-center justify-around'>
-                        <button className='w-1/4 border-r-2 py-2 px-4 hover:bg-slate-200 h-full'>
+                        <button
+                          type='button'
+                          className='flex items-center justify-center w-1/4 border-r-2 hover:bg-slate-200 h-full'
+                          onClick={decrementQuantity}
+                        >
                           <MinusIcon size={12} />
                         </button>
-                        <input
-                          placeholder='0'
-                          className='bg-slate-50 w-2/4 h-full text-center text-sm focus:bg-slate-100 focus:outline-none focus:ring-0 hover:bg-slate-100 caret-invisible'
-                          {...field}
+                        <Input
+                          value={quantity}
+                          className='bg-slate-50 border-0 w-2/4 h-full text-center text-sm focus:bg-slate-100 focus:outline-none focus:ring-0 hover:bg-slate-100 caret-invisible'
+                          onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                            changedQuantity(e);
+                            field.onChange(e);
+                          }}
                         />
-                        <button className='w-1/4 border-l-2 py-2 px-4 hover:bg-slate-200 h-full'>
+                        <button
+                          type='button'
+                          onClick={incrementQuantity}
+                          className='flex items-center justify-center w-1/4 border-l-2 hover:bg-slate-200 h-full'>
                           <PlusIcon size={12}/>
                         </button>
                       </div>
@@ -379,7 +396,7 @@ function FormDetalhe() {
                     <Input 
                       placeholder="Digite o valor"
                       className='bg-slate-50 text-muted-foreground hover:bg-slate-100 hover:placeholder:text-slate-900 hover:text-slate-900 focus:bg-white'
-                      onChange={(e) => {
+                      onChange={(e: ChangeEvent<HTMLInputElement>) => {
                         currencyInputChange(e);
                         field.onChange(e);
                       }} />
@@ -389,7 +406,7 @@ function FormDetalhe() {
             />
           </div>
           
-          {/* <Button type='submit' className='mt-2 w-4/6 self-center bg-indigo-700'>Salvar Alterações</Button> */}
+          <Button type='submit' className='mt-2 w-4/6 self-center bg-indigo-700'>Salvar Alterações</Button>
         </form>
       </Form>
     </div>
