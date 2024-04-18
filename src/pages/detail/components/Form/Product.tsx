@@ -11,7 +11,7 @@ import { Button } from '@/components/shadcn/ui/button';
 import { Input } from '@/components/shadcn/ui/input';
 
 import { cn } from '@/lib/utils';
-import { Check, ChevronsUpDown, Equal, Minus, PlusIcon, X } from 'lucide-react';
+import { Check, ChevronsUpDown, Equal, Minus, PlusIcon, Trash2Icon, X } from 'lucide-react';
 // import CustomInputCurrencyMask from '@/utils/customInputCurrencyMask';
 import produtonegocio from '@/validations/schemas/produtonegocio';
 
@@ -33,7 +33,7 @@ const products = [
 ] as const;
 
 const Product = () => {
-  const { control, getValues, setValue } = useFormContext();
+  const { control, getValues, setValue} = useFormContext();
   const [quantity, setQuantity] = useState(0);
   const [unitPrice, setUnitPrice] = useState(0);
   const [discount, setDiscount] = useState(0);
@@ -47,16 +47,21 @@ const Product = () => {
 
   useEffect(() => {
     setTotal(calculateTotal(quantity, unitPrice, discount));
-    setValue('total', total.toString());     
+    setValue('total', total.toString());
+    
+    console.log(quantity);
+    console.log(unitPrice);
+    console.log(discount);
+    console.log(total);
   }, [quantity, unitPrice, discount]);
 
   const changedQuantity = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newValue =parseInt(e.target.value) || 0;
+    const newValue = parseInt(e.target.value) || 0;
     setQuantity(newValue);
   };
 
   const changedDiscount = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newValue =parseFloat(e.target.value) || 0;
+    const newValue = parseFloat(e.target.value) || 0;
     setDiscount(newValue);
     setValue('desconto', newValue);
   };
@@ -79,7 +84,7 @@ const Product = () => {
   };
 
   return (
-    <div>
+    <div className='flex flex-col'>
       <form onSubmit={handleSubmit} className='py-2 px-2 flex flex-col gap-4'>
         {/** Produtos */}
         <FormField
@@ -167,14 +172,16 @@ const Product = () => {
           />
           <X size={16} className='mt-6 self-center'/>
 
+          {/** Valor Unitário */}
           <FormField
             control={control}
             name='valor'
             render={({ field }) => (
               <FormItem className='flex flex-col w-1/2'>
-                <FormLabel className='text-slate-900 pb-2.5'>Unitário</FormLabel>
+                <FormLabel className='text-slate-900 pb-2.5'>Valor Unitário</FormLabel>
                 <FormControl>
                   <Input
+                    value={unitPrice}
                     placeholder="R$"
                     className='bg-slate-50 text-muted-foreground hover:bg-slate-100 hover:placeholder:text-slate-900 hover:text-slate-900 focus:bg-white'
                     onChange={(e: ChangeEvent<HTMLInputElement>) => {
@@ -187,6 +194,7 @@ const Product = () => {
             )}
           />
           <Minus size={16} className='mt-6 self-center'/>
+
           {/** Desconto */}
           <FormField
             control={control}
@@ -195,7 +203,8 @@ const Product = () => {
               <FormItem className='flex flex-col w-1/2'>
                 <FormLabel className='text-slate-900 pb-2.5'>Desconto</FormLabel>
                 <FormControl>
-                  <Input 
+                  <Input
+                    value={discount} 
                     placeholder="R$"
                     className='bg-slate-50 text-muted-foreground hover:bg-slate-100 hover:placeholder:text-slate-900 hover:text-slate-900 focus:bg-white'
                     onChange={(e: ChangeEvent<HTMLInputElement>) => {
@@ -221,9 +230,10 @@ const Product = () => {
                 <FormLabel className='text-slate-900 pb-2.5'>Total</FormLabel>
                 <FormControl>
                   <Input
+                    disabled
                     value={total}
                     placeholder='R$'
-                    className='bg-slate-50 text-muted-foreground hover:bg-slate-100 hover:placeholder:text-slate-900 hover:text-slate-900 focus:bg-white'
+                    className='bg-slate-50 text-slate-900 hover:bg-slate-100 hover:placeholder:text-slate-900 hover:text-slate-900 focus:bg-white'
                     onChange={(e: ChangeEvent<HTMLInputElement>) => {
                       setValue('total', Number(e.target.value));
                       field.onChange(e);
@@ -233,8 +243,10 @@ const Product = () => {
             )}
           />
         </div>
-        <Button 
-          onClick={()=> {
+        <Button
+          type='button'
+          onClick={(e)=> {
+            e.preventDefault();
             const formData = getValues();
             const selectedProduct = products.find((product) => product.value === formData.codprod);
             if (selectedProduct) {
@@ -252,7 +264,7 @@ const Product = () => {
               setTotal(0);
             }
           }}
-          className='bg-green-200 w-10 self-end'><PlusIcon size={16} color='gray'/></Button>
+          className='bg-green-200 hover:bg-green-300 w-10 self-end'><PlusIcon size={16} color='gray'/></Button>
       </form>
 
       <Table className='border my-2'>
@@ -271,12 +283,17 @@ const Product = () => {
               <TableCell>{product.unitPrice}</TableCell>
               <TableCell>{product.discount}</TableCell>
               <TableCell>{product.total}</TableCell>
+              <TableCell>
+                <Button variant='ghost'>
+                  <Trash2Icon size={12}/>
+                </Button>
+              </TableCell>
             </tr>
           ))}
         </TableBody>
         <TableFooter className='text-xs'>
           <TableCell></TableCell>
-          <TableCell>2</TableCell>
+          <TableCell>totalquant</TableCell>
           <TableCell>totalunitario</TableCell>
           <TableCell>totaldesconto</TableCell>
           <TableCell>total</TableCell>
@@ -285,9 +302,9 @@ const Product = () => {
 
       <Button onClick={(e) => {
         e.preventDefault();
-        const values = getValues();
+        const values = getValues() || selectedProducts;
         console.log(values);
-      }} type='submit' variant='outline' className='my-2 bg-slate-50'>Salvar alterações</Button>
+      }} type='submit' variant='outline' className='my-2 bg-slate-50 self-end'>Salvar alterações</Button>
     </div>
   );
 };

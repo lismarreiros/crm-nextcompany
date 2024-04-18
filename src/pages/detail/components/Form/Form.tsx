@@ -9,22 +9,22 @@ import { zodResolver } from '@hookform/resolvers/zod';
 function FormDetalhe() {
   const methods = useForm({ resolver: zodResolver(negocio) });
   return (
-    <div className='bg-inherit p-4'>
+    <div className='bg-inherit'>
       <FormProvider {...methods}>
-        <div className='py-2 px-2 flex flex-col gap-4'>
+        <div className='flex flex-col gap-4'>
           <Tabs defaultValue='details' className='w-full bg-inherit'>
-            <TabsList className='grid w-full grid-cols-3'>
+            <TabsList className='grid w-full grid-cols-3 border-b rounded-0'>
               <TabsTrigger value='details'>Detalhes</TabsTrigger>
               <TabsTrigger value='products'>Produto</TabsTrigger>
               <TabsTrigger value='situation'>Situação</TabsTrigger>
             </TabsList>
-            <TabsContent value='details' className='w-full'>
+            <TabsContent value='details' className='w-full py-2 px-4'>
               <Details/>
             </TabsContent>
-            <TabsContent value='products'>
+            <TabsContent value='products' className='w-full py-2 px-4'>
               <Product/>
             </TabsContent>
-            <TabsContent value='situation'>
+            <TabsContent value='situation' className='w-full py-2 px-4'>
               <Situation/>
             </TabsContent>
           </Tabs>

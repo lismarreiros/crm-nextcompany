@@ -12,6 +12,7 @@ const negocio = z.object({
   participantes: z.string(),
   idfontenegocio: z.string(),
   situacao: z.string(),
+  motivo: z.string(),
   total: z.string()
 });
 
