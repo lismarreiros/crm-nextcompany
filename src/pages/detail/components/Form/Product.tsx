@@ -12,13 +12,13 @@ import { Input } from '@/components/shadcn/ui/input';
 
 import { cn } from '@/lib/utils';
 import { Check, ChevronsUpDown, Equal, Minus, PlusIcon, X } from 'lucide-react';
-import CustomInputCurrencyMask from '@/utils/customInputCurrencyMask';
+// import CustomInputCurrencyMask from '@/utils/customInputCurrencyMask';
 import produtonegocio from '@/validations/schemas/produtonegocio';
 
-const currencyInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  const { value } = e.target;
-  e.target.value = CustomInputCurrencyMask.valor(value);
-};
+// const currencyInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+//   const { value } = e.target;
+//   e.target.value = CustomInputCurrencyMask.valor(value);
+// };
 
 const products = [
   { label: 'Produto A', value: 'a' },
@@ -35,6 +35,9 @@ const products = [
 const Product = () => {
   const { control, getValues, setValue } = useFormContext();
   const [quantity, setQuantity] = useState(0);
+  const [unitPrice, setUnitPrice] = useState(0);
+  const [discount, setDiscount] = useState(0);
+  const [total, setTotal] = useState(0);
   const [open, setOpen] = useState(false);
   const [selectedProducts, setSelectedProducts] = useState<any[]>([]);
 
@@ -43,22 +46,25 @@ const Product = () => {
   };
 
   useEffect(() => {
-    const formData = getValues();
-    const quantity = parseInt(formData.quantidade) || 0;
-    const unitPrice = parseFloat(formData.valor) || 0;
-    const discount = parseFloat(formData.desconto) || 0;
-
-    const total = calculateTotal(quantity, unitPrice, discount);
-
-    setValue('total', total.toString());
-    console.log(quantity);
-    console.log(unitPrice);
-    console.log(discount);
-  }, [getValues, setValue]);
+    setTotal(calculateTotal(quantity, unitPrice, discount));
+    setValue('total', total.toString());     
+  }, [quantity, unitPrice, discount]);
 
   const changedQuantity = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue =parseInt(e.target.value) || 0;
     setQuantity(newValue);
+  };
+
+  const changedDiscount = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue =parseFloat(e.target.value) || 0;
+    setDiscount(newValue);
+    setValue('desconto', newValue);
+  };
+
+  const changedUnitPrice = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue =parseFloat(e.target.value) || 0;
+    // e.target.value = CustomInputCurrencyMask.valor(e.target.value);
+    setUnitPrice(newValue);
   };
 
   const form = useForm<z.infer<typeof produtonegocio>>({
@@ -150,6 +156,8 @@ const Product = () => {
                     className='bg-slate-50 text-muted-foreground text-center text-sm focus:bg-slate-100 focus:outline-none focus:ring-0 hover:bg-slate-100 caret-invisible'
                     onChange={(e: ChangeEvent<HTMLInputElement>) => {
                       changedQuantity(e);
+                      setValue('quantidade', Number(e.target.value) || 0);
+                      setQuantity(Number(e.target.value) || 0);
                       field.onChange(e);
                     }}
                   />
@@ -170,7 +178,8 @@ const Product = () => {
                     placeholder="R$"
                     className='bg-slate-50 text-muted-foreground hover:bg-slate-100 hover:placeholder:text-slate-900 hover:text-slate-900 focus:bg-white'
                     onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                      currencyInputChange(e);
+                      changedUnitPrice(e);
+                      setValue('valor', Number(e.target.value) || 0);
                       field.onChange(e);
                     }} />
                 </FormControl>
@@ -190,7 +199,9 @@ const Product = () => {
                     placeholder="R$"
                     className='bg-slate-50 text-muted-foreground hover:bg-slate-100 hover:placeholder:text-slate-900 hover:text-slate-900 focus:bg-white'
                     onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                      currencyInputChange(e);
+                      // currencyInputChange(e);
+                      changedDiscount(e);
+                      setValue('desconto', Number(e.target.value) || 0);
                       field.onChange(e);
                     }} />
                 </FormControl>
@@ -210,10 +221,11 @@ const Product = () => {
                 <FormLabel className='text-slate-900 pb-2.5'>Total</FormLabel>
                 <FormControl>
                   <Input
+                    value={total}
                     placeholder='R$'
                     className='bg-slate-50 text-muted-foreground hover:bg-slate-100 hover:placeholder:text-slate-900 hover:text-slate-900 focus:bg-white'
                     onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                      currencyInputChange(e);
+                      setValue('total', Number(e.target.value));
                       field.onChange(e);
                     }} />
                 </FormControl>
@@ -231,10 +243,13 @@ const Product = () => {
                 quantity: quantity,
                 unitPrice: formData.valor, 
                 discount: formData.desconto, 
-                total: formData.total, 
+                total: calculateTotal(Number(quantity), Number(unitPrice), Number(discount))
               };
               setSelectedProducts([...selectedProducts, newProduct]);
               setQuantity(0);
+              setDiscount(0);
+              setUnitPrice(0);
+              setTotal(0);
             }
           }}
           className='bg-green-200 w-10 self-end'><PlusIcon size={16} color='gray'/></Button>
