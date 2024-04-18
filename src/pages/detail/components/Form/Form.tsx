@@ -3,11 +3,11 @@ import Details from './Details';
 import { Tabs, TabsList, TabsContent, TabsTrigger } from '@/components/shadcn/ui/tabs';
 import Situation from './Situation';
 import { FormProvider, useForm } from 'react-hook-form';
-import schema from '@/validations/negocios/schema';
+import negocio from '@/validations/schemas/negocio';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 function FormDetalhe() {
-  const methods = useForm({ resolver: zodResolver(schema) });
+  const methods = useForm({ resolver: zodResolver(negocio) });
   return (
     <div className='bg-inherit p-4'>
       <FormProvider {...methods}>

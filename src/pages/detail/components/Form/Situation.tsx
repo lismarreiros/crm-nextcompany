@@ -1,13 +1,13 @@
 import { Button } from '@/components/shadcn/ui/button';
 import { FormControl, FormField, FormItem, FormLabel } from '@/components/shadcn/ui/form';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/shadcn/ui/select';
-import schema from '@/validations/negocios/schema';
+import schema from '@/validations/schemas/negocio';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, useFormContext } from 'react-hook-form';
 import { z } from 'zod';
 
 const Situation = () => {
-  const { control } = useFormContext();
+  const { control, getValues } = useFormContext();
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
   });
@@ -43,7 +43,11 @@ const Situation = () => {
             </FormItem>
           )}
         /> 
-        <Button type='submit' className='mt-2 w-4/6 self-center bg-indigo-700'>Salvar Alterações</Button>
+        <Button onClick={(e) => {
+          e.preventDefault();
+          const values = getValues();
+          console.log(values);
+        }} type='submit' variant='outline' className='mt-2 w-1/3 self-end'>Salvar Alterações</Button>
       </form>
     </div>
   );

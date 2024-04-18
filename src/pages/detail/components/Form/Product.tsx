@@ -1,167 +1,193 @@
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { ChangeEvent, useState, useEffect } from 'react';
 import { useForm, useFormContext } from 'react-hook-form';
-import { FormControl, FormField, FormLabel, FormItem } from '@/components/shadcn/ui/form';
-import { Input } from '@/components/shadcn/ui/input';
-import { ChangeEvent, useState } from 'react';
-import CustomInputCurrencyMask from '@/utils/customInputCurrencyMask';
-import { FancyMultiSelect } from '@/utils/customMultipleSelect';
-import schema from '@/validations/negocios/schema';
-import { MinusIcon, PlusIcon } from 'lucide-react';
 
-const productsList = [
-  {label: 'wCompany', value:'wCompany'},
-  {label: 'iCompany', value: 'iCompany'},
-  {label: 'xPDV', value: 'xPDV'}
-] as const;
+import { FormControl, FormField, FormLabel, FormItem } from '@/components/shadcn/ui/form';
+import { Table, TableBody, TableCell, TableFooter, TableHead, TableHeader } from '@/components/shadcn/ui/table';
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/shadcn/ui/command';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/shadcn/ui/popover';
+import { Button } from '@/components/shadcn/ui/button';
+import { Input } from '@/components/shadcn/ui/input';
+
+import { cn } from '@/lib/utils';
+import { Check, ChevronsUpDown, Equal, Minus, PlusIcon, X } from 'lucide-react';
+import CustomInputCurrencyMask from '@/utils/customInputCurrencyMask';
+import produtonegocio from '@/validations/schemas/produtonegocio';
 
 const currencyInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
   const { value } = e.target;
   e.target.value = CustomInputCurrencyMask.valor(value);
 };
 
+const products = [
+  { label: 'Produto A', value: 'a' },
+  { label: 'Produto B', value: 'b' },
+  { label: 'Produto C', value: 'c' },
+  { label: 'Produto D', value: 'd' },
+  { label: 'Produto E', value: 'e' },
+  { label: 'Produto F', value: 'f' },
+  { label: 'Produto G', value: 'g' },
+  { label: 'Produto H', value: 'h' },
+  { label: 'Produto I', value: 'i' },
+] as const;
+
 const Product = () => {
-  const { control } = useFormContext();
+  const { control, getValues, setValue } = useFormContext();
   const [quantity, setQuantity] = useState(0);
+  const [open, setOpen] = useState(false);
+  const [selectedProducts, setSelectedProducts] = useState<any[]>([]);
+
+  const calculateTotal = (quantity:number, unitPrice: number, discount:number): number => {
+    return (quantity * unitPrice) - discount;
+  };
+
+  useEffect(() => {
+    const formData = getValues();
+    const quantity = parseInt(formData.quantidade) || 0;
+    const unitPrice = parseFloat(formData.valor) || 0;
+    const discount = parseFloat(formData.desconto) || 0;
+
+    const total = calculateTotal(quantity, unitPrice, discount);
+
+    setValue('total', total.toString());
+    console.log(quantity);
+    console.log(unitPrice);
+    console.log(discount);
+  }, [getValues, setValue]);
 
   const changedQuantity = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue =parseInt(e.target.value) || 0;
     setQuantity(newValue);
   };
 
-  const incrementQuantity = () => {
-    const newValue = quantity + 1;
-    setQuantity(newValue);
-  };
-
-  const decrementQuantity = () => {
-    if (quantity > 0) {
-      setQuantity(prevQuantity => prevQuantity - 1);
-    }
-  };
-
-  const form = useForm<z.infer<typeof schema>>({
-    resolver: zodResolver(schema),
+  const form = useForm<z.infer<typeof produtonegocio>>({
+    resolver: zodResolver(produtonegocio),
   });
   
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = form.getValues();
     console.log(data);
+    console.log(selectedProducts);
   };
 
   return (
     <div>
       <form onSubmit={handleSubmit} className='py-2 px-2 flex flex-col gap-4'>
+        {/** Produtos */}
+        <FormField
+          control={control}
+          name='codprod'
+          render={({ field }) => (
+            <FormItem className='flex flex-col w-full'>
+              <FormLabel className='text-slate-900 pb-2.5'>Produto</FormLabel>
+              <Popover open={open} onOpenChange={setOpen}>
+                <PopoverTrigger asChild>
+                  <FormControl>
+                    <Button
+                      aria-expanded={open}
+                      variant='outline' 
+                      role='combobox'
+                      className={cn('w-full h-10 justify-between bg-slate-50 focus:bg-white text-muted-foreground font-normal',
+                        !field.value && 'text-muted-foreground font-normal'
+                      )}>
+                      {field.value 
+                        ? products.find(
+                          (product) => product.value === field.value
+                        )?.label
+                        : 'Selecione um produto'
+                      }
+                      <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
+                    </Button>
+                  </FormControl>
+                </PopoverTrigger>
+                <PopoverContent className='w-inherit p-0'>
+                  <Command>
+                    <CommandInput placeholder='Procure um produto' />
+                    <CommandEmpty>Não encontrado</CommandEmpty>
+                    <CommandList>
+                      <CommandGroup>
+                        {products.map((product) => (
+                          <CommandItem 
+                            value={product.label}
+                            key={product.value}
+                            onSelect={() => {
+                              setValue('codprod', product.value);
+                              setOpen(false);
+                            }}
+                          >
+                            <Check
+                              className={cn('mr-2 h-4 w-4',
+                                product.value === field.value
+                                  ? 'opacity-100'
+                                  : 'opacity-0'
+                              )}
+                            />
+                            <span>{product.label}</span>
+                          </CommandItem>
+                        ))}
+                      </CommandGroup>
+                    </CommandList>
+                  </Command>
+                </PopoverContent>
+              </Popover>
+            </FormItem>
+          )}
+        />
+
         <div className='flex items-start gap-2'>  
-          {/** Produtos */}
-          <FormField
-            control={control}
-            name='produto'
-            render={({ field }) => (
-              <FormItem className='flex flex-col w-3/4'>
-                <FormLabel className='text-slate-900 pb-2.5'>Produto</FormLabel>
-                <FormControl>
-                  <FancyMultiSelect 
-                    selectedItems={field.value ? field.value.split(',').map((value: any) => ({ label: value, value })) : []} 
-                    selectables={productsList.map(item => ({ label: item.label, value: item.value }))}
-                    onChange={(selected) => field.onChange(selected.map(item => item.value).join(','))}  />
-                </FormControl>
-              </FormItem>
-            )}
-          />
           {/** Quantidade de Produto */}
           <FormField
             control={control}
-            name='quantidadeprod'
+            name='quantidade'
             render={({ field }) => (
-              <FormItem className='flex flex-col w-1/4'>
+              <FormItem className='flex flex-col w-1/3'>
                 <FormLabel className='text-slate-900 pb-2.5'>Quantidade</FormLabel>
                 <FormControl>
-                  <div
-                    className='flex bg-slate-50 items-center border rounded-md h-10 hover:bg-slate-100 hover:text-slate-900 text-muted-foreground'>
-                    <div className='w-full h-full flex items-center justify-around'>
-                      <button
-                        type='button'
-                        className='flex items-center justify-center w-1/4 border-r-2 hover:bg-slate-200 h-full'
-                        onClick={decrementQuantity}
-                      >
-                        <MinusIcon size={12} />
-                      </button>
-                      <Input
-                        value={quantity}
-                        className='bg-slate-50 border-0 w-2/4 h-full text-center text-sm focus:bg-slate-100 focus:outline-none focus:ring-0 hover:bg-slate-100 caret-invisible'
-                        onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                          changedQuantity(e);
-                          field.onChange(e);
-                        }}
-                      />
-                      <button
-                        type='button'
-                        onClick={incrementQuantity}
-                        className='flex items-center justify-center w-1/4 border-l-2 hover:bg-slate-200 h-full'>
-                        <PlusIcon size={12}/>
-                      </button>
-                    </div>
-                  </div>
+                  <Input
+                    value={quantity}
+                    className='bg-slate-50 text-muted-foreground text-center text-sm focus:bg-slate-100 focus:outline-none focus:ring-0 hover:bg-slate-100 caret-invisible'
+                    onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                      changedQuantity(e);
+                      field.onChange(e);
+                    }}
+                  />
                 </FormControl>
               </FormItem>
             )}
           />
+          <X size={16} className='mt-6 self-center'/>
 
-        </div>
-        <div className='flex items-center gap-2'>
-
+          <FormField
+            control={control}
+            name='valor'
+            render={({ field }) => (
+              <FormItem className='flex flex-col w-1/2'>
+                <FormLabel className='text-slate-900 pb-2.5'>Unitário</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="R$"
+                    className='bg-slate-50 text-muted-foreground hover:bg-slate-100 hover:placeholder:text-slate-900 hover:text-slate-900 focus:bg-white'
+                    onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                      currencyInputChange(e);
+                      field.onChange(e);
+                    }} />
+                </FormControl>
+              </FormItem>
+            )}
+          />
+          <Minus size={16} className='mt-6 self-center'/>
           {/** Desconto */}
           <FormField
             control={control}
-            name='descontoprod'
+            name='desconto'
             render={({ field }) => (
-              <FormItem className='flex flex-col w-1/3'>
+              <FormItem className='flex flex-col w-1/2'>
                 <FormLabel className='text-slate-900 pb-2.5'>Desconto</FormLabel>
                 <FormControl>
                   <Input 
-                    placeholder="Digite o valor"
-                    className='bg-slate-50 text-muted-foreground hover:bg-slate-100 hover:placeholder:text-slate-900 hover:text-slate-900 focus:bg-white'
-                    onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                      currencyInputChange(e);
-                      field.onChange(e);
-                    }} />
-                </FormControl>
-              </FormItem>
-            )}
-          />
-
-          {/** Valor */}
-          <FormField
-            control={control}
-            name='descontoprod'
-            render={({ field }) => (
-              <FormItem className='flex flex-col w-1/3'>
-                <FormLabel className='text-slate-900 pb-2.5'>Valor</FormLabel>
-                <FormControl>
-                  <Input
-                    disabled
-                    className='bg-slate-50 text-muted-foreground hover:bg-slate-100 hover:placeholder:text-slate-900 hover:text-slate-900 focus:bg-white'
-                    onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                      currencyInputChange(e);
-                      field.onChange(e);
-                    }} />
-                </FormControl>
-              </FormItem>
-            )}
-          />
-
-          {/** Total */}
-          <FormField
-            control={control}
-            name='descontoprod'
-            render={({ field }) => (
-              <FormItem className='flex flex-col w-1/3'>
-                <FormLabel className='text-slate-900 pb-2.5'>Total</FormLabel>
-                <FormControl>
-                  <Input
-                    disabled
+                    placeholder="R$"
                     className='bg-slate-50 text-muted-foreground hover:bg-slate-100 hover:placeholder:text-slate-900 hover:text-slate-900 focus:bg-white'
                     onChange={(e: ChangeEvent<HTMLInputElement>) => {
                       currencyInputChange(e);
@@ -172,8 +198,81 @@ const Product = () => {
             )}
           />
         </div>
-        {/* <Button type='submit' className='mt-2 w-4/6 self-center bg-indigo-700'>Salvar Alterações</Button> */}
+
+        <div className='flex items-center justify-end gap-2'>
+          <Equal size={16} className='mt-6 self-center'/>
+          {/** Total */}
+          <FormField
+            control={control}
+            name='total'
+            render={({ field }) => (
+              <FormItem className='flex flex-col w-1/3 self-end'>
+                <FormLabel className='text-slate-900 pb-2.5'>Total</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder='R$'
+                    className='bg-slate-50 text-muted-foreground hover:bg-slate-100 hover:placeholder:text-slate-900 hover:text-slate-900 focus:bg-white'
+                    onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                      currencyInputChange(e);
+                      field.onChange(e);
+                    }} />
+                </FormControl>
+              </FormItem>
+            )}
+          />
+        </div>
+        <Button 
+          onClick={()=> {
+            const formData = getValues();
+            const selectedProduct = products.find((product) => product.value === formData.codprod);
+            if (selectedProduct) {
+              const newProduct = {
+                label: selectedProduct.label,
+                quantity: quantity,
+                unitPrice: formData.valor, 
+                discount: formData.desconto, 
+                total: formData.total, 
+              };
+              setSelectedProducts([...selectedProducts, newProduct]);
+              setQuantity(0);
+            }
+          }}
+          className='bg-green-200 w-10 self-end'><PlusIcon size={16} color='gray'/></Button>
       </form>
+
+      <Table className='border my-2'>
+        <TableHeader className='border-b text-xs'>
+          <TableHead>Produto</TableHead>
+          <TableHead>Quantidade</TableHead>
+          <TableHead>Unitário</TableHead>
+          <TableHead>Desconto</TableHead>
+          <TableHead>Total</TableHead>
+        </TableHeader>
+        <TableBody className='text-xs'>
+          {selectedProducts.map((product, index) => (
+            <tr key={index}>
+              <TableCell>{product.label}</TableCell>
+              <TableCell>{product.quantity}</TableCell>
+              <TableCell>{product.unitPrice}</TableCell>
+              <TableCell>{product.discount}</TableCell>
+              <TableCell>{product.total}</TableCell>
+            </tr>
+          ))}
+        </TableBody>
+        <TableFooter className='text-xs'>
+          <TableCell></TableCell>
+          <TableCell>2</TableCell>
+          <TableCell>totalunitario</TableCell>
+          <TableCell>totaldesconto</TableCell>
+          <TableCell>total</TableCell>
+        </TableFooter>
+      </Table>
+
+      <Button onClick={(e) => {
+        e.preventDefault();
+        const values = getValues();
+        console.log(values);
+      }} type='submit' variant='outline' className='my-2 bg-slate-50'>Salvar alterações</Button>
     </div>
   );
 };

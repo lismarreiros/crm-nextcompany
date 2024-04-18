@@ -10,7 +10,7 @@ const DetailPage = () => {
         <p className='text-sm font-light text-slate-900 mr-2'>Fase: Qualificação</p>
       </div>
 
-      <div className='grid lg:grid-cols-[1fr_35vw] md:grid-cols-1 '>
+      <div className='grid lg:grid-cols-[1fr_32vw] md:grid-cols-1 '>
         {/** Timeline */}
         <div className='min-h-screen bg-indigo-100 border-t-2 border-indigo-200'>
           <Timeline />

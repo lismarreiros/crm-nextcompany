@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-const schema = z.object({
+const negocio = z.object({
   client: z.string(),
   produto: z.string(),
   tel: z.string(),
@@ -12,9 +12,7 @@ const schema = z.object({
   participantes: z.string(),
   idfontenegocio: z.string(),
   situacao: z.string(),
-  quantidadeprod: z.number(),
-  descontoprod: z.string(),
   total: z.string()
 });
 
-export default schema;
+export default negocio;

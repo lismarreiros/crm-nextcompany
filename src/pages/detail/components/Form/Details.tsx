@@ -1,18 +1,17 @@
+import { useState } from 'react';
 import { useFormContext } from 'react-hook-form';
-import { FormControl, FormField, 
-  FormLabel, FormItem, } from '@/components/shadcn/ui/form';
-import { Textarea } from '@/components/shadcn/ui/textarea';
-import { format } from 'date-fns';
-import { ptBR } from 'date-fns/locale';
-import { CalendarIcon, Check, ChevronsUpDown } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import { Button } from '@/components/shadcn/ui/button';
-import { Calendar } from '@/components/shadcn/ui/calendar';
+import { FormControl, FormField, FormLabel, FormItem, } from '@/components/shadcn/ui/form';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/shadcn/ui/popover';
-import { Input, InputMasks } from '@/components/shadcn/ui/input';
 import { Command, CommandInput, CommandGroup, 
   CommandEmpty, CommandItem, CommandList } from '@/components/shadcn/ui/command';
-import { useState } from 'react';
+import { Textarea } from '@/components/shadcn/ui/textarea';
+import { Input, InputMasks } from '@/components/shadcn/ui/input';
+import { Calendar } from '@/components/shadcn/ui/calendar';
+import { Button } from '@/components/shadcn/ui/button';
+import { CalendarIcon, Check, ChevronsUpDown } from 'lucide-react';
+import { ptBR } from 'date-fns/locale';
+import { format } from 'date-fns';
+import { cn } from '@/lib/utils';
 
 const clients = [
   { label: 'Empresa A', value: 'en' },
@@ -27,7 +26,7 @@ const clients = [
 ] as const;
   
 const Details = () => {
-  const { control, getValues } = useFormContext();
+  const { control, getValues, setValue } = useFormContext();
   const [open, setOpen] = useState(false);
 
   return (
@@ -52,7 +51,7 @@ const Details = () => {
         />
 
         {/** Cliente */}
-        <div className='flex items-center justify-start gap-2'>
+        <div className='flex items-center justify-start gap-4'>
           {/** Número do telefone */}
           <FormField
             control={control}
@@ -109,7 +108,7 @@ const Details = () => {
                               value={client.label}
                               key={client.value}
                               onSelect={() => {
-                                // form.setValue('client', client.value);
+                                setValue('client', client.value);
                                 setOpen(false);
                               }}
                             >
@@ -134,7 +133,7 @@ const Details = () => {
 
         </div>
 
-        <div className='flex items-center justify-start gap-2'>
+        <div className='flex items-center justify-start gap-4'>
           {/** Data de Início */}
           <FormField
             control={control}
@@ -262,7 +261,7 @@ const Details = () => {
           e.preventDefault();
           const values = getValues();
           console.log(values);
-        }} type='submit' className='mt-2 w-4/6 self-center bg-indigo-700'>Salvar Alterações</Button>
+        }} type='submit' variant='outline' className='mt-2 w-1/3 self-end'>Salvar Alterações</Button>
       </form>
     </div>
   );
