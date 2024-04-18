@@ -6,7 +6,7 @@ const produtonegocio = z.object({
   quantidade: z.string(),
   valor: z.string(),
   desconto: z.string(),
-  total: z.string()
+  totalprod: z.string()
 });
 
 export default produtonegocio;

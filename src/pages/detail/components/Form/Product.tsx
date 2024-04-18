@@ -47,12 +47,7 @@ const Product = () => {
 
   useEffect(() => {
     setTotal(calculateTotal(quantity, unitPrice, discount));
-    setValue('total', total.toString());
-    
-    console.log(quantity);
-    console.log(unitPrice);
-    console.log(discount);
-    console.log(total);
+    setValue('totalprod', total.toString());
   }, [quantity, unitPrice, discount]);
 
   const changedQuantity = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -224,18 +219,16 @@ const Product = () => {
           {/** Total */}
           <FormField
             control={control}
-            name='total'
+            name='totalprod'
             render={({ field }) => (
               <FormItem className='flex flex-col w-1/3 self-end'>
                 <FormLabel className='text-slate-900 pb-2.5'>Total</FormLabel>
                 <FormControl>
                   <Input
-                    disabled
                     value={total}
                     placeholder='R$'
                     className='bg-slate-50 text-slate-900 hover:bg-slate-100 hover:placeholder:text-slate-900 hover:text-slate-900 focus:bg-white'
                     onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                      setValue('total', Number(e.target.value));
                       field.onChange(e);
                     }} />
                 </FormControl>
@@ -261,7 +254,6 @@ const Product = () => {
               setQuantity(0);
               setDiscount(0);
               setUnitPrice(0);
-              setTotal(0);
             }
           }}
           className='bg-green-200 hover:bg-green-300 w-10 self-end'><PlusIcon size={16} color='gray'/></Button>
@@ -302,7 +294,7 @@ const Product = () => {
 
       <Button onClick={(e) => {
         e.preventDefault();
-        const values = getValues() || selectedProducts;
+        const values = getValues();
         console.log(values);
       }} type='submit' variant='outline' className='my-2 bg-slate-50 self-end'>Salvar alterações</Button>
     </div>
