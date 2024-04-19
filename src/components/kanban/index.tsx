@@ -47,38 +47,39 @@ type DNDType = {
 };
 
 export default function Kanban() {
-  const [containers, setContainers] = useState<DNDType[]>([
-    {
-      id: 'container-1',
-      title: 'Prospecção',
-      items: [],
-    },
-    {
-      id: 'container-2',
-      title: 'Qualificação',
-      items: [],
-    },
-    {
-      id: 'container-3',
-      title: 'Apresentação',
-      items: [],
-    },
-    {
-      id: 'container-4',
-      title: 'Proposta',
-      items: [],
-    },
-    {
-      id: 'container-5',
-      title: 'Negociação',
-      items: [],
-    },
-    {
-      id: 'container-6',
-      title: 'Conclusão',
-      items: [],
-    }
-  ]);
+  const [containers, setContainers] = useState<DNDType[]>(
+    [
+      // {
+      //   id: 'container-1',
+      //   title: 'Prospecção',
+      //   items: [],
+      // },
+      // {
+      //   id: 'container-2',
+      //   title: 'Qualificação',
+      //   items: [],
+      // },
+      // {
+      //   id: 'container-3',
+      //   title: 'Apresentação',
+      //   items: [],
+      // },
+      // {
+      //   id: 'container-4',
+      //   title: 'Proposta',
+      //   items: [],
+      // },
+      // {
+      //   id: 'container-5',
+      //   title: 'Negociação',
+      //   items: [],
+      // },
+      // {
+      //   id: 'container-6',
+      //   title: 'Conclusão',
+      //   items: [],
+      // }
+    ]);
   const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null);
   const [currentContainerId, setCurrentContainerId] =
     useState<UniqueIdentifier>();
@@ -446,13 +447,13 @@ export default function Kanban() {
       {/** Botão de Adicionar Novo Negócio */}
       <div className="flex items-center justify-start absolute gap-2">
         {/* <h1 className="text-gray-800 text-3xl font-bold">Dnd-kit Guide</h1> */}
-        <Button onClick={() => setShowAddContainerModal(true)} className='gap-2 bg-indigo-900'>
+        <Button onClick={() => setShowAddContainerModal(true)} className='gap-2 bg-indigo-700'>
           <CirclePlus size={16}/>
-          Fluxo
+          Container
         </Button>
-        <Button onClick={() => setShowAddItemModal(true)} className='gap-2 bg-indigo-900'>
+        <Button onClick={() => setShowAddItemModal(true)} className='gap-2 bg-indigo-700'>
           <CirclePlus size={16}/>
-        Novo Negócio
+          Negócio
         </Button>
        
       </div>

@@ -6,7 +6,7 @@ import { LogOutIcon, Settings, User2 } from 'lucide-react';
 
 const NavBar = () => {
   return (
-    <div className='bg-white h-16 py-4 my-2 mx-auto max-w-7xl sm:px-6
+    <div className='bg-white h-16 py-4 my-2 w-full sm:px-6
       lg:px-8 flex justify-between items-center'>
       {/* logo */}
       <div>

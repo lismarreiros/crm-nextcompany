@@ -24,7 +24,7 @@ const Sidebar = () => {
   };
   
   return (
-    <div className='p-4'>
+    <div className='p-4 text-slate-800'>
       <div>
         <Link to='/clientes' className='flex items-center gap-2 font-medium hover:bg-indigo-50 rounded p-2' title='Ir para clientes'>
           <UsersIcon size={20}/>
