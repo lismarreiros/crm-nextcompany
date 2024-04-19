@@ -19,6 +19,7 @@ import {
 } from '@/components/shadcn/ui/dialog';
 import { Form, FormControl, FormField, FormLabel, FormItem, FormMessage } from '@/components/shadcn/ui/form';
 import { Textarea } from '@/components/shadcn/ui/textarea';
+import CustomInputPercentageMask from '@/utils/customInputPercentageMask';
 
 type ProductFormProps = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -29,7 +30,8 @@ const schema = z.object({
   nome: z.string(),
   codprod: z.string(),
   valor: z.string(),
-  descricao: z.string()
+  descricao: z.string(),
+  comissao: z.string()
 });
 
 export const ProductForm: React.FC<ProductFormProps> = ({ onProductSubmit }) => {
@@ -48,6 +50,11 @@ export const ProductForm: React.FC<ProductFormProps> = ({ onProductSubmit }) => 
   const currencyInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
     e.target.value = CustomInputCurrencyMask.valor(value);
+  };
+
+  const percentageInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    e.target.value = CustomInputPercentageMask.porcentagem(value);
   };
 
   return (
@@ -122,6 +129,24 @@ export const ProductForm: React.FC<ProductFormProps> = ({ onProductSubmit }) => 
                       <Input placeholder="Digite o valor"
                         onChange={(e) => {
                           currencyInputChange(e);
+                          field.onChange(e);
+                        }} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              {/** comissão */}
+              <FormField
+                control={form.control}
+                name='comissao'
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Alíquota de Comissão (%)</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Digite a porcentagem"
+                        onChange={(e) => {
+                          percentageInputChange(e);
                           field.onChange(e);
                         }} />
                     </FormControl>
