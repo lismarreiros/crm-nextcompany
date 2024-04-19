@@ -10,13 +10,13 @@ const DetailPage = () => {
         <p className='text-sm font-light text-slate-900 mr-2'>Fase: Qualificação</p>
       </div>
 
-      <div className='grid lg:grid-cols-[1fr_38vw] md:grid-cols-1 '>
+      <div className='grid lg:grid-cols-[1fr_33vw] md:grid-cols-1 '>
         {/** Timeline */}
         <div className='min-h-screen bg-indigo-50 border-t-2 border-indigo-200'>
           <Timeline />
         </div>
         {/** Formulário de Detalhes */}
-        <div className='min-h-screen border-l-2 border-t-2 border-indigo-200 bg-slate-50'>
+        <div className='min-h-screen bg-slate-50 border-t-2 border-indigo-200'>
           <FormDetalhe/>
         </div>
       </div>

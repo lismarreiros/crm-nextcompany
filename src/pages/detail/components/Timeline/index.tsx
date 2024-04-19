@@ -68,7 +68,7 @@ const Timeline: React.FC = () => {
 
   return (
     <div>
-      <div className='flex w-full py-1 px-4 gap-2 justify-end'>
+      <div className='flex w-full py-4 px-4 gap-2 justify-end'>
         <Command className='w-1/3 '> 
           <CommandInput placeholder='Digite para pesquisar...' />
           {/* <CommandList>
@@ -98,14 +98,14 @@ const Timeline: React.FC = () => {
         {/** barra de pesquisa (sem funcionar ainda!) + botões */}
       </div>
       <div className='flex flex-col min-h-screen mt-2 rounded-lg mx-4 bg-slate-50 border-2 border-slate-200'>
-        <Tabs>
+        <Tabs defaultValue='timeline'>
           <TabsList className='flex justify-start items-center border-b-2 border-slate-200 w-full '>
-            <TabsTrigger className='py-4 px-8 data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-indigo-300 data-[state=active]:text-indigo-500 text-slate-700' value='todas'>Timeline</TabsTrigger>
-            <TabsTrigger className='py-4 px-8 data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-indigo-300 data-[state=active]:text-indigo-500 text-slate-700' value='tarefas'>Tarefas</TabsTrigger>
-            <TabsTrigger className='py-4 px-8 data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-indigo-300 data-[state=active]:text-indigo-500 text-slate-700' value='comentarios'>Comentários</TabsTrigger>
+            <TabsTrigger className='py-4 px-8 data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-indigo-200 data-[state=active]:text-indigo-500 text-slate-700' value='todas'>Timeline</TabsTrigger>
+            <TabsTrigger className='py-4 px-8 data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-indigo-200 data-[state=active]:text-indigo-500 text-slate-700' value='tarefas'>Tarefas</TabsTrigger>
+            <TabsTrigger className='py-4 px-8 data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-indigo-200 data-[state=active]:text-indigo-500 text-slate-700' value='comentarios'>Comentários</TabsTrigger>
           </TabsList>
 
-          <TabsContent value='todas'>
+          <TabsContent value='timeline'>
             {/** Card Comentário */}
             {comments.map((comment, index) => (
               <CardComentario key={index} 

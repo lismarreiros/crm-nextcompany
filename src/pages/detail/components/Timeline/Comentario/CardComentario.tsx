@@ -10,7 +10,7 @@ type ComentarioCardProps = {
 const CardComentario: React.FC<ComentarioCardProps> = ({ comment, onDelete, onReopenModal }) => {
   return (
     
-    <div className="w-[900px] mt-4 ml-1 relative before:absolute before:ml-7 before:h-full before:w-0.5 before:bg-indigo-100">
+    <div className="w-full mt-4 ml-1 relative before:absolute before:ml-7 before:h-full before:w-0.5 before:bg-indigo-100">
       <div className="relative">
         <div className="md:flex items-center mb-2 px-4">
           <div className="flex items-center space-x-4">

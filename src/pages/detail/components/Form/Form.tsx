@@ -9,14 +9,14 @@ import { zodResolver } from '@hookform/resolvers/zod';
 function FormDetalhe() {
   const methods = useForm({ resolver: zodResolver(negocio) });
   return (
-    <div className='bg-inherit'>
+    <div className='bg-inherit h-full border-l-2 border-slate-200'>
       <FormProvider {...methods}>
         <div className='flex flex-col gap-4'>
           <Tabs defaultValue='details' className='w-full bg-inherit'>
             <TabsList className='grid w-full grid-cols-3 border-b rounded-0'>
-              <TabsTrigger value='details' className='py-4 px-4 data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-indigo-300 data-[state=active]:text-indigo-500 text-slate-700'>Detalhes</TabsTrigger>
-              <TabsTrigger value='products' className='py-4 px-4 data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-indigo-300 data-[state=active]:text-indigo-500 text-slate-700'>Produto</TabsTrigger>
-              <TabsTrigger value='situation' className='py-4 px-4 data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-indigo-300 data-[state=active]:text-indigo-500 text-slate-700'>Situação</TabsTrigger>
+              <TabsTrigger value='details' className='py-4 px-4 data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-indigo-200 data-[state=active]:text-indigo-500 text-slate-700'>Detalhes</TabsTrigger>
+              <TabsTrigger value='products' className='py-4 px-4 data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-indigo-200 data-[state=active]:text-indigo-500 text-slate-700'>Produto</TabsTrigger>
+              <TabsTrigger value='situation' className='py-4 px-4 data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-indigo-200 data-[state=active]:text-indigo-500 text-slate-700'>Situação</TabsTrigger>
             </TabsList>
             <TabsContent value='details' className='w-full py-2 px-4'>
               <Details/>

@@ -258,45 +258,48 @@ const Product = () => {
           }}
           className='bg-green-200 hover:bg-green-300 w-10 self-end'><PlusIcon size={16} color='gray'/></Button>
       </form>
-
-      <Table className='border my-2'>
-        <TableHeader className='border-b text-xs'>
-          <TableHead>Produto</TableHead>
-          <TableHead>Quantidade</TableHead>
-          <TableHead>Unitário</TableHead>
-          <TableHead>Desconto</TableHead>
-          <TableHead>Total</TableHead>
-        </TableHeader>
-        <TableBody className='text-xs'>
-          {selectedProducts.map((product, index) => (
-            <tr key={index}>
-              <TableCell>{product.label}</TableCell>
-              <TableCell>{product.quantity}</TableCell>
-              <TableCell>{product.unitPrice}</TableCell>
-              <TableCell>{product.discount}</TableCell>
-              <TableCell>{product.total}</TableCell>
-              <TableCell>
-                <Button variant='ghost'>
-                  <Trash2Icon size={12}/>
-                </Button>
-              </TableCell>
-            </tr>
-          ))}
-        </TableBody>
-        <TableFooter className='text-xs'>
-          <TableCell></TableCell>
-          <TableCell>totalquant</TableCell>
-          <TableCell>totalunitario</TableCell>
-          <TableCell>totaldesconto</TableCell>
-          <TableCell>total</TableCell>
-        </TableFooter>
-      </Table>
+      <div className='border rounded-md my-2'>
+        <Table>
+          <TableHeader className='border-b text-xs'>
+            <TableHead>Produto</TableHead>
+            <TableHead>Quantidade</TableHead>
+            <TableHead>Unitário</TableHead>
+            <TableHead>Desconto</TableHead>
+            <TableHead>Total</TableHead>
+            <TableHead></TableHead>
+          </TableHeader>
+          <TableBody className='text-xs'>
+            {selectedProducts.map((product, index) => (
+              <tr key={index}>
+                <TableCell>{product.label}</TableCell>
+                <TableCell>{product.quantity}</TableCell>
+                <TableCell>{product.unitPrice}</TableCell>
+                <TableCell>{product.discount}</TableCell>
+                <TableCell>{product.total}</TableCell>
+                <TableCell>
+                  <Button variant='ghost'>
+                    <Trash2Icon size={12}/>
+                  </Button>
+                </TableCell>
+              </tr>
+            ))}
+          </TableBody>
+          <TableFooter className='text-xs'>
+            <TableCell></TableCell>
+            <TableCell>totalquant</TableCell>
+            <TableCell>totalunitario</TableCell>
+            <TableCell>totaldesconto</TableCell>
+            <TableCell>total</TableCell>
+            <TableCell></TableCell>
+          </TableFooter>
+        </Table>
+      </div>
 
       <Button onClick={(e) => {
         e.preventDefault();
         const values = getValues();
         console.log(values);
-      }} type='submit' variant='outline' className='my-2 bg-slate-50 self-end'>Salvar alterações</Button>
+      }} type='submit' variant='outline' className='border-indigo-200 my-2 bg-slate-50 self-end'>Salvar alterações</Button>
     </div>
   );
 };
