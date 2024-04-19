@@ -9,7 +9,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 function FormDetalhe() {
   const methods = useForm({ resolver: zodResolver(negocio) });
   return (
-    <div className='bg-inherit h-full border-l-2 border-slate-200'>
+    <div className='bg-inherit h-full border-l border-slate-200'>
       <FormProvider {...methods}>
         <div className='flex flex-col gap-4'>
           <Tabs defaultValue='details' className='w-full bg-inherit'>

@@ -12,6 +12,7 @@ import React, { useState } from 'react';
 import CardTarefa from './Tarefa/CardTarefa';
 import { Tabs, TabsList, TabsTrigger } from '@/components/shadcn/ui/tabs';
 import { TabsContent } from '@radix-ui/react-tabs';
+import { ClipboardList, MessageSquareIcon } from 'lucide-react';
 
 interface TaskFormData {
   id: string;
@@ -69,7 +70,7 @@ const Timeline: React.FC = () => {
   return (
     <div>
       <div className='flex w-full py-4 px-4 gap-2 justify-end'>
-        <Command className='w-1/3 '> 
+        <Command className='w-1/3 border'> 
           <CommandInput placeholder='Digite para pesquisar...' />
           {/* <CommandList>
               <CommandGroup>
@@ -80,7 +81,10 @@ const Timeline: React.FC = () => {
        
         <Dialog open={openT} onOpenChange={setOpenT}>
           <DialogTrigger>
-            <Button className='bg-slate-700'>Adicionar Tarefa</Button>
+            <Button className='flex gap-1 h-10 bg-white text-slate-900 border border-indigo-200 text-xs text-slate-700 hover:bg-indigo-100'>
+              <ClipboardList size={15} className='text-slate-700'/>
+              Adicionar Tarefa
+            </Button>
           </DialogTrigger>
           <DialogContent className='h-[80%]'>
             <FormTarefa onTaskSubmit={handleTaskSubmit}/>
@@ -89,7 +93,10 @@ const Timeline: React.FC = () => {
           
         <Dialog open={openC} onOpenChange={setOpenC}>
           <DialogTrigger>
-            <Button className='bg-slate-700'>Adicionar Comentário</Button>
+            <Button className='flex gap-1 h-10 bg-white text-slate-900 border border-indigo-200 text-xs text-slate-700 hover:bg-indigo-100'>
+              <MessageSquareIcon size={15} className='text-slate-700'/>
+              Adicionar Comentário
+            </Button>
           </DialogTrigger>
           <DialogContent className='w-4/5 h-[40%]'>
             <FormComentario onCommentSubmit={handleCommentSubmit} />
@@ -97,12 +104,27 @@ const Timeline: React.FC = () => {
         </Dialog>
         {/** barra de pesquisa (sem funcionar ainda!) + botões */}
       </div>
-      <div className='flex flex-col min-h-screen mt-2 rounded-lg mx-4 bg-slate-50 border-2 border-slate-200'>
+      <div className='flex flex-col min-h-screen mt-2 rounded-lg mx-4 bg-slate-50 border border-slate-200'>
         <Tabs defaultValue='timeline'>
-          <TabsList className='flex justify-start items-center border-b-2 border-slate-200 w-full '>
-            <TabsTrigger className='py-4 px-8 data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-indigo-200 data-[state=active]:text-indigo-500 text-slate-700' value='todas'>Timeline</TabsTrigger>
-            <TabsTrigger className='py-4 px-8 data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-indigo-200 data-[state=active]:text-indigo-500 text-slate-700' value='tarefas'>Tarefas</TabsTrigger>
-            <TabsTrigger className='py-4 px-8 data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-indigo-200 data-[state=active]:text-indigo-500 text-slate-700' value='comentarios'>Comentários</TabsTrigger>
+          <TabsList className='flex justify-start items-center border-b border-slate-200 w-full '>
+            <TabsTrigger className='items-center gap-1 py-4 px-8 data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-indigo-200 data-[state=active]:text-indigo-500 text-slate-700' value='timeline'>
+              Timeline
+              <div className='my-1 mx-1 h-5 w-5 bg-indigo-400 rounded rounded-full text-white'>
+                1
+              </div>
+            </TabsTrigger>
+            <TabsTrigger className='items-center gap-1 py-4 px-8 data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-indigo-200 data-[state=active]:text-indigo-500 text-slate-700' value='tarefas'>
+              Tarefas
+              <div className='my-1 mx-1 h-5 w-5 bg-indigo-400 rounded rounded-full text-white'>
+                145
+              </div>
+            </TabsTrigger>
+            <TabsTrigger className='items-center gap-1 py-4 px-8 data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-indigo-200 data-[state=active]:text-indigo-500 text-slate-700' value='comentarios'>
+              Comentários
+              <div className='my-1 mx-1 h-5 w-5 bg-indigo-400 rounded rounded-full text-white'>
+                3
+              </div>
+            </TabsTrigger>
           </TabsList>
 
           <TabsContent value='timeline'>
