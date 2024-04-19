@@ -5,6 +5,11 @@ export default class Constants {
     'Serviços',
   ];
 
+  static readonly LISTA_STATUS = [
+    'Ativo',
+    'Inativo',
+  ];
+
   static readonly LISTA_DE_ESTADOS = [
     {
       sigla: 'AC',
@@ -115,4 +120,13 @@ export default class Constants {
       nome: 'Tocantins',
     },
   ];
+
+  static readonly LISTA_COLUNAS_CLIENTES = [
+    'Nome/Fantasia',
+    'CPF/CNPJ',
+    'Razão Social',
+    'Ramo Atividade',
+    'Status',
+  ];
+
 }

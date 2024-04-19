@@ -1,12 +1,12 @@
 /* eslint-disable no-extra-boolean-cast */
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import ValidationCpforCnpj from '@/validations/cpfCnpj/validationCpfCnpj';
 import CustomInputMask from '@/utils/customInputMask';
 
-import { Users, Plus } from 'lucide-react';
+import { PlusIcon, UsersIcon } from 'lucide-react';
 import { Button } from '@/components/shadcn/ui/button';
 import {
   Dialog,
@@ -31,27 +31,26 @@ import {
 
 import Constants from '@/constants';
 
+type ClientFormProps = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  onClientSubmit: (data: any) => void;
+};
+
 {/* validação */}
 const schema = z.object({
   cpfOrCnpj: z.string()
     .refine((value: string) => {
       if (typeof value !== 'string') return false;
       return ValidationCpforCnpj.validateCpfOrCnpj(value);
-    }, {message: 'Digite um CPF ou CNPJ válido.'}),
-  nomefantasia: z.string()
-    .max(100)
-    .transform(nomefantasia => {
-      return nomefantasia.trim().split('').map(word => {
-        return word[0].toLocaleUpperCase().concat(word.substring(1));
-      }).join(' ');
-    }),
+    }, { message: 'Digite um CPF ou CNPJ válido.'} ),
+  nomefantasia: z.string().max(100),
   razao: z.optional(z.string()),
   ramo: z.optional(z.string()),
   status: z.optional(z.string()),
   nomeContato: z.optional(z.string()),
   celular: z.optional(z.string()), 
   fixo: z.optional(z.string()), 
-  email: z.optional(z.string()), 
+  email: z.optional(z.string().email('Digite um email válido')), 
   funcao: z.optional(z.string()), 
   cep: z.optional(z.string()),
   rua: z.optional(z.string()),
@@ -61,8 +60,8 @@ const schema = z.object({
   numero: z.optional(z.string())
 });
 
-const ClientFormComponent = () => {
-
+const ClientForm: React.FC<ClientFormProps> = ({ onClientSubmit }) => {
+  const [open, setOpen] = useState(false);
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
   });
@@ -72,9 +71,15 @@ const ClientFormComponent = () => {
     e.target.value = CustomInputMask.cpfCnpj(value);
   };
 
-  const onSubmit = (data: z.infer<typeof schema>) => console.log(data);
+  const handleSubmit =  (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const data = form.getValues();
+    // console.log(data);
+    onClientSubmit(data);
+    setOpen(false);
+  };
   
-  const pesquisarCep = async (cep: any) => {
+  const pesquisarCep = async (cep: string) => {
     try {
       const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
       const data = await response.json();
@@ -102,18 +107,18 @@ const ClientFormComponent = () => {
   };
 
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button variant='link' size='sm' className='focus:ring-2'> 
-          <Plus size={16}/> 
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger>
+        <Button size='default' className='gap-1 bg-indigo-700'> 
+          <PlusIcon size={12}/> 
          Adicionar Cliente
         </Button>
       </DialogTrigger> 
-      <DialogContent className='w-4/5'> 
+      <DialogContent className='max-w-[54vw]'> 
         <DialogHeader>
           <DialogTitle>
-            <div className='flex items-center gap-2'>
-              <Users size={22} />
+            <div className='flex items-center gap-2 font-medium text-md'>
+              <UsersIcon size={22} />
                   Novo Cliente
             </div>
           </DialogTitle>
@@ -121,7 +126,7 @@ const ClientFormComponent = () => {
 
         {/* Começo do Formulário */}
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          <form onSubmit={handleSubmit} className="space-y-8">
             <div className='grid gap-4 pt-2'>
 
               {/* CPF/CNPJ */}
@@ -189,7 +194,34 @@ const ClientFormComponent = () => {
                           <SelectGroup>
                             {Constants.LISTA_DE_RAMO_DE_ATIVIDADE.map((ramo) => (
                               <SelectItem key={ramo} value={ramo}>
-                                <SelectLabel>{ramo}</SelectLabel>
+                                <SelectLabel className='p-2 font-normal'>{ramo}</SelectLabel>
+                              </SelectItem>
+                            ))}
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name='status'
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Status</FormLabel>
+                    <FormControl>
+                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <SelectTrigger>
+                          <SelectValue placeholder=""/>
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectGroup>
+                            {Constants.LISTA_STATUS.map((status) => (
+                              <SelectItem key={status} value={status}>
+                                <SelectLabel className='p-2 font-normal'>{status}</SelectLabel>
                               </SelectItem>
                             ))}
                           </SelectGroup>
@@ -245,7 +277,7 @@ const ClientFormComponent = () => {
                   name='celular'
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Celular</FormLabel>
+                      <FormLabel>Telefone 2</FormLabel>
                       <FormControl>
                         <InputMasks
                           {...field}
@@ -378,7 +410,7 @@ const ClientFormComponent = () => {
                             <SelectGroup>
                               {Constants.LISTA_DE_ESTADOS.map((estado) => (
                                 <SelectItem key={estado.sigla} value={estado.sigla}>
-                                  <SelectLabel>{`${estado.sigla} - ${estado.nome}`}</SelectLabel>
+                                  <SelectLabel className='p-2 font-normal'>{`${estado.sigla} - ${estado.nome}`}</SelectLabel>
                                 </SelectItem>
                               ))}
                             </SelectGroup>
@@ -406,7 +438,7 @@ const ClientFormComponent = () => {
               </div>
             </div>
             <DialogFooter>
-              <Button type="submit">Salvar Cliente</Button>
+              <Button type="submit" className='bg-indigo-700'>Salvar Cliente</Button>
             </DialogFooter>
           </form>
         </Form> 
@@ -416,11 +448,4 @@ const ClientFormComponent = () => {
   );
 };
 
-export default function ClientForm()  {
-  
-  return (
-    <div>
-      <ClientFormComponent />  
-    </div>
-  );
-}
+export default ClientForm;

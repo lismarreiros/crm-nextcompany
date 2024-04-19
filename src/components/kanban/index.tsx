@@ -32,6 +32,7 @@ import { Button } from '@/components/kanban/components/Button';
 import { Dialog, DialogContent } from '@/components/shadcn/ui/dialog';
 import InputModal from '@/components/kanban/components/Input';
 import { CirclePlus } from 'lucide-react';
+import { InputMasks } from '../shadcn/ui/input';
 
 // const inter = Inter({ subsets: ['latin'] });
 
@@ -397,7 +398,7 @@ export default function Kanban() {
   }
 
   return (
-    <div className="px-8 overflow-auto">
+    <div className='px-8 mt-10 h-full bg-inherit overflow-auto'>
       {/* Add Container Modal - NÃO ESTÁ SENDO USADO */}
       <Modal
         showModal={showAddContainerModal}
@@ -418,35 +419,42 @@ export default function Kanban() {
 
       {/* Add Item Modal - NEGÓCIO */}
       <Dialog open={showAddItemModal} onOpenChange={setShowAddItemModal}>
-        <DialogContent className='h-[40%]'>
-          <div className="flex flex-col w-full items-start gap-y-4 py-6">
+        <DialogContent className='h-[60%]'>
+          <div className="flex flex-col w-full items-start gap-y-4 py-6 static">
             {/* <h1 className="text-gray-800 text-3xl font-bold">Add Item</h1> */}
+            <h1 className='text-lg font-medium'>Novo Négocio</h1>
+            <label className='text-sm font-medium'>Descrição</label>
             <InputModal
               type="text"
               placeholder="Descrição"
               name="itemname"
               value={itemName}
               onChange={(e) => setItemName(e.target.value)}
-            />   
-            <InputModal
+            />
+            <label className='text-sm font-medium'>Número do Contato</label>   
+            <InputMasks
+              mask='(99) 99999-9999'
               type="text"
               placeholder="Número"
               name="itemname"
-              value={itemName}
-              onChange={(e) => setItemName(e.target.value)}
             />
-            <Button onClick={onAddItem}>Adicionar</Button>
+            <Button className='bg-indigo-900 hover:bg-indigo-700' onClick={onAddItem}>Adicionar</Button>
           </div>
         </DialogContent>
       </Dialog>
 
       {/** Botão de Adicionar Novo Negócio */}
-      <div className="flex items-center justify-start mt-10">
+      <div className="flex items-center justify-start absolute gap-2">
         {/* <h1 className="text-gray-800 text-3xl font-bold">Dnd-kit Guide</h1> */}
-        <Button onClick={() => setShowAddItemModal(true)} className='gap-2'>
+        <Button onClick={() => setShowAddContainerModal(true)} className='gap-2 bg-indigo-900'>
           <CirclePlus size={16}/>
-         Novo Negócio
+          Fluxo
         </Button>
+        <Button onClick={() => setShowAddItemModal(true)} className='gap-2 bg-indigo-900'>
+          <CirclePlus size={16}/>
+        Novo Negócio
+        </Button>
+       
       </div>
 
       <div className="my-8">

@@ -1,12 +1,14 @@
 /* eslint-disable no-extra-boolean-cast */
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Input } from '@/components/shadcn/ui/input';
 
-import { Box, Plus } from 'lucide-react';
+import { BoxIcon, PlusIcon } from 'lucide-react';
 import { Button } from '@/components/shadcn/ui/button';
+import CustomInputCurrencyMask from '../../../utils/customInputCurrencyMask';
+
 import {
   Dialog,
   DialogContent,
@@ -16,43 +18,68 @@ import {
   DialogTrigger,
 } from '@/components/shadcn/ui/dialog';
 import { Form, FormControl, FormField, FormLabel, FormItem, FormMessage } from '@/components/shadcn/ui/form';
+import { Textarea } from '@/components/shadcn/ui/textarea';
+import CustomInputPercentageMask from '@/utils/customInputPercentageMask';
 
-{/* validação */}
+type ProductFormProps = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  onProductSubmit: (data: any) => void;
+};
+
 const schema = z.object({
   nome: z.string(),
   codprod: z.string(),
-  valor: z.coerce.number()
+  valor: z.string(),
+  descricao: z.string(),
+  comissao: z.string()
 });
 
-export const ProductForm = () => {
-
+export const ProductForm: React.FC<ProductFormProps> = ({ onProductSubmit }) => {
+  const [open, setOpen] = useState(false);
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
   });
 
-  const onSubmit = (data: z.infer<typeof schema>) => console.log(data);
-  
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const data = form.getValues();
+    onProductSubmit(data); 
+    setOpen(false);
+  };
+
+  const currencyInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    e.target.value = CustomInputCurrencyMask.valor(value);
+  };
+
+  const percentageInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    e.target.value = CustomInputPercentageMask.porcentagem(value);
+  };
+
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button variant='link' size='sm'> 
-          <Plus size={16}/> 
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger>
+        <div className='relative -top-2 border-l-2 border-indigo-100 rounded-b m-2 px-2'>
+          <Button variant='ghost' className='gap-1 mt-2 bg-indigo-50 hover:bg-indigo-100'> 
+            <PlusIcon size={12}/> 
           Adicionar Produto
-        </Button>
+          </Button>
+        </div>
       </DialogTrigger> 
       <DialogContent className='w-4/5 h-[60%]'> 
         <DialogHeader>
           <DialogTitle>
             <div className='flex items-center gap-2'>
-              <Box  size={22} />
-                  Novo Produto
+              <BoxIcon  size={22} />
+                Novo Produto
             </div>
           </DialogTitle>
         </DialogHeader>
 
         {/* Começo do Formulário */}
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          <form onSubmit={handleSubmit} className="space-y-8">
             <div className='grid gap-4 pt-2'>
 
               {/* nome */}
@@ -73,20 +100,24 @@ export const ProductForm = () => {
                 )}
               />
 
-              {/* codigo */}
+              {/* descrição */}
               <FormField
                 control={form.control}
-                name='codprod'
+                name='descricao'
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Código do Produto</FormLabel>
+                    <FormLabel>Descrição</FormLabel>
                     <FormControl>
-                      <Input placeholder="Digite o código" {...field} />
+                      <Textarea 
+                        placeholder="Digite o nome"
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
+
               {/* valor */}
               <FormField
                 control={form.control}
@@ -95,7 +126,29 @@ export const ProductForm = () => {
                   <FormItem>
                     <FormLabel>Valor</FormLabel>
                     <FormControl>
-                      <Input placeholder="Digite o valor" {...field} />
+                      <Input placeholder="Digite o valor"
+                        onChange={(e) => {
+                          currencyInputChange(e);
+                          field.onChange(e);
+                        }} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              {/** comissão */}
+              <FormField
+                control={form.control}
+                name='comissao'
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Alíquota de Comissão (%)</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Digite a porcentagem"
+                        onChange={(e) => {
+                          percentageInputChange(e);
+                          field.onChange(e);
+                        }} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -104,7 +157,7 @@ export const ProductForm = () => {
 
             </div>
             <DialogFooter>
-              <Button type='submit' variant='default'>Cadastrar Produto</Button>
+              <Button type='submit' className='bg-indigo-700'>Cadastrar Produto</Button>
             </DialogFooter>
           </form>
         </Form> 
@@ -113,4 +166,3 @@ export const ProductForm = () => {
   
   );
 };
-
