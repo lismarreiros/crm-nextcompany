@@ -1,5 +1,5 @@
 import { Button } from '@/components/shadcn/ui/button';
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandList, } from '@/components/shadcn/ui/command';
+import { Command, CommandInput, } from '@/components/shadcn/ui/command';
 import {
   Dialog,
   DialogContent,
@@ -12,7 +12,6 @@ import React, { useState } from 'react';
 import CardTarefa from './Tarefa/CardTarefa';
 import { Tabs, TabsList, TabsTrigger } from '@/components/shadcn/ui/tabs';
 import { TabsContent } from '@radix-ui/react-tabs';
-import { ClipboardList, MessageSquareIcon } from 'lucide-react';
 
 interface TaskFormData {
   id: string;
@@ -69,7 +68,7 @@ const Timeline: React.FC = () => {
 
   return (
     <div>
-      <div className='flex w-full py-4 px-4 gap-2 justify-end'>
+      <div className='flex w-full mt-4 px-4 gap-2 justify-end'>
         <Command className='w-1/3 border'> 
           <CommandInput placeholder='Digite para pesquisar...' />
           {/* <CommandList>
@@ -81,8 +80,7 @@ const Timeline: React.FC = () => {
        
         <Dialog open={openT} onOpenChange={setOpenT}>
           <DialogTrigger>
-            <Button className='flex gap-1 h-10 bg-white text-slate-900 border border-indigo-200 text-xs text-slate-700 hover:bg-indigo-100'>
-              <ClipboardList size={15} className='text-slate-700'/>
+            <Button className='flex gap-1 h-10 text-white text-sm bg-indigo-400 hover:bg-indigo-600'>
               Adicionar Tarefa
             </Button>
           </DialogTrigger>
@@ -93,8 +91,7 @@ const Timeline: React.FC = () => {
           
         <Dialog open={openC} onOpenChange={setOpenC}>
           <DialogTrigger>
-            <Button className='flex gap-1 h-10 bg-white text-slate-900 border border-indigo-200 text-xs text-slate-700 hover:bg-indigo-100'>
-              <MessageSquareIcon size={15} className='text-slate-700'/>
+            <Button className='flex gap-1 h-10 text-white text-sm bg-indigo-400 hover:bg-indigo-600'>
               Adicionar Comentário
             </Button>
           </DialogTrigger>
@@ -104,27 +101,16 @@ const Timeline: React.FC = () => {
         </Dialog>
         {/** barra de pesquisa (sem funcionar ainda!) + botões */}
       </div>
-      <div className='flex flex-col min-h-screen mt-2 rounded-lg mx-4 bg-slate-50 border border-slate-200'>
+      <div className='flex flex-col min-h-screen mt-2 rounded-lg mx-4 bg-white border border-slate-200'>
         <Tabs defaultValue='timeline'>
-          <TabsList className='flex justify-start items-center border-b border-slate-200 w-full '>
-            <TabsTrigger className='items-center gap-1 py-4 px-8 data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-indigo-200 data-[state=active]:text-indigo-500 text-slate-700' value='timeline'>
-              Timeline
-              <div className='my-1 mx-1 h-5 w-5 bg-indigo-400 rounded rounded-full text-white'>
-                1
-              </div>
+          <TabsList className='flex justify-start items-center border-b border-slate-200 w-full'>
+            <TabsTrigger value='timeline'> Timeline
+              {/* <div className='my-1 mx-1 h-5 w-5 bg-indigo-400 rounded rounded-full text-white text-xs content-center'>
+                2
+              </div> */}
             </TabsTrigger>
-            <TabsTrigger className='items-center gap-1 py-4 px-8 data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-indigo-200 data-[state=active]:text-indigo-500 text-slate-700' value='tarefas'>
-              Tarefas
-              <div className='my-1 mx-1 h-5 w-5 bg-indigo-400 rounded rounded-full text-white'>
-                145
-              </div>
-            </TabsTrigger>
-            <TabsTrigger className='items-center gap-1 py-4 px-8 data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-indigo-200 data-[state=active]:text-indigo-500 text-slate-700' value='comentarios'>
-              Comentários
-              <div className='my-1 mx-1 h-5 w-5 bg-indigo-400 rounded rounded-full text-white'>
-                3
-              </div>
-            </TabsTrigger>
+            <TabsTrigger value='tarefas'> Tarefas </TabsTrigger>
+            <TabsTrigger value='comentarios'> Comentários </TabsTrigger>
           </TabsList>
 
           <TabsContent value='timeline'>
@@ -146,6 +132,7 @@ const Timeline: React.FC = () => {
               />
             ))} 
           </TabsContent>
+
           <TabsContent value='comentarios'>
             {/** Card Comentário */}
             {comments.map((comment, index) => (
@@ -166,24 +153,7 @@ const Timeline: React.FC = () => {
               />
             ))} 
           </TabsContent>
-          {/* * Card Comentário
-      {comments.map((comment, index) => (
-        <CardComentario key={index} 
-        comment={comment} 
-        onDelete={() => handleCommentDelete(index)} 
-        onReopenModal={() => handleReopenModal(index)} />
-      ))}
-      
-      * Tarefa Adicionada
-      {tasks.map((formData, index) => (
-        <CardTarefa 
-        key={index} 
-        formData={formData} 
-        onDelete={() => handleTaskDelete(index)} 
-        onReopenModal={() => handleReopenModalTask(index)}
-        />
-      ))}  */}
-      
+        
           {/** Troca de fase */}
           {/* <div className='relative  lg:w-[55vw] h-[110px] md:w-[600px] sm:w-[500px] self-center my-1 md:ml-8 md:mr-8'>
         <div className='absolute  flex items-center size-8 -top-3 -left-4 bg-indigo-500 py-1 px-2 rounded-full'>

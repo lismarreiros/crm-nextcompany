@@ -444,12 +444,17 @@ export default function Kanban() {
       </Dialog>
 
       {/** Botão de Adicionar Novo Negócio */}
-      <div className="flex items-center justify-start absolute">
+      <div className="flex items-center justify-start absolute gap-2">
         {/* <h1 className="text-gray-800 text-3xl font-bold">Dnd-kit Guide</h1> */}
+        <Button onClick={() => setShowAddContainerModal(true)} className='gap-2 bg-indigo-900'>
+          <CirclePlus size={16}/>
+          Fluxo
+        </Button>
         <Button onClick={() => setShowAddItemModal(true)} className='gap-2 bg-indigo-900'>
           <CirclePlus size={16}/>
         Novo Negócio
         </Button>
+       
       </div>
 
       <div className="my-8">
