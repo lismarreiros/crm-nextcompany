@@ -129,4 +129,11 @@ export default class Constants {
     'Status',
   ];
 
+  static readonly LISTA_COLUNAS_PRODUTOS = [
+    'Nome',
+    'Descrição',
+    'Valor',
+    'Alíquota Comissão',
+  ];
+
 }

@@ -5,6 +5,7 @@ import InnerTable from './InnerTable';
 import { ChevronDownIcon, EditIcon, Trash2Icon } from 'lucide-react';
 import Constants from '@/constants';
 import { Badge } from '../shadcn/ui/badge';
+
 interface ClientFormData {
   nomefantasia: string;
   razao: string;

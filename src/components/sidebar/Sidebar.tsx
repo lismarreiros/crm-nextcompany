@@ -6,8 +6,7 @@ import {
   AccordionTrigger,
 } from '@/components/shadcn/ui/accordion';
 import { ProductForm } from '../forms/productForm/productForm';
-import { BoxIcon, UsersIcon } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { BoxIcon } from 'lucide-react';
 import ProductsDetail from '../products/ProductsDetail';
 
 interface ProductFormData {
@@ -41,12 +40,6 @@ const Sidebar = () => {
   
   return (
     <div className='p-4 text-slate-800'>
-      <div>
-        <Link to='/clientes' className='flex items-center gap-2 font-medium hover:bg-indigo-50 rounded p-2' title='Ir para clientes'>
-          <UsersIcon size={20}/>
-          <p className='hidden lg:block'>Clientes</p>
-        </Link>
-      </div>
      
       {/** PRODUTOS */}
       <Accordion type="single" collapsible className="w-full">

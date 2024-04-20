@@ -3,15 +3,19 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/shadcn/ui/
 import { Separator } from '@/components/shadcn/ui/separator';
 import { Button } from '../shadcn/ui/button';
 import { LogOutIcon, Settings, User2 } from 'lucide-react';
+import MenuTabs from './tabs/MenuTabs';
 
 const NavBar = () => {
   return (
-    <div className='bg-white h-16 py-4 my-2 w-full sm:px-6
+    <div className='bg-white h-12 px-2 py-4 my-2 w-full sm:px-6
       lg:px-8 flex justify-between items-center'>
       {/* logo */}
       <div>
-        <span className='text-sm text-slate-500 font-bold'>Empresa</span>
-        <h1 className='text-2xl font-bold text-slate-900'>NextCompany</h1>
+        <span className='text-xs text-slate-500 font-bold py-2'>Empresa</span>
+        <h1 className='text-lg font-bold text-slate-900'>NextCompany</h1>
+      </div>
+      <div>
+        <MenuTabs/>
       </div>
       <Popover>
         <PopoverTrigger asChild>

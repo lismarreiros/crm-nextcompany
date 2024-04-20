@@ -60,14 +60,14 @@ export const ProductForm: React.FC<ProductFormProps> = ({ onProductSubmit }) => 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger>
-        <div className='relative -top-2 border-l-2 border-indigo-100 rounded-b m-2 px-2'>
+        <div className=''>
           <Button variant='ghost' className='gap-1 mt-2 bg-indigo-50 hover:bg-indigo-100'> 
             <PlusIcon size={12}/> 
           Adicionar Produto
           </Button>
         </div>
       </DialogTrigger> 
-      <DialogContent className='w-4/5 h-[60%]'> 
+      <DialogContent className='w-4/5 h-[70%]'> 
         <DialogHeader>
           <DialogTitle>
             <div className='flex items-center gap-2'>
@@ -79,7 +79,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({ onProductSubmit }) => 
 
         {/* Começo do Formulário */}
         <Form {...form}>
-          <form onSubmit={handleSubmit} className="space-y-8">
+          <form onSubmit={handleSubmit} className="space-y-4">
             <div className='grid gap-4 pt-2'>
 
               {/* nome */}
