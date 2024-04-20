@@ -26,9 +26,10 @@ interface ClientFormData {
 
 type TableViewProps = {
   data: ClientFormData[];
+  onClientDelete: (index: number) => void;
 }
 
-const TableView: React.FC<TableViewProps> = ({ data }) => {
+const TableView: React.FC<TableViewProps> = ({ data, onClientDelete }) => {
   return (
     <div className='m-4 rounded-md sm:border'>
       <Table>
@@ -61,7 +62,7 @@ const TableView: React.FC<TableViewProps> = ({ data }) => {
                   <TableCell>
                     <div className='flex gap-2'>
                       <button title='Apagar'>
-                        <Trash2Icon size={26} className='bg-indigo-50 hover:bg-indigo-200 rounded-md p-1'/>
+                        <Trash2Icon onClick={() => onClientDelete(index)} size={26} className='bg-indigo-50 hover:bg-indigo-200 rounded-md p-1'/>
                       </button>
                       <button title='Editar'>
                         <EditIcon size={26} className='bg-indigo-50 hover:bg-indigo-200 rounded-md p-1'/>

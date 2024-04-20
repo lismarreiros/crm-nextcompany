@@ -28,7 +28,7 @@ import Container from '@/components/kanban/components/Container';
 import Items from '@/components/kanban/components/Item';
 import Modal from '@/components/kanban/components/Modal';
 import Input from '@/components/kanban/components/Input';
-import { Button } from '@/components/kanban/components/Button';
+import { Button } from '@/components/shadcn/ui/button';
 import { Dialog, DialogContent } from '@/components/shadcn/ui/dialog';
 import InputModal from '@/components/kanban/components/Input';
 import { CirclePlus } from 'lucide-react';
@@ -49,11 +49,11 @@ type DNDType = {
 export default function Kanban() {
   const [containers, setContainers] = useState<DNDType[]>(
     [
-      // {
-      //   id: 'container-1',
-      //   title: 'Prospecção',
-      //   items: [],
-      // },
+      {
+        id: 'container-1',
+        title: 'Prospecção',
+        items: [],
+      }
       // {
       //   id: 'container-2',
       //   title: 'Qualificação',
@@ -406,15 +406,16 @@ export default function Kanban() {
         setShowModal={setShowAddContainerModal}
       >
         <div className="flex flex-col w-full items-start gap-y-4">
-          <h1 className="text-gray-800 text-3xl font-bold">Add Container</h1>
+          <h1 className="text-slate-700 text-xl font-bold">Adicionar Container</h1>
+          
           <Input
             type="text"
-            placeholder="Container Title"
+            placeholder="Digite o título"
             name="containername"
             value={containerName}
             onChange={(e) => setContainerName(e.target.value)}
           />
-          <Button onClick={onAddContainer}>Add container</Button>
+          <Button className='bg-indigo-700 hover:bg-indigo-500' onClick={onAddContainer}>Adicionar</Button>
         </div>
       </Modal>
 

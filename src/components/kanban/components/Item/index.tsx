@@ -2,7 +2,7 @@ import { UniqueIdentifier } from '@dnd-kit/core';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import clsx from 'clsx';
-import { Grip, Pencil } from 'lucide-react';
+import { ArrowUpRightIcon, Grip } from 'lucide-react';
 import { Badge } from '../../../shadcn/ui/badge';
 import { Link } from 'react-router-dom';
 
@@ -12,7 +12,7 @@ type ItemsType = {
   status: string;
 };
 
-const Items = ({ id, title, status }: ItemsType) => {
+const Items = ({ id, title, status}: ItemsType) => {
   const {
     attributes,
     listeners,
@@ -57,7 +57,7 @@ const Items = ({ id, title, status }: ItemsType) => {
           </p>
         </Badge> 
         <Link to='/detalhe' title='Ir para detalhes'>
-          <Pencil size={16} color="#4b5569" />
+          <ArrowUpRightIcon size={16} color="#4b5569" />
         </Link>
       </div>
 

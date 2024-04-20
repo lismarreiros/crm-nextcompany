@@ -4,7 +4,7 @@ import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import clsx from 'clsx';
 //import { Button } from '@/components/shadcn/ui/button';
-import { Grip, Plus } from 'lucide-react';
+import { Grip, GripIcon } from 'lucide-react';
 
 const Container = ({
   id,
@@ -39,7 +39,7 @@ const Container = ({
         isDragging && 'opacity-50',
       )}
     >
-      <div className="flex items-center justify-between w-[190px] my-2">
+      <div className="flex items-baseline justify-between w-[190px] my-2">
         <div className="flex flex-col gap-y-1 ">
           <h1 className="text-slate-800 text-lg font-semibold">{title}</h1>
           <p className="text-slate-400 text-sm">{description}</p>
@@ -49,7 +49,7 @@ const Container = ({
           className="text-xs rounded-xl"
           {...listeners}
         >
-          <Grip color="#4b5563"/>
+          <GripIcon size={22} className='text-slate-900'/>
         </button>
       </div>
       {children}

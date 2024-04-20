@@ -87,7 +87,6 @@ const ClientForm: React.FC<ClientFormProps> = ({ onClientSubmit }) => {
       if (data.erro) {
         throw new Error('CEP não encontrado.');
       }
-
       form.setValue('rua', data.logradouro);
       form.setValue('bairro', data.bairro);
       form.setValue('cidade', data.localidade);

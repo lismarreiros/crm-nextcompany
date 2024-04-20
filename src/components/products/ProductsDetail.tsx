@@ -7,13 +7,15 @@ interface ProductFormData {
   descricao: string;
   valor: string;
   codprod: string;
+  comissao: string;
 }
 
 type ProductsDetailProps = {
   data: ProductFormData[];
+  onProductDelete: (index: number) => void;
 }
 
-const ProductsDetail: React.FC<ProductsDetailProps> = ({ data }) => {
+const ProductsDetail: React.FC<ProductsDetailProps> = ({ data, onProductDelete }) => {
   const [openDialogs, setOpenDialogs] = useState<boolean[]>(new Array(data.length).fill(false));
 
   const handleOpenChange = (index: number) => {
@@ -29,7 +31,7 @@ const ProductsDetail: React.FC<ProductsDetailProps> = ({ data }) => {
           <DialogTrigger className='flex flex-col'>
             <h1 className='text-start hover:border-b border-indigo-200 mt-2'>{product.nome}</h1>
           </DialogTrigger>
-          <DialogContent className='h-[35%]'>
+          <DialogContent className='h-[45%]'>
             <div>
               <h1 className='font-bold text-lg mb-6'>{product.nome}</h1>
               <div className='flex flex-col gap-1 mb-4'>
@@ -40,12 +42,17 @@ const ProductsDetail: React.FC<ProductsDetailProps> = ({ data }) => {
                 <h1 className='text-xs'>Valor</h1>
                 <h1 className='font-light font-medium'>{product.valor}</h1>
               </div>
+              <div className='flex flex-col gap-1 mb-4'>
+                <h1 className='text-xs'>Alíquota de Comissão</h1>
+                <h1 className='font-light font-medium'>{product.comissao}%</h1>
+              </div>
               <div className='flex items-center gap-2 justify-end'>
                 <button title='Editar'>
                   <EditIcon size={26} className='bg-indigo-50 hover:bg-indigo-200 rounded-md p-1' />
                 </button>
                 <button title='Excluir'>
-                  <Trash2Icon 
+                  <Trash2Icon
+                    onClick={() => onProductDelete(index)}
                     size={26} 
                     className='bg-indigo-50 hover:bg-indigo-200 rounded-md p-1'
                   

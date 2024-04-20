@@ -25,10 +25,35 @@ interface ClientFormData {
 }
 
 const ClientPage = () => {
-  const [clients, setClient] = useState<ClientFormData[]>([]);
+  const [clients, setClient] = useState<ClientFormData[]>([
+    {
+      cpfOrCnpj:'111.111.111-60',
+      nomefantasia: 'Empresa Abc',
+      razao: 'Abc ltda',
+      ramo: 'Comércio',
+      status: 'Ativo',
+      nomeContato: 'Maria',
+      celular: '98888-8888',
+      fixo: '98888-9999',
+      email: 'maria@yahoo.com',
+      funcao: 'Sócia',
+      cep: '65400-590',
+      rua: 'Rua Marechal',
+      cidade: 'Teresina',
+      uf:'PI',
+      bairro: 'Porto Alegre',
+      numero: '1111'
+    }
+  ]);
 
   const handleClientSubmit = (data: ClientFormData) => {
     setClient([data, ...clients]);
+  };
+
+  const handleClientDelete = (index: number) => {
+    const listClient = [...clients];
+    listClient.splice(index, 1);
+    setClient(listClient);
   };
   
   return (
@@ -47,7 +72,7 @@ const ClientPage = () => {
           <div>
           <TableView
           data={clients}
-          // onDelete={() => handleTaskDelete(index)} 
+          onClientDelete={handleClientDelete} 
            />
           </div>
         </div>

@@ -15,12 +15,28 @@ interface ProductFormData {
   descricao: string; 
   valor: string;
   codprod: string;
+  comissao: string;
 }
+
 const Sidebar = () => {
-  const [products, setProducts] = useState<ProductFormData[]>([]);
+  const [products, setProducts] = useState<ProductFormData[]>([
+    {
+      nome: 'wCompany',
+      descricao: 'Aplicativo de gerenciamento empresarial',
+      valor: 'R$ 1599,99',
+      codprod: '1',
+      comissao: '15'
+    }
+  ]);
 
   const handleProductSubmit = (data: ProductFormData) => {
     setProducts([data, ...products]);
+  };
+
+  const handleProductDelete = (index: number) => {
+    const listProducts = [...products];
+    listProducts.splice(index, 1);
+    setProducts(listProducts);
   };
   
   return (
@@ -48,7 +64,9 @@ const Sidebar = () => {
           <AccordionContent className='flex flex-col items-start'>
             <div className='flex items-center gap-2 px-2'>
               <ProductsDetail 
-                data={products} />
+                data={products}
+                onProductDelete={handleProductDelete}
+              />
             </div>
             <ProductForm onProductSubmit={handleProductSubmit} />
           </AccordionContent>
