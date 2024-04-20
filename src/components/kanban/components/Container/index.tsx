@@ -4,14 +4,14 @@ import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import clsx from 'clsx';
 //import { Button } from '@/components/shadcn/ui/button';
-import { Grip, GripIcon } from 'lucide-react';
+import { GripIcon } from 'lucide-react';
 
 const Container = ({
   id,
   children,
   title,
   description,
-  onAddItem,
+//  onAddItem,
 }: ContainerProps) => {
   const {
     attributes,

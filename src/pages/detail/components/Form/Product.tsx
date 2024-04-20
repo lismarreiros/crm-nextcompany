@@ -67,6 +67,12 @@ const Product = () => {
     setUnitPrice(newValue);
   };
 
+  const handleProductDelete = (index: number) => {
+    const listProducts = [...selectedProducts];
+    listProducts.splice(index, 1);
+    setSelectedProducts(listProducts);
+  };
+
   const form = useForm<z.infer<typeof produtonegocio>>({
     resolver: zodResolver(produtonegocio),
   });
@@ -277,8 +283,8 @@ const Product = () => {
                 <TableCell>{product.discount}</TableCell>
                 <TableCell>{product.total}</TableCell>
                 <TableCell>
-                  <Button variant='ghost'>
-                    <Trash2Icon size={12}/>
+                  <Button variant='ghost' onClick={() => handleProductDelete(index)}>
+                    <Trash2Icon size={12} />
                   </Button>
                 </TableCell>
               </tr>
