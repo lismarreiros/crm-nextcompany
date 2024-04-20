@@ -7,7 +7,7 @@ type ComentarioCardProps = {
     onReopenModal: () => void;
 };
 
-const CardComentario: React.FC<ComentarioCardProps> = ({ comment, onDelete, onReopenModal }) => {
+const CardComment: React.FC<ComentarioCardProps> = ({ comment, onDelete, onReopenModal }) => {
   return (
     
     <div className="w-full mt-4 ml-1 relative before:absolute before:ml-7 before:h-full before:w-0.5 before:bg-indigo-100">
@@ -73,4 +73,4 @@ const CardComentario: React.FC<ComentarioCardProps> = ({ comment, onDelete, onRe
   );
 };
 
-export default CardComentario;
+export default CardComment;

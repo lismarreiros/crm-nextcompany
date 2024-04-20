@@ -10,12 +10,14 @@ const NavBar = () => {
     <div className='bg-white h-12 px-2 py-4 my-2 w-full sm:px-6
       lg:px-8 flex justify-between items-center'>
       {/* logo */}
-      <div>
-        <span className='text-xs text-slate-500 font-bold py-2'>Empresa</span>
-        <h1 className='text-lg font-bold text-slate-900'>NextCompany</h1>
-      </div>
-      <div>
-        <MenuTabs/>
+      <div className='flex items-end gap-8 px-2'>
+        <div>
+          <span className='text-xs text-slate-500 font-bold py-2'>Empresa</span>
+          <h1 className='text-lg font-bold text-slate-900'>NextCompany</h1>
+        </div>
+        <div>
+          <MenuTabs/>
+        </div>
       </div>
       <Popover>
         <PopoverTrigger asChild>

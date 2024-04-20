@@ -406,7 +406,7 @@ export default function Kanban() {
         setShowModal={setShowAddContainerModal}
       >
         <div className="flex flex-col w-full items-start gap-y-4">
-          <h1 className="text-slate-700 text-xl font-bold">Adicionar Container</h1>
+          <h1 className="text-slate-700 text-xl font-bold">Adicionar Fase</h1>
           
           <Input
             type="text"
@@ -450,7 +450,7 @@ export default function Kanban() {
         {/* <h1 className="text-gray-800 text-3xl font-bold">Dnd-kit Guide</h1> */}
         <Button onClick={() => setShowAddContainerModal(true)} className='gap-2 bg-indigo-700'>
           <CirclePlus size={16}/>
-          Container
+          Fase
         </Button>
         <Button onClick={() => setShowAddItemModal(true)} className='gap-2 bg-indigo-700'>
           <CirclePlus size={16}/>

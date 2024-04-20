@@ -7,24 +7,49 @@ function MenuTabs() {
     <div>
       <Menubar>
         <MenubarMenu>
+          <Link to='/'>
+            <MenubarTrigger>Kanban</MenubarTrigger>
+          </Link>
+        </MenubarMenu>
+        
+        <MenubarMenu>
           <MenubarTrigger >Configurações</MenubarTrigger>
+        
           <MenubarContent>
-            <MenubarItem> 
+            <Link to='/fluxo'>
+              <MenubarItem> 
               Fluxo de Oportunidade
-              {/* <MenubarShortcut>⌘T</MenubarShortcut> */}
-            </MenubarItem>
+                {/* <MenubarShortcut>⌘T</MenubarShortcut> */}
+              </MenubarItem>
+            </Link>
+        
             <MenubarSeparator />
-            <MenubarItem>Tipos de Atividade</MenubarItem>
-            <MenubarItem>Ramo de Atividade</MenubarItem>
+            <Link to='/tipoatividade'>
+              <MenubarItem>Tipos de Atividade</MenubarItem>
+            </Link>
+        
+            <Link to='/ramoatividade'>
+              <MenubarItem>Ramo de Atividade</MenubarItem>
+            </Link>
+        
             <MenubarSeparator />
-            <MenubarItem>Fonte</MenubarItem>
+            <Link to='/fonte'>
+              <MenubarItem>Fonte</MenubarItem>
+            </Link>
+     
           </MenubarContent>
         </MenubarMenu>
+
         <MenubarMenu>
           <MenubarTrigger>Negócios</MenubarTrigger>
+        
           <MenubarContent>
-            <MenubarItem>Negócios</MenubarItem>
+            <Link to='/negocios'>
+              <MenubarItem>Negócios</MenubarItem>
+            </Link>
+        
             <MenubarSeparator/>
+        
             <Link to='/produtos'>
               <MenubarItem>Produtos</MenubarItem>
             </Link>
@@ -32,6 +57,7 @@ function MenuTabs() {
             <Link to='/clientes'>
               <MenubarItem>Clientes</MenubarItem>
             </Link>
+        
           </MenubarContent>
         </MenubarMenu>
       </Menubar>

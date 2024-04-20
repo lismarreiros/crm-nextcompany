@@ -5,13 +5,13 @@ import {
   DialogContent,
   DialogTrigger,
 } from '@/components/shadcn/ui/dialog';
-import FormTarefa from './Tarefa/FormTarefa';
-import FormComentario from './Comentario/FormComentario';
-import CardComentario from './Comentario/CardComentario';
+import FormTask from './Task/FormTask';
 import React, { useState } from 'react';
-import CardTarefa from './Tarefa/CardTarefa';
+import CardTask from './Task/CardTask';
 import { Tabs, TabsList, TabsTrigger } from '@/components/shadcn/ui/tabs';
 import { TabsContent } from '@radix-ui/react-tabs';
+import CardComment from './Comment/CardComment';
+import FormComment from './Comment/FormComment';
 
 interface TaskFormData {
   id: string;
@@ -85,7 +85,7 @@ const Timeline: React.FC = () => {
             </Button>
           </DialogTrigger>
           <DialogContent className='h-[80%]'>
-            <FormTarefa onTaskSubmit={handleTaskSubmit}/>
+            <FormTask onTaskSubmit={handleTaskSubmit}/>
           </DialogContent>
         </Dialog>
           
@@ -96,7 +96,7 @@ const Timeline: React.FC = () => {
             </Button>
           </DialogTrigger>
           <DialogContent className='w-4/5 h-[40%]'>
-            <FormComentario onCommentSubmit={handleCommentSubmit} />
+            <FormComment onCommentSubmit={handleCommentSubmit} />
           </DialogContent>
         </Dialog>
         {/** barra de pesquisa (sem funcionar ainda!) + botões */}
@@ -116,7 +116,7 @@ const Timeline: React.FC = () => {
           <TabsContent value='timeline'>
             {/** Card Comentário */}
             {comments.map((comment, index) => (
-              <CardComentario key={index} 
+              <CardComment key={index} 
                 comment={comment} 
                 onDelete={() => handleCommentDelete(index)} 
                 onReopenModal={() => handleReopenModal(index)} />
@@ -124,7 +124,7 @@ const Timeline: React.FC = () => {
 
             {/** Tarefa Adicionada */}
             {tasks.map((formData, index) => (
-              <CardTarefa 
+              <CardTask 
                 key={index} 
                 formData={formData} 
                 onDelete={() => handleTaskDelete(index)} 
@@ -136,7 +136,7 @@ const Timeline: React.FC = () => {
           <TabsContent value='comentarios'>
             {/** Card Comentário */}
             {comments.map((comment, index) => (
-              <CardComentario key={index} 
+              <CardComment key={index} 
                 comment={comment} 
                 onDelete={() => handleCommentDelete(index)} 
                 onReopenModal={() => handleReopenModal(index)} />
@@ -145,7 +145,7 @@ const Timeline: React.FC = () => {
           <TabsContent value='tarefas'>
             {/** Tarefa Adicionada */}
             {tasks.map((formData, index) => (
-              <CardTarefa 
+              <CardTask 
                 key={index} 
                 formData={formData} 
                 onDelete={() => handleTaskDelete(index)} 

@@ -35,10 +35,22 @@ const ProductsDetail: React.FC<ProductsDetailProps> = ({ data, onProductDelete }
               <TableCell>{produto.nome}</TableCell>
               <TableCell>{produto.descricao}</TableCell>
               <TableCell>{produto.valor}</TableCell>
-              <TableCell>{produto.comissao}</TableCell>
+              <TableCell>{produto.comissao}%</TableCell>
               <TableCell>
                 <div className='flex gap-2'>
-
+                  <button title='Apagar'>
+                    <Trash2Icon 
+                      onClick={() => onProductDelete(index)} 
+                      size={26} 
+                      className='bg-indigo-50 hover:bg-indigo-200 rounded-md p-1'
+                    />
+                  </button>
+                  <button title='Editar'>
+                    <EditIcon
+                      size={26}
+                      className='bg-indigo-50 hover:bg-indigo-200 rounded-md p-1'
+                    />
+                  </button>
                 </div>
               </TableCell>
             </TableRow>

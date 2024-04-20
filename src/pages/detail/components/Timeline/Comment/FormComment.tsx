@@ -18,7 +18,7 @@ const schema = z.object({
   comentario: z.string().max(100, { message: 'Limite de caracteres atingido' }),
 });
 
-const FormComentario: React.FC<FormComentarioProps> = ({ onCommentSubmit }) => {
+const FormComment: React.FC<FormComentarioProps> = ({ onCommentSubmit }) => {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
@@ -56,4 +56,4 @@ const FormComentario: React.FC<FormComentarioProps> = ({ onCommentSubmit }) => {
   );
 };
 
-export default FormComentario;
+export default FormComment;
