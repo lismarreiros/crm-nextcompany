@@ -108,7 +108,7 @@ const ClientForm: React.FC<ClientFormProps> = ({ onClientSubmit }) => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger>
-        <Button variant='ghost' className='gap-1 mt-2 bg-indigo-50 hover:bg-indigo-100'> 
+        <Button variant='ghost' className='gap-1 mt-2 bg-indigo-50 hover:bg-indigo-200'> 
           <PlusIcon size={12}/> 
          Adicionar Cliente
         </Button>
