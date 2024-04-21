@@ -6,6 +6,7 @@ const ActivityBranch = () => {
       <h1 className='text-white font-bold p-2'>
         Ramo de Atividade
       </h1>
+     
     </div>
   );
 };
