@@ -1,5 +1,5 @@
 import { ProductForm } from '@/components/forms/productForm/productForm';
-import ProductsDetail from '@/components/products/ProductsDetail';
+import TableView from '@/components/products/TableView';
 import { CommandInput, Command } from '@/components/shadcn/ui/command';
 import React, { useState } from 'react';
 
@@ -45,7 +45,7 @@ const ProductPage = () => {
           </div>
         </div>
         <div>
-          <ProductsDetail
+          <TableView
             data={products}
             onProductDelete={handleProductDelete}  
           />

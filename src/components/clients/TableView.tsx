@@ -35,7 +35,7 @@ const TableView: React.FC<TableViewProps> = ({ data, onClientDelete }) => {
     <div className='m-4 rounded-md sm:border'>
       <Table>
         <TableHeader>
-          <TableRow className=''>
+          <TableRow>
             {Constants.LISTA_COLUNAS_CLIENTES.map((coluna) => (
               <TableHead className='h-10' key={coluna}>{coluna}</TableHead>
             ))}

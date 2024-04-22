@@ -5,10 +5,10 @@ import NavBar from './components/navbar/NavBar';
 import ProductPage from './pages/products/ProductPage';
 import OpportunityFlow from './pages/configurations/OpportunityFlow';
 import ActivityType from './pages/activities/ActivityType';
-import DashboardPage from './pages/dashboard/Dashboard';
 import ActivityBranch from './pages/activities/ActivityBranch';
 import Source from './pages/source/Source';
-import LeadPage from './pages/lead/LeadPage';
+import LeadPage from './pages/leads/LeadPage';
+import DashboardPage from './pages/dashboard/dashboard';
 
 function App() {
   return (

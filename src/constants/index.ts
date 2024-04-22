@@ -136,4 +136,16 @@ export default class Constants {
     'Alíquota Comissão',
   ];
 
+  static readonly LISTA_COLUNAS_NEGOCIOS = [
+    'ID',
+    'Descrição',
+    'Contato',
+    'Fase',
+    'Data Início',
+    'Previsão',
+    'Data Fechamento',
+    'Valor',
+    'Feedback'
+  ];
+
 }
