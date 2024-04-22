@@ -2,29 +2,30 @@ import { Button } from '@/components/shadcn/ui/button';
 import { Command, CommandInput } from '@/components/shadcn/ui/command';
 import { Input } from '@/components/shadcn/ui/input';
 import { Table, TableCell, TableHead, TableHeader, TableRow } from '@/components/shadcn/ui/table';
-import { PlusIcon, Trash2Icon } from 'lucide-react';
-import React, { useState } from 'react';
+import { PlusIcon,  Trash2Icon } from 'lucide-react';
+import { useState } from 'react';
 
-const listFlow = [
-  'Prospecção',
-  'Qualificação',
+const listTypes = [
+  'Almoço',
   'Apresentação',
-  'Proposta',
-  'Negociação',
-  'Conclusão'
+  'Ligação',
+  'Email',
+  'Reunião',
+  'Apresentação'
 ];
 
-const OpportunityFlow = () => {
-  const [flowValues, setFlowValues] = useState(listFlow);
+const ActivityType = () => {
+
+  const [typeValues, setTypeValues] = useState(listTypes);
 
   const addEmptyInput = () => {
-    setFlowValues([...flowValues, '']);
+    setTypeValues([...typeValues, '']);
   };
 
   const handleDelete = (index: number) => {
-    const listFlow = [...flowValues];
-    listFlow.splice(index, 1);
-    setFlowValues(listFlow);
+    const listTypes = [...typeValues];
+    listTypes.splice(index, 1);
+    setTypeValues(listTypes);
   };
 
   return (
@@ -32,7 +33,7 @@ const OpportunityFlow = () => {
       <div className='min-h-100 w-[50%] flex flex-col items-center overflow bg-white rounded-md py-4 mx-8 mb-4'>
         
         <div className='flex m-2 px-8 w-full justify-between items-center'>
-          <h1 className='text-md font-medium'>Fluxo de Oportunidade</h1>
+          <h1 className='text-md font-medium'>Tipos de Atividade</h1>
           <div className='flex gap-6 items-center'>
             <Button
               onClick={() => addEmptyInput}
@@ -52,15 +53,15 @@ const OpportunityFlow = () => {
               <TableHead>Descrição</TableHead>
               <TableHead >Ações</TableHead>
             </TableHeader>
-            {flowValues.map((flow, index) => (
+            {typeValues.map((type, index) => (
               <TableRow className='border-b-0' key={index}>
                 <TableCell>
                   <Input
-                    value={flow}
+                    value={type}
                     onChange={(e) => {
-                      const newValues = [...flowValues];
+                      const newValues = [...typeValues];
                       newValues[index] = e.target.value;
-                      setFlowValues(newValues);
+                      setTypeValues(newValues);
                     }}
                   />
                 </TableCell>
@@ -81,4 +82,4 @@ const OpportunityFlow = () => {
   );
 };
 
-export default OpportunityFlow;
+export default ActivityType;

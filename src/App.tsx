@@ -4,9 +4,9 @@ import ClientPage from './pages/clients/ClientPage';
 import NavBar from './components/navbar/NavBar';
 import ProductPage from './pages/products/ProductPage';
 import OpportunityFlow from './pages/configurations/OpportunityFlow';
-import ActivityType from './pages/activities/ActivityType';
-import ActivityBranch from './pages/activities/ActivityBranch';
-import Source from './pages/source/Source';
+import ActivityType from './pages/configurations/activities/ActivityType';
+import ActivityBranch from './pages/configurations/activities/ActivityBranch';
+import Source from './pages/configurations/source/Source';
 import LeadPage from './pages/leads/LeadPage';
 import DashboardPage from './pages/dashboard/dashboard';
 
