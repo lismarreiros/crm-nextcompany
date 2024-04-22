@@ -35,7 +35,7 @@ const sources = [
   { label: 'Website', value: 'website' },
   { label: 'Email Marketing', value: 'marketing' },
   { label: 'Evento', value: 'evento' },
-  { label: 'indicador', value: 'indicador'}
+  { label: 'Indicador', value: 'indicador'}
 ] as const;
 
 const Details = () => {
