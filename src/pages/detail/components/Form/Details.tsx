@@ -24,10 +24,25 @@ const clients = [
   { label: 'Empresa H', value: 'ko' },
   { label: 'Empresa I', value: 'zh' },
 ] as const;
-  
+
+const types = [
+  { label: 'Venda', value: 'venda' },
+  { label: 'Implementação', value: 'implementaco' },
+  { label: 'Pós-Venda', value: 'posvenda' },
+] as const;
+
+const sources = [
+  { label: 'Website', value: 'website' },
+  { label: 'Email Marketing', value: 'marketing' },
+  { label: 'Evento', value: 'evento' },
+  { label: 'indicador', value: 'indicador'}
+] as const;
+
 const Details = () => {
   const { control, getValues, setValue } = useFormContext();
-  const [open, setOpen] = useState(false);
+  const [openClientSelect, setOpenClientSelect] = useState(false);
+  const [openTypeSelect, setOpenTypeSelect] = useState(false);
+  const [openSourceSelect, setOpenSourceSelect] = useState(false);
 
   return (
     <div>
@@ -46,6 +61,67 @@ const Details = () => {
                   {...field}
                 />
               </FormControl>
+            </FormItem>
+          )}
+        />
+
+        {/** tipo negocio */}
+        <FormField
+          control={control}
+          name='idtiponegocio'
+          render={({ field }) => (
+            <FormItem className='flex flex-col'>
+              <FormLabel className='text-slate-900 pb-2.5'>Tipo Negócio</FormLabel>
+              <Popover open={openTypeSelect} onOpenChange={setOpenTypeSelect}>
+                <PopoverTrigger asChild>
+                  <FormControl>
+                    <Button
+                      aria-expanded={openClientSelect}
+                      variant='outline' 
+                      role='combobox'
+                      className={cn('w-full h-10 justify-between bg-slate-50 focus:bg-white text-muted-foreground font-normal',
+                        !field.value && 'text-muted-foreground font-normal'
+                      )}>
+                      {field.value 
+                        ? types.find(
+                          (type) => type.value === field.value
+                        )?.label
+                        : 'Selecione um tipo'
+                      }
+                      <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
+                    </Button>
+                  </FormControl>
+                </PopoverTrigger>
+                <PopoverContent className='w-inherit p-0'>
+                  <Command>
+                    <CommandInput placeholder='Procure um tipo' />
+                    <CommandEmpty>Não encontrado</CommandEmpty>
+                    <CommandList>
+                      <CommandGroup>
+                        {types.map((type) => (
+                          <CommandItem 
+                            value={type.label}
+                            key={type.value}
+                            onSelect={() => {
+                              setValue('idtiponegocio', type.value);
+                              setOpenTypeSelect(false);
+                            }}
+                          >
+                            <Check
+                              className={cn('mr-2 h-4 w-4',
+                                type.value === field.value
+                                  ? 'opacity-100'
+                                  : 'opacity-0'
+                              )}
+                            />
+                            <span>{type.label}</span>
+                          </CommandItem>
+                        ))}
+                      </CommandGroup>
+                    </CommandList>
+                  </Command>
+                </PopoverContent>
+              </Popover>
             </FormItem>
           )}
         />
@@ -77,11 +153,11 @@ const Details = () => {
             render={({ field }) => (
               <FormItem className='flex flex-col w-1/2'>
                 <FormLabel className='text-slate-900 pb-2.5'>Cliente</FormLabel>
-                <Popover open={open} onOpenChange={setOpen}>
+                <Popover open={openClientSelect} onOpenChange={setOpenClientSelect}>
                   <PopoverTrigger asChild>
                     <FormControl>
                       <Button
-                        aria-expanded={open}
+                        aria-expanded={openTypeSelect}
                         variant='outline' 
                         role='combobox'
                         className={cn('w-full h-10 justify-between bg-slate-50 focus:bg-white text-muted-foreground font-normal',
@@ -109,7 +185,7 @@ const Details = () => {
                               key={client.value}
                               onSelect={() => {
                                 setValue('client', client.value);
-                                setOpen(false);
+                                setOpenClientSelect(false);
                               }}
                             >
                               <Check
@@ -239,16 +315,96 @@ const Details = () => {
             </FormItem>
           )}
         />
+        <div className='flex items-center gap-2'>
 
-        {/** Fonte */}
+          {/* idindicador @ */}
+          <FormField
+            control={control}
+            name="idindicador"
+            render={({ field }) => (
+              <FormItem className='flex flex-col w-full'>
+                <FormLabel className='text-slate-900 pb-2.5'>Indicador</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder=""
+                    className="resize-none text-muted-foreground bg-slate-50 hover:bg-slate-100 hover:text-slate-900  focus:bg-white"
+                    {...field}
+                  />
+                </FormControl>
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={control}
+            name='idfontenegocio'
+            render={({ field }) => (
+              <FormItem className='flex flex-col w-1/2'>
+                <FormLabel className='text-slate-900 pb-2.5'>Fonte Negócio</FormLabel>
+                <Popover open={openSourceSelect} onOpenChange={setOpenSourceSelect}>
+                  <PopoverTrigger asChild>
+                    <FormControl>
+                      <Button
+                        aria-expanded={openSourceSelect}
+                        variant='outline' 
+                        role='combobox'
+                        className={cn('w-full h-10 justify-between bg-slate-50 focus:bg-white text-muted-foreground font-normal',
+                          !field.value && 'text-muted-foreground font-normal'
+                        )}>
+                        {field.value 
+                          ? sources.find(
+                            (source) => source.value === field.value
+                          )?.label
+                          : 'Selecione'
+                        }
+                        <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
+                      </Button>
+                    </FormControl>
+                  </PopoverTrigger>
+                  <PopoverContent className='w-inherit p-0'>
+                    <Command>
+                      <CommandInput placeholder='Procure' />
+                      <CommandEmpty>Não encontrado</CommandEmpty>
+                      <CommandList>
+                        <CommandGroup>
+                          {sources.map((source) => (
+                            <CommandItem 
+                              value={source.label}
+                              key={source.value}
+                              onSelect={() => {
+                                setValue('idfontenegocio', source.value);
+                                setOpenSourceSelect(false);
+                              }}
+                            >
+                              <Check
+                                className={cn('mr-2 h-4 w-4',
+                                  source.value === field.value
+                                    ? 'opacity-100'
+                                    : 'opacity-0'
+                                )}
+                              />
+                              <span>{source.label}</span>
+                            </CommandItem>
+                          ))}
+                        </CommandGroup>
+                      </CommandList>
+                    </Command>
+                  </PopoverContent>
+                </Popover>
+              </FormItem>
+            )}
+          />
+        </div>
+
+        {/** Observação */}
         <FormField
           control={control}
-          name="idfontenegocio"
+          name="observacao"
           render={({ field }) => (
             <FormItem className='flex flex-col w-full'>
-              <FormLabel className='text-slate-900 pb-2.5'>Fonte</FormLabel>
+              <FormLabel className='text-slate-900 pb-2.5'>Observação</FormLabel>
               <FormControl>
-                <Input
+                <Textarea
                   placeholder=''
                   className="resize-none bg-slate-50 hover:bg-slate-100 focus:bg-white hover:text-slate-900 text-muted-foreground"
                   {...field}
