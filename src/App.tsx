@@ -4,12 +4,13 @@ import ClientPage from './pages/clients/ClientPage';
 import NavBar from './components/navbar/NavBar';
 import ProductPage from './pages/products/ProductPage';
 import OpportunityFlow from './pages/configurations/flow/OpportunityFlow';
-import ActivityType from './pages/configurations/activities/ActivityType';
-import ActivityBranch from './pages/configurations/activities/ActivityBranch';
+import ActivityType from './pages/configurations/activities/type/ActivityType';
+import ActivityBranch from './pages/configurations/activities/branch/ActivityBranch';
 import Source from './pages/configurations/source/Source';
 import LeadPage from './pages/leads/LeadPage';
 import DashboardPage from './pages/dashboard/dashboard';
 import { OpportunityFlowProvider } from './pages/configurations/flow/OpportunityFlowContext';
+import { ActivityBranchProvider } from './pages/configurations/activities/branch/ActivityBranchContext';
 
 function App() {
   return (
@@ -24,16 +25,25 @@ function App() {
               <DashboardPage />
             </OpportunityFlowProvider>
           } />
-          <Route path='/detalhe' element={<DetailPage/>} />
-          <Route path='/clientes' element={<ClientPage/>} />
-          <Route path='/produtos'element={<ProductPage/>} />
           <Route path='/fluxo' element={
             <OpportunityFlowProvider>
               <OpportunityFlow/>
             </OpportunityFlowProvider>
           } />
+          <Route path='/clientes' element={
+            <ActivityBranchProvider>
+              <ClientPage/>
+            </ActivityBranchProvider>
+          } />
+          <Route path='/ramoatividade' element={
+            <ActivityBranchProvider>
+              <ActivityBranch/>
+            </ActivityBranchProvider>
+          } />
+          
+          <Route path='/detalhe' element={<DetailPage/>} />
+          <Route path='/produtos'element={<ProductPage/>} />
           <Route path='/tipoatividade' element={<ActivityType />} />
-          <Route path='/ramoatividade' element={<ActivityBranch/>} />
           <Route path='/fonte' element={<Source />} />
           <Route path='/negocios' element={<LeadPage/>} />
         </Routes>

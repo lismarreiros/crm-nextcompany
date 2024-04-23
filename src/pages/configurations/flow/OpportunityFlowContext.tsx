@@ -23,7 +23,7 @@ export const OpportunityFlowProvider: React.FC<{ children: React.ReactNode }> = 
   const [opportunityFlows, setOpportunityFlows] = useState<OpportunityFlow[]>([]);
 
   const addOpportunityFlow = (flows: OpportunityFlow[]) => {
-    setOpportunityFlows([...opportunityFlows, ...flows]);
+    setOpportunityFlows([...flows]);
   };
 
   return (

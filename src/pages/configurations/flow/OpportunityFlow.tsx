@@ -90,6 +90,7 @@ const OpportunityFlow = () => {
                 <TableRow className='border-b-0' key={field.id}>
                   <TableCell className='w-1/5'>
                     <input
+                      type='number'
                       className='w-full h-10 border rounded-lg p-2 focus:outline-none hover:bg-slate-50'
                       {...register(`flow.${index}.ordem`)}
                     />

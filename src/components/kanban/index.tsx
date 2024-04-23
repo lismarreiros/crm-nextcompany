@@ -58,26 +58,18 @@ export default function Kanban() {
   const [showAddContainerModal, setShowAddContainerModal] = useState(false);
   const [showAddItemModal, setShowAddItemModal] = useState(false);
 
-  // Atualizar os containers sempre que os fluxos de oportunidade mudarem
   useEffect(() => {
-  // Mesclar os fluxos de oportunidade padrão com os dados existentes
-    const mergedFlows = opportunityFlows.map((flow, index) => ({
+    // Transformar os fluxos de oportunidade em containers
+    const newContainers = opportunityFlows.map((flow, index) => ({
       id: `container-${index + 1}`,
       title: flow.descricao,
       items: [],
     }));
-
-    // Definir os containers com os fluxos mesclados
-    setContainers((prevContainers) => {
-    // Se já houver containers definidos, apenas mantenha-os e adicione os novos
-      if (prevContainers.length > 0) {
-        return [...prevContainers, ...mergedFlows];
-      }
-      // Se não houver containers definidos, use apenas os fluxos mesclados
-      return mergedFlows;
-    });
+  
+    // Definir os containers com os novos dados
+    setContainers(newContainers);
   }, [opportunityFlows]);
-
+  
   const onAddContainer = () => {
     if (!containerName) return;
     const id = `container-${uuidv4()}`;
@@ -438,10 +430,10 @@ export default function Kanban() {
       {/** Botão de Adicionar Novo Negócio */}
       <div className="flex items-center justify-start absolute gap-2">
         {/* <h1 className="text-gray-800 text-3xl font-bold">Dnd-kit Guide</h1> */}
-        <Button onClick={() => setShowAddContainerModal(true)} className='gap-2 bg-indigo-700'>
+        {/* <Button onClick={() => setShowAddContainerModal(true)} className='gap-2 bg-indigo-700'>
           <CirclePlus size={16}/>
           Fase
-        </Button>
+        </Button> */}
         <Button onClick={() => setShowAddItemModal(true)} className='gap-2 bg-indigo-700'>
           <CirclePlus size={16}/>
           Negócio

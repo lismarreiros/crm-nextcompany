@@ -4,6 +4,7 @@ import { Table, TableCell, TableHead, TableHeader, TableRow } from '@/components
 import { PlusIcon, Trash2Icon } from 'lucide-react';
 import { SubmitHandler, useFieldArray, useForm } from 'react-hook-form';
 import React, { useState } from 'react';
+import { useActivityBranchContext } from './ActivityBranchContext';
 
 type FormValuesBranch = {
   branch: { 
@@ -13,6 +14,7 @@ type FormValuesBranch = {
 }
 
 const ActivityBranch = () => {
+  const { addActivityBranch } = useActivityBranchContext();
   const [nextId, setNextId] = useState(4);
   const { register, formState: { errors }, handleSubmit, control } = useForm<FormValuesBranch>({
     defaultValues: {
@@ -32,7 +34,10 @@ const ActivityBranch = () => {
     }
   });
 
-  const onSubmit: SubmitHandler<FormValuesBranch> = (data) => console.log(data);
+  const onSubmit = (data: FormValuesBranch) => {
+    console.log(data);
+    addActivityBranch(data.branch);
+  };
 
   return (
     <div className='flex min-h-screen bg-indigo-200 p-8 justify-center'>

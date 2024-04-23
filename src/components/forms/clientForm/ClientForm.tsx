@@ -118,7 +118,7 @@ const ClientForm: React.FC<ClientFormProps> = ({ onClientSubmit }) => {
           <DialogTitle>
             <div className='flex items-center gap-2 font-medium text-md'>
               <UsersIcon size={22} />
-                  Novo Cliente
+                Novo Cliente
             </div>
           </DialogTitle>
         </DialogHeader>
@@ -204,7 +204,7 @@ const ClientForm: React.FC<ClientFormProps> = ({ onClientSubmit }) => {
                   </FormItem>
                 )}
               />
-
+              {/** Status */}
               <FormField
                 control={form.control}
                 name='status'
@@ -212,9 +212,9 @@ const ClientForm: React.FC<ClientFormProps> = ({ onClientSubmit }) => {
                   <FormItem>
                     <FormLabel>Status</FormLabel>
                     <FormControl>
-                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                      <Select onValueChange={field.onChange} defaultValue='Ativo'>
                         <SelectTrigger>
-                          <SelectValue placeholder=""/>
+                          <SelectValue/>
                         </SelectTrigger>
                         <SelectContent>
                           <SelectGroup>
