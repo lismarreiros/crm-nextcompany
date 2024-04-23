@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 // DnD
@@ -33,6 +33,7 @@ import { Dialog, DialogContent } from '@/components/shadcn/ui/dialog';
 import InputModal from '@/components/kanban/components/Input';
 import { CirclePlus } from 'lucide-react';
 import { InputMasks } from '../shadcn/ui/input';
+import { useOpportunityFlowContext } from '@/pages/configurations/flow/OpportunityFlowContext';
 
 // const inter = Inter({ subsets: ['latin'] });
 
@@ -47,39 +48,8 @@ type DNDType = {
 };
 
 export default function Kanban() {
-  const [containers, setContainers] = useState<DNDType[]>(
-    [
-      {
-        id: 'container-1',
-        title: 'Prospecção',
-        items: [],
-      }
-      // {
-      //   id: 'container-2',
-      //   title: 'Qualificação',
-      //   items: [],
-      // },
-      // {
-      //   id: 'container-3',
-      //   title: 'Apresentação',
-      //   items: [],
-      // },
-      // {
-      //   id: 'container-4',
-      //   title: 'Proposta',
-      //   items: [],
-      // },
-      // {
-      //   id: 'container-5',
-      //   title: 'Negociação',
-      //   items: [],
-      // },
-      // {
-      //   id: 'container-6',
-      //   title: 'Conclusão',
-      //   items: [],
-      // }
-    ]);
+  const { opportunityFlows } = useOpportunityFlowContext();
+  const [containers, setContainers] = useState<DNDType[]>([]);
   const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null);
   const [currentContainerId, setCurrentContainerId] =
     useState<UniqueIdentifier>();
@@ -87,6 +57,26 @@ export default function Kanban() {
   const [itemName, setItemName] = useState('');
   const [showAddContainerModal, setShowAddContainerModal] = useState(false);
   const [showAddItemModal, setShowAddItemModal] = useState(false);
+
+  // Atualizar os containers sempre que os fluxos de oportunidade mudarem
+  useEffect(() => {
+  // Mesclar os fluxos de oportunidade padrão com os dados existentes
+    const mergedFlows = opportunityFlows.map((flow, index) => ({
+      id: `container-${index + 1}`,
+      title: flow.descricao,
+      items: [],
+    }));
+
+    // Definir os containers com os fluxos mesclados
+    setContainers((prevContainers) => {
+    // Se já houver containers definidos, apenas mantenha-os e adicione os novos
+      if (prevContainers.length > 0) {
+        return [...prevContainers, ...mergedFlows];
+      }
+      // Se não houver containers definidos, use apenas os fluxos mesclados
+      return mergedFlows;
+    });
+  }, [opportunityFlows]);
 
   const onAddContainer = () => {
     if (!containerName) return;

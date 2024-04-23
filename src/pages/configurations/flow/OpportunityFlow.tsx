@@ -2,8 +2,9 @@ import { Button } from '@/components/shadcn/ui/button';
 import { Command, CommandInput } from '@/components/shadcn/ui/command';
 import { Table, TableCell, TableHead, TableHeader, TableRow } from '@/components/shadcn/ui/table';
 import { PlusIcon, Trash2Icon } from 'lucide-react';
-import { SubmitHandler, useFieldArray, useForm } from 'react-hook-form';
+import { useFieldArray, useForm } from 'react-hook-form';
 import { useState } from 'react';
+import { useOpportunityFlowContext } from './OpportunityFlowContext';
 
 type FormValues = {
   flow: { 
@@ -14,6 +15,7 @@ type FormValues = {
 }
 
 const OpportunityFlow = () => {
+  const { addOpportunityFlow } = useOpportunityFlowContext();
   const [nextId, setNextId] = useState(7);
   const [nextOrder, setNextOrder] = useState(7);
   const { register, formState: { errors }, handleSubmit, control  } = useForm<FormValues>({
@@ -37,7 +39,16 @@ const OpportunityFlow = () => {
     }
   });
 
-  const onSubmit: SubmitHandler<FormValues> = (data) => console.log(data);
+  const onSubmit = (data: FormValues) => {
+    console.log(data);
+    addOpportunityFlow(data.flow);
+  };
+
+  // const onSubmit = ( data: FormValues ) => {
+  //   data.flow.forEach(flow => {
+  //     addOpportunityFlow(flow);
+  //   });
+  // };
 
   return (
     <div className='flex min-h-screen bg-indigo-200 p-8 justify-center'>
@@ -103,7 +114,7 @@ const OpportunityFlow = () => {
             <Button
               type='submit'
               variant='ghost' 
-              className='mt-4 mx-4 bg-indigo-50 hover:bg-indigo-200'
+              className='mt-4 mx-4 px-2 bg-indigo-50 hover:bg-indigo-200'
             >
               Salvar Alterações
             </Button>
