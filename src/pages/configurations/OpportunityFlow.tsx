@@ -1,30 +1,30 @@
 import { Button } from '@/components/shadcn/ui/button';
 import { Command, CommandInput } from '@/components/shadcn/ui/command';
-import { Input } from '@/components/shadcn/ui/input';
 import { Table, TableCell, TableHead, TableHeader, TableRow } from '@/components/shadcn/ui/table';
 import { PlusIcon, Trash2Icon } from 'lucide-react';
 import { SubmitHandler, useFieldArray, useForm } from 'react-hook-form';
 import { useState } from 'react';
-import { Form, FormControl, FormField, FormItem } from '@/components/shadcn/ui/form';
 
 type FormValues = {
   flow: { 
-    idfluxodeoportunidade: string,
+    idfluxodeoportunidade: number,
+    ordem: number,
     descricao: string 
   }[]
 }
 
 const OpportunityFlow = () => {
-  const [nextId, setNextId] = useState('7');
+  const [nextId, setNextId] = useState(7);
+  const [nextOrder, setNextOrder] = useState(7);
   const { register, formState: { errors }, handleSubmit, control  } = useForm<FormValues>({
     defaultValues: {
       flow: [
-        { idfluxodeoportunidade: '1', descricao: 'Prospecção'},
-        { idfluxodeoportunidade: '2', descricao: 'Qualificação' },
-        { idfluxodeoportunidade: '3', descricao: 'Apresentação'},
-        { idfluxodeoportunidade: '4', descricao: 'Proposta' },
-        { idfluxodeoportunidade: '5', descricao: 'Negociação' },
-        { idfluxodeoportunidade: '6', descricao: 'Conclusão' }
+        { idfluxodeoportunidade: 1, ordem: 1,  descricao: 'Prospecção'},
+        { idfluxodeoportunidade: 2, ordem: 2, descricao: 'Qualificação' },
+        { idfluxodeoportunidade: 3, ordem: 3, descricao: 'Apresentação'},
+        { idfluxodeoportunidade: 4, ordem: 4, descricao: 'Proposta' },
+        { idfluxodeoportunidade: 5, ordem: 5,descricao: 'Negociação' },
+        { idfluxodeoportunidade: 6, ordem: 6, descricao: 'Conclusão' }
       ],
     }
   });
@@ -47,12 +47,15 @@ const OpportunityFlow = () => {
           <h1 className='text-md font-medium'>Fluxo de Oportunidade</h1>
           <div className='flex gap-6 items-center'>
             <Button
+              type='button'
               onClick={() => { 
                 append({
-                  idfluxodeoportunidade: nextId.toString(),
-                  descricao: 'teste'
+                  idfluxodeoportunidade: nextId,
+                  ordem: nextOrder,
+                  descricao: ''
                 });
-                setNextId(nextId + 1);
+                setNextId(prevId => prevId + 1);
+                setNextOrder(prevOrder => prevOrder + 1);
               }}
               variant='ghost' 
               className='gap-1 p-4 bg-indigo-50 hover:bg-indigo-200'> 
@@ -64,45 +67,47 @@ const OpportunityFlow = () => {
           </div>
         </div>
         
-        <div className='px-4 py-2 w-[80%] m-4 border rounded-lg'>
-          <Form {...form}>
-            <form onSubmit={handleSubmit(onSubmit)}>
-              <Table>
-                <TableHeader>
-                  <TableHead>Ordem</TableHead>
-                  <TableHead>Descrição</TableHead>
-                  <TableHead>Ações</TableHead>
-                </TableHeader>
-                {fields.map((field, index) => (
-                  <TableRow className='border-b-0' key={field.id}>
-                    <TableCell>{field.idfluxodeoportunidade}</TableCell>
-                    <TableCell>
-                      <FormField
-                        control={control}
-                        name={`flow.${index}.descricao`}
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormControl>
-                              <Input
-                                {...field}
-                              />
-                            </FormControl>
-                          </FormItem>
-                        )} />
-                    </TableCell>
-                    <TableCell>
-                      <button title='Apagar'>
-                        <Trash2Icon
-                          onClick={() => remove(index)}
-                          size={26} 
-                          className='bg-indigo-50 hover:bg-indigo-200 rounded-md p-1'/>
-                      </button>              
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </Table>
-            </form>
-          </Form>
+        <div className='flex mx-4 my-2 py-2 w-[80%] m-4 border rounded-lg'>
+          <form onSubmit={handleSubmit(onSubmit)} className='w-full'>
+            <Table>
+              <TableHeader>
+                <TableHead>Ordem</TableHead>
+                <TableHead>Descrição</TableHead>
+                <TableHead>Ações</TableHead>
+              </TableHeader>
+              {fields.map((field, index) => (
+                <TableRow className='border-b-0' key={field.id}>
+                  <TableCell className='w-1/5'>
+                    <input
+                      className='w-full h-10 border rounded-lg p-2 focus:outline-none hover:bg-slate-50'
+                      {...register(`flow.${index}.ordem`)}
+                    />
+                  </TableCell>
+                  <TableCell className='w-full'>
+                    <input
+                      className='w-full h-10 border rounded-lg p-2 focus:outline-none hover:bg-slate-50'
+                      {...register(`flow.${index}.descricao`)}
+                    />
+                  </TableCell>
+                  <TableCell>
+                    <button type='button' title='Apagar'>
+                      <Trash2Icon
+                        onClick={() => remove(index)}
+                        size={26} 
+                        className='bg-indigo-50 hover:bg-indigo-200 rounded-md p-1'/>
+                    </button>              
+                  </TableCell>
+                </TableRow>
+              ))}
+            </Table>
+            <Button
+              type='submit'
+              variant='ghost' 
+              className='mt-4 mx-4 bg-indigo-50 hover:bg-indigo-200'
+            >
+              Salvar Alterações
+            </Button>
+          </form>
           <p>{ errors.flow?.message }</p>
         </div>
       </div>

@@ -1,41 +1,59 @@
 import { Button } from '@/components/shadcn/ui/button';
 import { Command, CommandInput } from '@/components/shadcn/ui/command';
-import { Input } from '@/components/shadcn/ui/input';
 import { Table, TableCell, TableHead, TableHeader, TableRow } from '@/components/shadcn/ui/table';
 import { PlusIcon, Trash2Icon } from 'lucide-react';
+import { SubmitHandler, useFieldArray, useForm } from 'react-hook-form';
 import React, { useState } from 'react';
 
-const listBranches = [
-  'Indústria',
-  'Comércio',
-  'Serviços',
-];
+type FormValuesBranch = {
+  branch: { 
+    idramoatividade: number,
+    descricao: string 
+  }[]
+}
 
 const ActivityBranch = () => {
-  const [branchValues, setBranchValues] = useState(listBranches);
+  const [nextId, setNextId] = useState(4);
+  const { register, formState: { errors }, handleSubmit, control } = useForm<FormValuesBranch>({
+    defaultValues: {
+      branch: [
+        { idramoatividade: 1, descricao: 'Indústria' },
+        { idramoatividade: 2, descricao: 'Comércio' },
+        { idramoatividade: 3, descricao: 'Serviços' }
+      ],
+    }
+  });
+  
+  const { fields, append, remove } = useFieldArray({
+    name: 'branch',
+    control,
+    rules: {
+      required: 'Cadastre pelo menos 1 ramo de atividade'
+    }
+  });
 
-  const addEmptyInput = () => {
-    setBranchValues([...branchValues, '']);
-  };
-
-  const handleDelete = (index: number) => {
-    const listBranches = [...branchValues];
-    listBranches.splice(index, 1);
-    setBranchValues(listBranches);
-  };
+  const onSubmit: SubmitHandler<FormValuesBranch> = (data) => console.log(data);
 
   return (
     <div className='flex min-h-screen bg-indigo-200 p-8 justify-center'>
       <div className='min-h-100 w-[50%] flex flex-col items-center overflow bg-white rounded-md py-4 mx-8 mb-4'>
       
         <div className='flex m-2 px-8 w-full justify-between items-center'>
-          <h1 className='text-md font-medium'>Ramo de Atividade </h1>
+          <h1 className='text-md font-medium'> Ramo de Atividade </h1>
           <div className='flex gap-6 items-center'>
             <Button
-              onClick={() => addEmptyInput}
+              type='button'
+              onClick={() => {
+                append({
+                  idramoatividade: nextId,
+                  descricao: ''
+                });
+                setNextId(prevId => prevId + 1);
+              }}
               variant='ghost' 
               className='gap-1 p-4 bg-indigo-50 hover:bg-indigo-200'> 
-              <PlusIcon size={12}/> Adicionar 
+              <PlusIcon size={12}/> 
+              Adicionar 
             </Button>
             <Command className='flex items-center rounded-lg border-2 p-1 gap-1'>
               <CommandInput placeholder='Pesquisar'/>
@@ -43,35 +61,41 @@ const ActivityBranch = () => {
           </div>
         </div>
       
-        <div className='p-1 w-[80%] m-4 border rounded-lg'>
-          <Table>
-            <TableHeader>
-              <TableHead>Descrição</TableHead>
-              <TableHead >Ações</TableHead>
-            </TableHeader>
-            {branchValues.map((branch, index) => (
-              <TableRow className='border-b-0' key={index}>
-                <TableCell>
-                  <Input
-                    value={branch}
-                    onChange={(e) => {
-                      const newValues = [...branchValues];
-                      newValues[index] = e.target.value;
-                      setBranchValues(newValues);
-                    }}
-                  />
-                </TableCell>
-                <TableCell>
-                  <button title='Apagar'>
-                    <Trash2Icon 
-                      onClick={() => handleDelete(index)}
-                      size={26} 
-                      className='bg-indigo-50 hover:bg-indigo-200 rounded-md p-1'/>
-                  </button>  
-                </TableCell>
-              </TableRow>
-            ))}
-          </Table>
+        <div className='flex mx-4 my-4 py-2 w-[80%] m-4 border rounded-lg'>
+          <form onSubmit={handleSubmit(onSubmit)} className='w-full'>
+            <Table>
+              <TableHeader>
+                <TableHead>Descrição</TableHead>
+                <TableHead>Ações</TableHead>
+              </TableHeader>
+              {fields.map((field, index) => (
+                <TableRow className='border-b-0' key={field.id}>
+                  <TableCell>
+                    <input
+                      className='w-full h-10 border rounded-lg p-2 focus:outline-none hover:bg-slate-50'
+                      {...register(`branch.${index}.descricao`)}
+                    />
+                  </TableCell>
+                  <TableCell>
+                    <button  type='button' title='Apagar'>
+                      <Trash2Icon 
+                        onClick={() => remove(index)}
+                        size={26} 
+                        className='bg-indigo-50 hover:bg-indigo-200 rounded-md p-1'/>
+                    </button>  
+                  </TableCell>
+                </TableRow>
+              ))}
+            </Table>
+            <Button 
+              type='submit'
+              variant='ghost'
+              className='mt-4 mx-4 gap-1 p-4 bg-indigo-50 hover:bg-indigo-200'
+            >
+              Salvar Alterações
+            </Button>
+          </form>
+          <p>{errors.branch?.message}</p>
         </div>
       </div>
     </div>
