@@ -11,6 +11,7 @@ import LeadPage from './pages/leads/LeadPage';
 import DashboardPage from './pages/dashboard/dashboard';
 import { OpportunityFlowProvider } from './pages/configurations/flow/OpportunityFlowContext';
 import { ActivityBranchProvider } from './pages/configurations/activities/branch/ActivityBranchContext';
+import { ActivityTypeProvider } from './pages/configurations/activities/type/ActivityTypeContext';
 
 function App() {
   return (
@@ -41,10 +42,19 @@ function App() {
             </ActivityBranchProvider>
           } />
           
-          <Route path='/detalhe' element={<DetailPage/>} />
           <Route path='/produtos'element={<ProductPage/>} />
-          <Route path='/tipoatividade' element={<ActivityType />} />
           <Route path='/fonte' element={<Source />} />
+          
+          <Route path='/detalhe' element={
+            <ActivityTypeProvider>
+              <DetailPage/>
+            </ActivityTypeProvider>
+          } />
+          <Route path='/tipoatividade' element={
+            <ActivityTypeProvider>
+              <ActivityType />
+            </ActivityTypeProvider>
+          } />
           <Route path='/negocios' element={<LeadPage/>} />
         </Routes>
       </div>

@@ -1,11 +1,10 @@
 /* eslint-disable no-extra-boolean-cast */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import ValidationCpforCnpj from '@/validations/cpfCnpj/validationCpfCnpj';
 import CustomInputMask from '@/utils/customInputMask';
-
 import { PlusIcon, UsersIcon } from 'lucide-react';
 import { Button } from '@/components/shadcn/ui/button';
 import {
@@ -18,7 +17,6 @@ import {
 } from '@/components/shadcn/ui/dialog';
 import { Input, InputMasks } from '@/components/shadcn/ui/input';
 import { Form, FormControl, FormField, FormLabel, FormItem, FormMessage } from '@/components/shadcn/ui/form';
-
 import {
   Select,
   SelectContent,
@@ -30,11 +28,17 @@ import {
 } from '@/components/shadcn/ui/select';
 
 import Constants from '@/constants';
+import { useActivityBranchContext } from '@/pages/configurations/activities/branch/ActivityBranchContext';
 
 type ClientFormProps = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onClientSubmit: (data: any) => void;
 };
+
+type BranchType = {
+  idramoatividade: string;
+  descricao: string;
+}[]
 
 {/* validação */}
 const schema = z.object({
@@ -61,6 +65,8 @@ const schema = z.object({
 });
 
 const ClientForm: React.FC<ClientFormProps> = ({ onClientSubmit }) => {
+  const { activityBranches } = useActivityBranchContext();
+  const [branches, setBranches] = useState<BranchType>([]);
   const [open, setOpen] = useState(false);
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
@@ -104,6 +110,14 @@ const ClientForm: React.FC<ClientFormProps> = ({ onClientSubmit }) => {
       pesquisarCep(cep);
     }
   };
+
+  useEffect(() => {
+    const newBranches = activityBranches.map((branch, index) => ({
+      idramoatividade: `${index + 1}`,
+      descricao: branch.descricao,
+    }));
+    setBranches(newBranches);
+  }, [activityBranches]);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -185,15 +199,15 @@ const ClientForm: React.FC<ClientFormProps> = ({ onClientSubmit }) => {
                   <FormItem>
                     <FormLabel>Ramo Atividade</FormLabel>
                     <FormControl>
-                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                      <Select onValueChange={field.onChange}>
                         <SelectTrigger>
                           <SelectValue placeholder="Selecione o ramo de atividade"/>
                         </SelectTrigger>
                         <SelectContent>
                           <SelectGroup>
-                            {Constants.LISTA_DE_RAMO_DE_ATIVIDADE.map((ramo) => (
-                              <SelectItem key={ramo} value={ramo}>
-                                <SelectLabel className='p-2 font-normal'>{ramo}</SelectLabel>
+                            {branches.map((ramo, idramoatividade) => (
+                              <SelectItem key={idramoatividade} value={ramo.descricao}>
+                                <SelectLabel className='p-2 font-normal'>{ramo.descricao}</SelectLabel>
                               </SelectItem>
                             ))}
                           </SelectGroup>

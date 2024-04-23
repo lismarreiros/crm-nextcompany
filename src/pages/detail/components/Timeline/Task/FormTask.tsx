@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/shadcn/ui/form';
-import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@/components/shadcn/ui/select';
+import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem, SelectLabel } from '@/components/shadcn/ui/select';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Textarea } from '@/components/shadcn/ui/textarea';
@@ -15,11 +15,17 @@ import { ptBR } from 'date-fns/locale';
 import { Input } from '@/components/shadcn/ui/input';
 import { RadioGroup, RadioGroupItem } from '@/components/shadcn/ui/radio-group';
 import { Switch } from '@/components/shadcn/ui/switch';
+import { useActivityTypeContext } from '@/pages/configurations/activities/type/ActivityTypeContext';
 
 type FormTarefaProps = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onTaskSubmit: (formData: any) => void;
 };
+
+type TypeType ={
+  idtipoatividade: string;
+  descricao: string;
+}[]
 
 const schema = z.object({
   id: z.string(),
@@ -34,7 +40,8 @@ const schema = z.object({
 });
   
 const FormTarefa: React.FC<FormTarefaProps> = ({ onTaskSubmit }) => {
-
+  const { activityTypes } = useActivityTypeContext();
+  const [types, setTypes] = useState<TypeType>([]);
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
   });
@@ -45,6 +52,14 @@ const FormTarefa: React.FC<FormTarefaProps> = ({ onTaskSubmit }) => {
     onTaskSubmit(formData);
     console.log(formData);
   };
+
+  useEffect(() => {
+    const newTypes = activityTypes.map((type, index) => ({
+      idtipoatividade: `${index + 1}`,
+      descricao: type.descricao,
+    }));
+    setTypes(newTypes);
+  }, [activityTypes]);
 
   return (
     <div>
@@ -186,9 +201,11 @@ const FormTarefa: React.FC<FormTarefaProps> = ({ onTaskSubmit }) => {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="Reunião">Reunião</SelectItem>
-                    <SelectItem value="Conferência">Conferência Online</SelectItem>
-                    <SelectItem value="Outros">Outros</SelectItem>
+                    {types.map((type, idtipoatividade) => (
+                      <SelectItem key={idtipoatividade} value={type.descricao}>
+                        <SelectLabel className='p-2 font-normal'>{type.descricao}</SelectLabel>
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
                 <FormMessage />
