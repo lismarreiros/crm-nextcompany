@@ -31,4 +31,3 @@ export const ActivityBranchProvider: React.FC<{ children: React.ReactNode}> = ({
     </ActivityBranchContext.Provider>
   );
 };
-

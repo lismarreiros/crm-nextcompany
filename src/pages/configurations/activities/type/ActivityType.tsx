@@ -3,7 +3,8 @@ import { Command, CommandInput } from '@/components/shadcn/ui/command';
 import { Table, TableCell, TableHead, TableHeader, TableRow } from '@/components/shadcn/ui/table';
 import { PlusIcon,  Trash2Icon } from 'lucide-react';
 import { useState } from 'react';
-import { SubmitHandler, useFieldArray, useForm } from 'react-hook-form';
+import { useFieldArray, useForm } from 'react-hook-form';
+import { useActivityTypeContext } from './ActivityTypeContext';
 
 type FormValuesType = {
   type: {
@@ -13,6 +14,7 @@ type FormValuesType = {
 }
 
 const ActivityType = () => {
+  const { addActivityType } = useActivityTypeContext();
   const [nextId, setNextId] = useState(7);
   const { register, formState: { errors }, handleSubmit, control } = useForm<FormValuesType>({
     defaultValues: {
@@ -35,7 +37,10 @@ const ActivityType = () => {
     }
   });
 
-  const onSubmit: SubmitHandler<FormValuesType> = (data) => console.log(data);
+  const onSubmit = (data: FormValuesType) => {
+    console.log(data);
+    addActivityType(data.type);
+  };
 
   return (
     <div className='flex min-h-screen bg-indigo-200 p-8 justify-center'>

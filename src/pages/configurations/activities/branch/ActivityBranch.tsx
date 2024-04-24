@@ -2,7 +2,7 @@ import { Button } from '@/components/shadcn/ui/button';
 import { Command, CommandInput } from '@/components/shadcn/ui/command';
 import { Table, TableCell, TableHead, TableHeader, TableRow } from '@/components/shadcn/ui/table';
 import { PlusIcon, Trash2Icon } from 'lucide-react';
-import { SubmitHandler, useFieldArray, useForm } from 'react-hook-form';
+import { useFieldArray, useForm } from 'react-hook-form';
 import React, { useState } from 'react';
 import { useActivityBranchContext } from './ActivityBranchContext';
 
