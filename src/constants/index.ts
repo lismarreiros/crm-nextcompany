@@ -5,6 +5,8 @@ export default class Constants {
     'Serviços',
   ];
 
+  static readonly BASE_URL = 'http://localhost:3001';
+
   static readonly LISTA_STATUS = [
     'Ativo',
     'Inativo',
