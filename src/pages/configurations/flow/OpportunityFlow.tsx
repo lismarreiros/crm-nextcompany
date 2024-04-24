@@ -3,8 +3,9 @@ import { Command, CommandInput } from '@/components/shadcn/ui/command';
 import { Table, TableCell, TableHead, TableHeader, TableRow } from '@/components/shadcn/ui/table';
 import { PlusIcon, Trash2Icon } from 'lucide-react';
 import { useFieldArray, useForm } from 'react-hook-form';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useOpportunityFlowContext } from './OpportunityFlowContext';
+import { useOpportunityFlow } from '@/hook/useOportunityFlow';
 
 type FormValues = {
   flow: { 
@@ -18,17 +19,21 @@ const OpportunityFlow = () => {
   const { addOpportunityFlow } = useOpportunityFlowContext();
   const [nextId, setNextId] = useState(7);
   const [nextOrder, setNextOrder] = useState(7);
+
+  const { opportunityFlows } = useOpportunityFlow();
+  // console.log(opportunityFlows);
+  
   const { register, formState: { errors }, handleSubmit, control  } = useForm<FormValues>({
-    defaultValues: {
-      flow: [
-        { idfluxodeoportunidade: 1, ordem: 1,  descricao: 'Prospecção'},
-        { idfluxodeoportunidade: 2, ordem: 2, descricao: 'Qualificação' },
-        { idfluxodeoportunidade: 3, ordem: 3, descricao: 'Apresentação'},
-        { idfluxodeoportunidade: 4, ordem: 4, descricao: 'Proposta' },
-        { idfluxodeoportunidade: 5, ordem: 5,descricao: 'Negociação' },
-        { idfluxodeoportunidade: 6, ordem: 6, descricao: 'Conclusão' }
-      ],
-    }
+    // defaultValues: {
+    //   flow: [
+    //     { idfluxodeoportunidade: 1, ordem: 1,  descricao: 'Prospecção'},
+    //     { idfluxodeoportunidade: 2, ordem: 2, descricao: 'Qualificação' },
+    //     { idfluxodeoportunidade: 3, ordem: 3, descricao: 'Apresentação'},
+    //     { idfluxodeoportunidade: 4, ordem: 4, descricao: 'Proposta' },
+    //     { idfluxodeoportunidade: 5, ordem: 5,descricao: 'Negociação' },
+    //     { idfluxodeoportunidade: 6, ordem: 6, descricao: 'Conclusão' }
+    //   ],
+    // }
   });
 
   const { fields, append, remove } = useFieldArray({
@@ -38,6 +43,14 @@ const OpportunityFlow = () => {
       required: 'Cadastre pelo menos 2 fluxos de oportunidade',
     }
   });
+
+  useEffect(() => {
+    append(opportunityFlows.map((flow) => ({
+      idfluxodeoportunidade: flow.id,
+      ordem: flow.order,
+      descricao: flow.description
+    })));
+  }, [opportunityFlows]);
 
   const onSubmit = (data: FormValues) => {
     console.log(data);
