@@ -34,21 +34,24 @@ import InputModal from '@/components/kanban/components/Input';
 import { CirclePlus } from 'lucide-react';
 import { InputMasks } from '../shadcn/ui/input';
 import { useOpportunityFlowContext } from '@/pages/configurations/flow/OpportunityFlowContext';
+import { useOpportunityFlow } from '@/hook/useOportunityFlow';
 
 // const inter = Inter({ subsets: ['latin'] });
 
 type DNDType = {
   id: UniqueIdentifier;
+  opportunityFlowsId: number;
   title: string;
   items: {
     id: UniqueIdentifier;
+    bussinessId: number;
     title: string;
     status: string;
   }[];
 };
 
 export default function Kanban() {
-  const { opportunityFlows } = useOpportunityFlowContext();
+  // const { opportunityFlows } = useOpportunityFlowContext();
   const [containers, setContainers] = useState<DNDType[]>([]);
   const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null);
   const [currentContainerId, setCurrentContainerId] =
@@ -58,17 +61,26 @@ export default function Kanban() {
   const [showAddContainerModal, setShowAddContainerModal] = useState(false);
   const [showAddItemModal, setShowAddItemModal] = useState(false);
 
+  const { opportunityFlowsWithBussiness } = useOpportunityFlow();
+
   useEffect(() => {
     // Transformar os fluxos de oportunidade em containers
-    const newContainers = opportunityFlows.map((flow, index) => ({
-      id: `container-${index + 1}`,
-      title: flow.descricao,
-      items: [],
+    const newContainers = opportunityFlowsWithBussiness.map((flow) => ({
+      id: `container-${uuidv4()}`,
+      opportunityFlowsId: flow.id,
+      order: flow.order,
+      title: flow.description,
+      items: flow.bussiness ? flow.bussiness.map((bussiness) => ({
+        id: `item-${uuidv4()}}`,
+        bussinessId: bussiness.id,
+        title: bussiness.description,
+        status: flow.description,
+      })) : [],
     }));
   
     // Definir os containers com os novos dados
-    setContainers(newContainers);
-  }, [opportunityFlows]);
+    setContainers(newContainers.sort((a, b) => a.order - b.order));
+  }, [opportunityFlowsWithBussiness]);
   
   const onAddContainer = () => {
     if (!containerName) return;
@@ -77,6 +89,7 @@ export default function Kanban() {
       ...containers,
       {
         id,
+        opportunityFlowsId: 0,
         title: containerName,
         items: [],
       },
@@ -109,7 +122,8 @@ export default function Kanban() {
     if (!firstContainer) return;
 
     firstContainer.items.push({
-      id, 
+      id,
+      bussinessId: 0,
       title: itemName,
       status: firstContainer.title,
     });
@@ -177,8 +191,8 @@ export default function Kanban() {
       active.id !== over.id
     ) {
       // Find the active container and over container
-      const activeContainer = findValueOfItems(active.id, 'item');
-      const overContainer = findValueOfItems(over.id, 'item');
+      const activeContainer = findValueOfItems(active.id, 'item'); // fluxo 1
+      const overContainer = findValueOfItems(over.id, 'item'); // fluxo 2
 
       // If the active or over container is not found, return
       if (!activeContainer || !overContainer) return;
@@ -206,6 +220,8 @@ export default function Kanban() {
           activeitemIndex,
           overitemIndex,
         );
+
+        // todo: alterar ordem do fluxo usando o endpoint switchOpportunityFlow.
 
         setContainers(newItems);
       } else {
