@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/shadcn/ui/form';
-import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem, SelectLabel } from '@/components/shadcn/ui/select';
+import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem, SelectLabel, SelectGroup } from '@/components/shadcn/ui/select';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Textarea } from '@/components/shadcn/ui/textarea';
@@ -17,15 +17,15 @@ import { RadioGroup, RadioGroupItem } from '@/components/shadcn/ui/radio-group';
 import { Switch } from '@/components/shadcn/ui/switch';
 import { useActivityTypeContext } from '@/pages/configurations/activities/type/ActivityTypeContext';
 
+type TypeType = {
+  idtipoatividade: number;
+  descricao: string;
+}[]
+
 type FormTarefaProps = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onTaskSubmit: (formData: any) => void;
 };
-
-type TypeType ={
-  idtipoatividade: string;
-  descricao: string;
-}[]
 
 const schema = z.object({
   id: z.string(),
@@ -50,14 +50,15 @@ const FormTarefa: React.FC<FormTarefaProps> = ({ onTaskSubmit }) => {
     event.preventDefault();
     const formData = form.getValues();
     onTaskSubmit(formData);
-    console.log(formData);
+    console.log('formData:',formData);
   };
 
   useEffect(() => {
     const newTypes = activityTypes.map((type, index) => ({
-      idtipoatividade: `${index + 1}`,
+      idtipoatividade: index + 1,
       descricao: type.descricao,
     }));
+    console.log('types:', activityTypes);
     setTypes(newTypes);
   }, [activityTypes]);
 
@@ -193,21 +194,23 @@ const FormTarefa: React.FC<FormTarefaProps> = ({ onTaskSubmit }) => {
             name='tipo'
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Tipo</FormLabel>
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
-                  <FormControl>
+                <FormLabel>Tipo de Atividade</FormLabel>
+                <FormControl>
+                  <Select onValueChange={field.onChange}>
                     <SelectTrigger>
                       <SelectValue placeholder="Selecione um tipo" />
                     </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    {types.map((type, idtipoatividade) => (
-                      <SelectItem key={idtipoatividade} value={type.descricao}>
-                        <SelectLabel className='p-2 font-normal'>{type.descricao}</SelectLabel>
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                    <SelectContent>
+                      <SelectGroup>
+                        {types.map((tipo, idtipoatividade) => (
+                          <SelectItem key={idtipoatividade} value={tipo.descricao}>
+                            <SelectLabel className='p-2 font-normal'>{tipo.descricao}</SelectLabel>
+                          </SelectItem>
+                        ))}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                </FormControl>
                 <FormMessage />
               </FormItem>
             )}

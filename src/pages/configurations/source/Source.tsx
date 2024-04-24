@@ -2,8 +2,9 @@ import { Button } from '@/components/shadcn/ui/button';
 import { Command, CommandInput } from '@/components/shadcn/ui/command';
 import { Table, TableCell, TableHead, TableHeader, TableRow } from '@/components/shadcn/ui/table';
 import { PlusIcon, Trash2Icon } from 'lucide-react';
-import { SubmitHandler, useFieldArray, useForm } from 'react-hook-form';
+import { useFieldArray, useForm } from 'react-hook-form';
 import React, { useState } from 'react';
+import { useSourceContext } from './SourceContext';
 
 type FormValuesSource = {
   source: {
@@ -13,6 +14,7 @@ type FormValuesSource = {
 }
 
 const Source = () => {
+  const { addSource } = useSourceContext();
   const [nextId, setNextId] = useState(5);
   const { register, formState: { errors }, handleSubmit, control } = useForm<FormValuesSource>({
     defaultValues: {
@@ -33,7 +35,10 @@ const Source = () => {
     }
   });
 
-  const onSubmit: SubmitHandler<FormValuesSource> = (data) => console.log(data);
+  const onSubmit = (data: FormValuesSource) => {
+    console.log(data);
+    addSource(data.source);
+  };
 
   return (
     <div className='flex min-h-screen bg-indigo-200 p-8 justify-center'>

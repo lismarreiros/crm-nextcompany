@@ -12,6 +12,8 @@ import DashboardPage from './pages/dashboard/dashboard';
 import { OpportunityFlowProvider } from './pages/configurations/flow/OpportunityFlowContext';
 import { ActivityBranchProvider } from './pages/configurations/activities/branch/ActivityBranchContext';
 import { ActivityTypeProvider } from './pages/configurations/activities/type/ActivityTypeContext';
+import { SourceContextProvider } from './pages/configurations/source/SourceContext';
+import Login from './pages/login/Login';
 
 function App() {
   return (
@@ -26,16 +28,19 @@ function App() {
               <DashboardPage />
             </OpportunityFlowProvider>
           } />
+
           <Route path='/fluxo' element={
             <OpportunityFlowProvider>
               <OpportunityFlow/>
             </OpportunityFlowProvider>
           } />
+
           <Route path='/clientes' element={
             <ActivityBranchProvider>
               <ClientPage/>
             </ActivityBranchProvider>
           } />
+
           <Route path='/ramoatividade' element={
             <ActivityBranchProvider>
               <ActivityBranch/>
@@ -43,19 +48,29 @@ function App() {
           } />
           
           <Route path='/produtos'element={<ProductPage/>} />
-          <Route path='/fonte' element={<Source />} />
+
+          <Route path='/fonte' element={
+            <SourceContextProvider>
+              <Source />
+            </SourceContextProvider>
+          } />
           
           <Route path='/detalhe' element={
             <ActivityTypeProvider>
-              <DetailPage/>
+              <SourceContextProvider>
+                <DetailPage/>
+              </SourceContextProvider>
             </ActivityTypeProvider>
           } />
+
           <Route path='/tipoatividade' element={
             <ActivityTypeProvider>
               <ActivityType />
             </ActivityTypeProvider>
           } />
+          
           <Route path='/negocios' element={<LeadPage/>} />
+          <Route path='/login' element={<Login/>}/>
         </Routes>
       </div>
     </div>

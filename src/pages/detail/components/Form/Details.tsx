@@ -12,6 +12,7 @@ import { CalendarIcon, Check, ChevronsUpDown } from 'lucide-react';
 import { ptBR } from 'date-fns/locale';
 import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
+import { useSourceContext } from '@/pages/configurations/source/SourceContext';
 
 const clients = [
   { label: 'Empresa A', value: 'en' },
@@ -31,14 +32,8 @@ const types = [
   { label: 'Pós-Venda', value: 'posvenda' },
 ] as const;
 
-const sources = [
-  { label: 'Website', value: 'website' },
-  { label: 'Email Marketing', value: 'marketing' },
-  { label: 'Evento', value: 'evento' },
-  { label: 'Indicador', value: 'indicador'}
-] as const;
-
 const Details = () => {
+  const { sources } = useSourceContext();
   const { control, getValues, setValue } = useFormContext();
   const [openClientSelect, setOpenClientSelect] = useState(false);
   const [openTypeSelect, setOpenTypeSelect] = useState(false);
@@ -334,7 +329,7 @@ const Details = () => {
               </FormItem>
             )}
           />
-
+          {/** fonte */}
           <FormField
             control={control}
             name='idfontenegocio'
@@ -345,6 +340,7 @@ const Details = () => {
                   <PopoverTrigger asChild>
                     <FormControl>
                       <Button
+                        onClick={() => console.log('fontes:', sources)}
                         aria-expanded={openSourceSelect}
                         variant='outline' 
                         role='combobox'
@@ -353,8 +349,8 @@ const Details = () => {
                         )}>
                         {field.value 
                           ? sources.find(
-                            (source) => source.value === field.value
-                          )?.label
+                            (source) => source.idfontenegocio === field.value
+                          )?.descricao
                           : 'Selecione'
                         }
                         <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
@@ -369,21 +365,21 @@ const Details = () => {
                         <CommandGroup>
                           {sources.map((source) => (
                             <CommandItem 
-                              value={source.label}
-                              key={source.value}
+                              value={source.descricao}
+                              key={source.idfontenegocio}
                               onSelect={() => {
-                                setValue('idfontenegocio', source.value);
+                                setValue('idfontenegocio', source.idfontenegocio);
                                 setOpenSourceSelect(false);
                               }}
                             >
                               <Check
                                 className={cn('mr-2 h-4 w-4',
-                                  source.value === field.value
+                                  source.idfontenegocio === field.value
                                     ? 'opacity-100'
                                     : 'opacity-0'
                                 )}
                               />
-                              <span>{source.label}</span>
+                              <span>{source.descricao}</span>
                             </CommandItem>
                           ))}
                         </CommandGroup>
