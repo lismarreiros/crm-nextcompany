@@ -61,7 +61,7 @@ export default function Kanban() {
   const [showAddContainerModal, setShowAddContainerModal] = useState(false);
   const [showAddItemModal, setShowAddItemModal] = useState(false);
 
-  const { opportunityFlowsWithBussiness } = useOpportunityFlow();
+  const { opportunityFlowsWithBussiness, swapOpportunityFlows } = useOpportunityFlow();
 
   useEffect(() => {
     // Transformar os fluxos de oportunidade em containers
@@ -291,8 +291,8 @@ export default function Kanban() {
       over &&
       active.id !== over.id
     ) {
-      const item = containers.find((container) => container.id === over.id);
-      console.log(item);
+      // const item = containers.find((container) => container.id === over.id);
+      // console.log(item);
       // Find the index of the active and over container
       const activeContainerIndex = containers.findIndex(
         (container) => container.id === active.id,
@@ -301,6 +301,9 @@ export default function Kanban() {
         (container) => container.id === over.id,
       );
       // Swap the active and over container
+      // alterar ordem do fluxo usando o endpoint switchOpportunityFlow
+      swapOpportunityFlows(containers[activeContainerIndex].opportunityFlowsId, containers[overContainerIndex].opportunityFlowsId);
+
       let newItems = [...containers];
       newItems = arrayMove(newItems, activeContainerIndex, overContainerIndex);
       setContainers(newItems);
