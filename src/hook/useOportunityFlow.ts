@@ -38,5 +38,10 @@ export function useOpportunityFlow() {
     console.log(response);
   };
 
-  return { opportunityFlows, errorFetchOpportunityFlows, opportunityFlowsWithBussiness, swapOpportunityFlows };
+  const saveOpportunityFlows = async (opportunityFlows: OpportunityFlow[]) => {
+    const response = await OpportunityFlowService.updateManyOpportunityFlow(opportunityFlows);
+    console.log(response);
+  };
+
+  return { opportunityFlows, errorFetchOpportunityFlows, opportunityFlowsWithBussiness, swapOpportunityFlows, saveOpportunityFlows };
 }

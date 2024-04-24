@@ -20,7 +20,7 @@ const OpportunityFlow = () => {
   const [nextId, setNextId] = useState(7);
   const [nextOrder, setNextOrder] = useState(7);
 
-  const { opportunityFlows } = useOpportunityFlow();
+  const { opportunityFlows, saveOpportunityFlows } = useOpportunityFlow();
   // console.log(opportunityFlows);
   
   const { register, formState: { errors }, handleSubmit, control  } = useForm<FormValues>({
@@ -53,7 +53,12 @@ const OpportunityFlow = () => {
   }, [opportunityFlows]);
 
   const onSubmit = (data: FormValues) => {
-    console.log(data);
+    const opportunityFlows = data.flow.map(flow => ({
+      id: Number(flow.idfluxodeoportunidade),
+      description: flow.descricao,
+      order: Number(flow.ordem)
+    }));
+    saveOpportunityFlows(opportunityFlows);
     addOpportunityFlow(data.flow);
   };
 
