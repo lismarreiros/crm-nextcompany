@@ -10,8 +10,21 @@ import {
 } from '@/components/shadcn/ui/card';
 import { Input } from '@/components/shadcn/ui/input';
 import { Label } from '@/components/shadcn/ui/label';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+
+const schema = z.object({
+  email: z.string().email({ message: 'Email inválido'}),
+  senha: z.string()
+}).required();
 
 const Login = () => {
+  const { register, handleSubmit } = useForm<z.infer<typeof schema>>({
+    resolver: zodResolver(schema),
+  });
+  const onSubmit: SubmitHandler<z.infer<typeof schema>> = (data) => console.log(data);
+
   return (
     <div className='flex min-h-screen bg-indigo-200 justify-center items-center'>
       <Card className="w-[450px] h-[400px]">
@@ -20,19 +33,25 @@ const Login = () => {
           <CardDescription>Faça o seu login</CardDescription>
         </CardHeader>
         <CardContent>
-          <form>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <div className="grid w-full items-center gap-6">
               <div className="flex flex-col space-y-1.5">
                 <Label htmlFor="email">Usuário</Label>
-                <Input type='email' id="nome" placeholder="Endereço de email" />
+                <Input
+                  {...register('email', { required: true })} 
+                  type='email' 
+                  placeholder="Endereço de email" />
               </div>
               <div className="flex flex-col space-y-1.5">
                 <Label htmlFor="senha">Senha</Label>
-                <Input type='password' id="senha" placeholder="Senha" />
+                <Input 
+                  {...register('senha', { required: true })}
+                  type='password' 
+                  placeholder="Senha" />
               </div>
               <CardFooter className="mt-6 flex justify-between">
-                <Button variant="ghost">Criar Conta</Button>
-                <Button className='bg-indigo-500 hover:bg-indigo-800 w-[130px]'>Entrar</Button>
+                <Button type='button' variant="ghost">Criar Conta</Button>
+                <Button type='submit' className='bg-indigo-500 hover:bg-indigo-800 w-[130px]'>Entrar</Button>
               </CardFooter>
             </div>
           </form>
