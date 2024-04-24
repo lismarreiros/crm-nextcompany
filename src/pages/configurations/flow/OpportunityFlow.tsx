@@ -49,7 +49,7 @@ const OpportunityFlow = () => {
       idfluxodeoportunidade: flow.id,
       ordem: flow.order,
       descricao: flow.description
-    })));
+    })).sort((a, b) => a.ordem - b.ordem));
   }, [opportunityFlows]);
 
   const onSubmit = (data: FormValues) => {
