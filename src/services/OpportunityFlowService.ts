@@ -81,6 +81,37 @@ export class OpportunityFlowService {
     return null;
   }
 
+  // change opportunity flow of bussiness
+  public static async changeOpportunityFlowOfBussiness(bussinessId: number, opportunityFlowId: number): Promise<OpportunityFlowWithBussiness[] | null> {
+    const response = await this.api.post<any>('/bussiness/change-opportunity-flow', {
+      bussinessId: bussinessId,
+      newOpportunityFlowId: opportunityFlowId
+    }, {
+      headers: {
+        Authorization: 'Bearer ' + this.token,
+      },
+    });
+
+    if (response.status === 201) {
+      return response.data.map((data: any) => ({
+        id: data.id,
+        description: data.description,
+        order: data.order,
+        bussiness: data.bussiness.map((bussiness: any) => ({
+          id: bussiness.id,
+          description: bussiness.description,
+          status: bussiness.status,
+          closedAt: bussiness.closedAt,
+          startedAt: bussiness.startedAt,
+          prevision: bussiness.prevision,
+          clientId: bussiness.clientId,
+        }))
+      }));
+    }
+
+    return null;
+  }
+
   public static async updateManyOpportunityFlow(opportunitiesFlows: OpportunityFlow[]): Promise<OpportunityFlow[] | null> {
 
     const response = await this.api.post<any>('/opportunity-flow/update-many', {

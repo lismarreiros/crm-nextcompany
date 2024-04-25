@@ -61,7 +61,7 @@ export default function Kanban() {
   const [showAddContainerModal, setShowAddContainerModal] = useState(false);
   const [showAddItemModal, setShowAddItemModal] = useState(false);
 
-  const { opportunityFlowsWithBussiness, swapOpportunityFlows } = useOpportunityFlow();
+  const { opportunityFlowsWithBussiness, swapOpportunityFlows, changeOpportunityFlowOfBussiness } = useOpportunityFlow();
 
   useEffect(() => {
     // Transformar os fluxos de oportunidade em containers
@@ -181,7 +181,7 @@ export default function Kanban() {
 
   const handleDragMove = (event: DragMoveEvent) => {
     const { active, over } = event;
-
+    
     // Handle Items Sorting
     if (
       active.id.toString().includes('item') &&
@@ -220,9 +220,6 @@ export default function Kanban() {
           activeitemIndex,
           overitemIndex,
         );
-
-        // todo: alterar ordem do fluxo usando o endpoint switchOpportunityFlow.
-
         setContainers(newItems);
       } else {
         // In different containers
@@ -274,6 +271,14 @@ export default function Kanban() {
         activeitemIndex,
         1,
       );
+
+      const opportunityFlowsId = newItems[overContainerIndex].opportunityFlowsId;
+      const bussinessId = removeditem.bussinessId;
+      changeOpportunityFlowOfBussiness(bussinessId, opportunityFlowsId);
+      
+      // atualizando status do item
+      removeditem.status = newItems[overContainerIndex].title;
+
       newItems[overContainerIndex].items.push(removeditem);
       setContainers(newItems);
     }
@@ -291,8 +296,8 @@ export default function Kanban() {
       over &&
       active.id !== over.id
     ) {
-      // const item = containers.find((container) => container.id === over.id);
-      // console.log(item);
+      const item = containers.find((container) => container.id === over.id);
+      console.log(item);
       // Find the index of the active and over container
       const activeContainerIndex = containers.findIndex(
         (container) => container.id === active.id,
@@ -393,6 +398,7 @@ export default function Kanban() {
         activeitemIndex,
         1,
       );
+
       newItems[overContainerIndex].items.push(removeditem);
       setContainers(newItems);
     }

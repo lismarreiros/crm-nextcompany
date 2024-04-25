@@ -38,10 +38,18 @@ export function useOpportunityFlow() {
     console.log(response);
   };
 
-  const saveOpportunityFlows = async (opportunityFlows: OpportunityFlow[]) => {
-    const response = await OpportunityFlowService.updateManyOpportunityFlow(opportunityFlows);
+  // todo: adicionar função para remove fluxo de oportunidade.
+
+  const changeOpportunityFlowOfBussiness = async (bussinessId: number, opportunityFlowId: number) => {
+    const response = await OpportunityFlowService.changeOpportunityFlowOfBussiness(bussinessId, opportunityFlowId); 
+    // if (response) setOpportunityFlowsWithBussiness(response);
     console.log(response);
   };
 
-  return { opportunityFlows, errorFetchOpportunityFlows, opportunityFlowsWithBussiness, swapOpportunityFlows, saveOpportunityFlows };
+  const saveOpportunityFlows = async (opportunityFlows: OpportunityFlow[]) => {
+    const response = await OpportunityFlowService.updateManyOpportunityFlow(opportunityFlows);
+    // console.log(response);
+  };
+
+  return { opportunityFlows, errorFetchOpportunityFlows, opportunityFlowsWithBussiness, swapOpportunityFlows, saveOpportunityFlows, changeOpportunityFlowOfBussiness };
 }
