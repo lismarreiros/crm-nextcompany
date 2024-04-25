@@ -2,7 +2,6 @@ import { OpportunityFlow } from '@/entities/opportunityFlow';
 import axios from 'axios';
 import Constants from '@/constants';
 import { OpportunityFlowWithBussiness } from '@/entities/opportunityFlowWithBussiness';
-import { de } from 'date-fns/locale';
 
 export class OpportunityFlowService {
 
@@ -10,12 +9,14 @@ export class OpportunityFlowService {
     baseURL: Constants.BASE_URL,
   });
 
+  private static token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoibmV4dGNvbXBhbnkiLCJjb21wYW55SWQiOjEsInJvbGVzIjpbImFkbWluIl0sImlhdCI6MTcxNDA0NjQ2NCwiZXhwIjoxNzE0MTMyODY0fQ.dNfz6mxnQq5aSaJAnBBdEE2b4Qo2R2g6BSKQBxYQQz4';
+
   public static async getOpportunityFlow(): Promise<OpportunityFlow[] | null> {
     // axios call
     const response = await this.api.get<any>('/opportunity-flow', {
       headers: {
         Authorization:
-          'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoibmV4dGNvbXBhbnkiLCJjb21wYW55SWQiOjEsInJvbGVzIjpbImFkbWluIl0sImlhdCI6MTcxMzk1Nzg3MCwiZXhwIjoxNzE0MDQ0MjcwfQ.hjL49a3SO2UR0SY9xcRYX9GaEiuaVefOAMX1FfWO0Qo',
+          'Bearer ' + this.token,
       },
     });
 
@@ -35,7 +36,7 @@ export class OpportunityFlowService {
     const response = await this.api.get<any>('/opportunity-flow-with-bussiness', {
       headers: {
         Authorization:
-          'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoibmV4dGNvbXBhbnkiLCJjb21wYW55SWQiOjEsInJvbGVzIjpbImFkbWluIl0sImlhdCI6MTcxMzk1Nzg3MCwiZXhwIjoxNzE0MDQ0MjcwfQ.hjL49a3SO2UR0SY9xcRYX9GaEiuaVefOAMX1FfWO0Qo',
+          'Bearer ' + this.token,
       },
     });
 
@@ -65,7 +66,7 @@ export class OpportunityFlowService {
       secondOpportunityFlowId: secondOpportunityFlowId
     }, {
       headers: {
-        Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoibmV4dGNvbXBhbnkiLCJjb21wYW55SWQiOjEsInJvbGVzIjpbImFkbWluIl0sImlhdCI6MTcxMzk1Nzg3MCwiZXhwIjoxNzE0MDQ0MjcwfQ.hjL49a3SO2UR0SY9xcRYX9GaEiuaVefOAMX1FfWO0Qo',
+        Authorization: 'Bearer ' + this.token,
       },
     });
 
@@ -90,7 +91,7 @@ export class OpportunityFlowService {
       }))
     }, {
       headers: {
-        Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoibmV4dGNvbXBhbnkiLCJjb21wYW55SWQiOjEsInJvbGVzIjpbImFkbWluIl0sImlhdCI6MTcxMzk1Nzg3MCwiZXhwIjoxNzE0MDQ0MjcwfQ.hjL49a3SO2UR0SY9xcRYX9GaEiuaVefOAMX1FfWO0Qo',
+        Authorization: 'Bearer ' + this.token,
       },
     });
 
