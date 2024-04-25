@@ -8,11 +8,12 @@ import { Link } from 'react-router-dom';
 
 type ItemsType = {
   id: UniqueIdentifier;
+  bussinessId: number;
   title: string;
   status: string;
 };
 
-const Items = ({ id, title, status}: ItemsType) => {
+const Items = ({ id, bussinessId, title, status}: ItemsType) => {
   const {
     attributes,
     listeners,
@@ -56,7 +57,7 @@ const Items = ({ id, title, status}: ItemsType) => {
             {status}
           </p>
         </Badge> 
-        <Link to='/detalhe' title='Ir para detalhes'>
+        <Link to={`/detalhe/${bussinessId}`} title='Ir para detalhes'>
           <ArrowUpRightIcon size={16} color="#4b5569" />
         </Link>
       </div>
