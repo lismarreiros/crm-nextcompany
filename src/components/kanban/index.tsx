@@ -489,7 +489,7 @@ export default function Kanban() {
                   <SortableContext items={container.items.map((i) => i.id)}>
                     <div className="flex items-start flex-col gap-y-4">
                       {container.items.map((i) => (
-                        <Items title={i.title} id={i.id} key={i.id} status={i.status} />
+                        <Items title={i.title} bussinessId={i.bussinessId} id={i.id} key={i.id} status={i.status} />
                       ))}
                     </div>
                   </SortableContext>
@@ -499,13 +499,13 @@ export default function Kanban() {
             <DragOverlay adjustScale={false}>
               {/* Drag Overlay For item Item */}
               {activeId && activeId.toString().includes('item') && (
-                <Items id={activeId} title={findItemTitle(activeId)} status={findContainerTitle(activeId)} />
+                <Items id={activeId} bussinessId={0} title={findItemTitle(activeId)} status={findContainerTitle(activeId)} />
               )}
               {/* Drag Overlay For Container */}
               {activeId && activeId.toString().includes('container') && (
                 <Container id={activeId} title={findContainerTitle(activeId)}>
                   {findContainerItems(activeId).map((i) => (
-                    <Items key={i.id} title={i.title} id={i.id} status={findContainerTitle(activeId)}/>
+                    <Items key={i.id} bussinessId={i.bussinessId} title={i.title} id={i.id} status={findContainerTitle(activeId)}/>
                   ))}
                 </Container>
               )}
