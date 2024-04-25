@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { FormControl, FormField, FormLabel, FormItem, } from '@/components/shadcn/ui/form';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/shadcn/ui/popover';
@@ -13,6 +13,7 @@ import { ptBR } from 'date-fns/locale';
 import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
 import { useSourceContext } from '@/pages/configurations/source/SourceContext';
+import { Bussiness } from '@/entities/bussiness';
 
 const clients = [
   { label: 'Empresa A', value: 'en' },
@@ -32,12 +33,21 @@ const types = [
   { label: 'Pós-Venda', value: 'posvenda' },
 ] as const;
 
-const Details = () => {
+type PropsType = {
+  bussiness: Bussiness,
+}
+
+const Details = ({ bussiness }: PropsType) => {
   const { sources } = useSourceContext();
   const { control, getValues, setValue } = useFormContext();
   const [openClientSelect, setOpenClientSelect] = useState(false);
   const [openTypeSelect, setOpenTypeSelect] = useState(false);
   const [openSourceSelect, setOpenSourceSelect] = useState(false);
+
+  useEffect(() => {
+    setValue('descricao', bussiness.description);
+    setValue('dtinicio', bussiness.startedAt);
+  }, []);
 
   return (
     <div>

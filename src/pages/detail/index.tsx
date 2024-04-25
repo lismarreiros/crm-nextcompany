@@ -1,7 +1,12 @@
 import Timeline from './components/Timeline';
 import FormDetalhe from './components/Form/Form';
+import { useParams } from 'react-router-dom';
+import { useBussiness } from '@/hook/useBussiness';
 
 const DetailPage = () => {
+  const { leadId } = useParams();
+  const { bussiness } = useBussiness(Number(leadId));
+
   return (
     <div className='w-screen bg-white'>
 
@@ -12,7 +17,7 @@ const DetailPage = () => {
         </div>
         {/** Formulário de Detalhes */}
         <div className='min-h-screen bg-white border-t-2 border-indigo-200'>
-          <FormDetalhe/>
+          { bussiness && <FormDetalhe bussiness={bussiness}/> }
         </div>
       </div>
     </div>

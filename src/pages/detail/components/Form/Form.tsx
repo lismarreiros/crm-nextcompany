@@ -5,9 +5,15 @@ import Situation from './Situation';
 import { FormProvider, useForm } from 'react-hook-form';
 import negocio from '@/validations/schemas/negocio';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Bussiness } from '@/entities/bussiness';
 
-function FormDetalhe() {
+type PropsType = {
+  bussiness: Bussiness,
+}
+
+function FormDetalhe({ bussiness }: PropsType) {
   const methods = useForm({ resolver: zodResolver(negocio) });
+  
   return (
     <div className='bg-inherit h-full border-l border-slate-200'>
       <FormProvider {...methods}>
@@ -19,7 +25,7 @@ function FormDetalhe() {
               <TabsTrigger value='situation'>Situação</TabsTrigger>
             </TabsList>
             <TabsContent value='details' className='w-full py-2 px-4'>
-              <Details/>
+              <Details bussiness={bussiness} />
             </TabsContent>
             <TabsContent value='products' className='w-full py-2 px-4'>
               <Product/>
