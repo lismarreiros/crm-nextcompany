@@ -11,7 +11,7 @@ import {
   KeyboardSensor,
   PointerSensor,
   UniqueIdentifier,
-  closestCorners,
+  closestCenter,
   useSensor,
   useSensors,
 } from '@dnd-kit/core';
@@ -470,7 +470,7 @@ export default function Kanban() {
         <div className="flex gap-x-4">
           <DndContext
             sensors={sensors}
-            collisionDetection={closestCorners}
+            collisionDetection={closestCenter}
             onDragStart={handleDragStart}
             onDragMove={handleDragMove}
             onDragEnd={handleDragEnd}
