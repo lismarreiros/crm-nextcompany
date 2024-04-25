@@ -12,10 +12,23 @@ import { Calendar } from '@/components/shadcn/ui/calendar';
 import { cn } from '@/lib/utils';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
-import { Input } from '@/components/shadcn/ui/input';
 import { RadioGroup, RadioGroupItem } from '@/components/shadcn/ui/radio-group';
 import { Switch } from '@/components/shadcn/ui/switch';
 import { useActivityTypeContext } from '@/pages/configurations/activities/type/ActivityTypeContext';
+import { Mention, MentionsInput } from 'react-mentions';
+import mentionStyles from '../../Form/mentionStyles';
+
+const responsavel = [
+  { id: 1, display: 'Chico' },
+  { id: 2, display: 'Beltrão' },
+  { id: 3, display: 'Maria' }
+];
+
+const participantes = [
+  { id: 1, display: 'Chico' },
+  { id: 2, display: 'Beltrão' },
+  { id: 3, display: 'Maria' }
+];
 
 type TypeType = {
   idtipoatividade: number;
@@ -92,11 +105,14 @@ const FormTarefa: React.FC<FormTarefaProps> = ({ onTaskSubmit }) => {
               <FormItem>
                 <FormLabel>Responsável</FormLabel>
                 <FormControl>
-                  <Input
-                    placeholder=""
-                    className="resize-none"
-                    {...field}
-                  />
+                  <MentionsInput
+                    placeholder='@'
+                    style={mentionStyles}
+                    value={field.value}
+                    onChange={(e) => field.onChange(e.target.value)}
+                  >
+                    <Mention displayTransform={(id, display) => `@${display} `} data={responsavel} trigger={'@'} />
+                  </MentionsInput>
                 </FormControl>
               </FormItem>
             )}
@@ -224,11 +240,14 @@ const FormTarefa: React.FC<FormTarefaProps> = ({ onTaskSubmit }) => {
               <FormItem>
                 <FormLabel>Participantes</FormLabel>
                 <FormControl>
-                  <Input
-                    placeholder=""
-                    className="resize-none"
-                    {...field}
-                  />
+                  <MentionsInput
+                    placeholder='@'
+                    style={mentionStyles}
+                    value={field.value}
+                    onChange={(e) => field.onChange(e.target.value)}
+                  >
+                    <Mention displayTransform={(id, display) => `@${display} `} data={participantes} trigger={'@'} />
+                  </MentionsInput>
                 </FormControl>
               </FormItem>
             )}

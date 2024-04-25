@@ -5,7 +5,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/shadcn/ui/
 import { Command, CommandInput, CommandGroup, 
   CommandEmpty, CommandItem, CommandList } from '@/components/shadcn/ui/command';
 import { Textarea } from '@/components/shadcn/ui/textarea';
-import { Input, InputMasks } from '@/components/shadcn/ui/input';
+import { InputMasks } from '@/components/shadcn/ui/input';
 import { Calendar } from '@/components/shadcn/ui/calendar';
 import { Button } from '@/components/shadcn/ui/button';
 import { CalendarIcon, Check, ChevronsUpDown } from 'lucide-react';
@@ -14,6 +14,20 @@ import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
 import { useSourceContext } from '@/pages/configurations/source/SourceContext';
 import { Bussiness } from '@/entities/bussiness';
+import { MentionsInput, Mention } from 'react-mentions';
+import mentionStyles from './mentionStyles';
+
+const participantes = [
+  { id: 1, display: 'Chico' },
+  { id: 2, display: 'Beltrão' },
+  { id: 3, display: 'Maria' }
+];
+
+const indicadores = [
+  { id: 1, display: 'Chico' },
+  { id: 2, display: 'Beltrão' },
+  { id: 3, display: 'Maria' }
+];
 
 const clients = [
   { label: 'Empresa A', value: 'en' },
@@ -307,15 +321,19 @@ const Details = ({ bussiness }: PropsType) => {
         <FormField
           control={control}
           name="participantes"
+          defaultValue=''
           render={({ field }) => (
             <FormItem className='flex flex-col w-full'>
               <FormLabel className='text-slate-900 pb-2.5'>Participantes</FormLabel>
               <FormControl>
-                <Input
-                  placeholder="Convide alguém"
-                  className="resize-none text-muted-foreground bg-slate-50 hover:bg-slate-100 hover:text-slate-900  focus:bg-white"
-                  {...field}
-                />
+                <MentionsInput
+                  placeholder='@'
+                  style={mentionStyles}
+                  value={field.value}
+                  onChange={(e) => field.onChange(e.target.value)}
+                >
+                  <Mention displayTransform={(id, display) => `@${display} `} data={participantes} trigger={'@'} />
+                </MentionsInput>
               </FormControl>
             </FormItem>
           )}
@@ -330,11 +348,14 @@ const Details = ({ bussiness }: PropsType) => {
               <FormItem className='flex flex-col w-full'>
                 <FormLabel className='text-slate-900 pb-2.5'>Indicador</FormLabel>
                 <FormControl>
-                  <Input
-                    placeholder=""
-                    className="resize-none text-muted-foreground bg-slate-50 hover:bg-slate-100 hover:text-slate-900  focus:bg-white"
-                    {...field}
-                  />
+                  <MentionsInput
+                    placeholder='@'
+                    style={mentionStyles}
+                    value={field.value}
+                    onChange={(e) => field.onChange(e.target.value)}
+                  >
+                    <Mention displayTransform={(id, display) => `@${display} `} data={indicadores} trigger={'@'} />
+                  </MentionsInput>
                 </FormControl>
               </FormItem>
             )}

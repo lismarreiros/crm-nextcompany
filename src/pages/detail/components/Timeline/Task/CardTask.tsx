@@ -1,7 +1,7 @@
 import { AccordionItem, AccordionTrigger } from '@/components/shadcn/ui/accordion';
 import { Accordion, AccordionContent } from '@radix-ui/react-accordion';
 import { format } from 'date-fns';
-import {  CalendarCheck2Icon, CalendarPlusIcon, CheckSquareIcon, SquarePenIcon, Trash2Icon } from 'lucide-react';
+import { CheckSquareIcon, ClipboardCheckIcon, ClipboardIcon, SquarePenIcon, Trash2Icon } from 'lucide-react';
 import React, { useState } from 'react';
 
 interface TaskFormData {
@@ -24,7 +24,7 @@ type TarefaCardProps = {
 
 const CardTarefa: React.FC<TarefaCardProps> = ({ formData, onDelete, onReopenModal }) => {
   const [cardTitle, setCardTitle] = useState('Tarefa Adicionada');
-  const [icon, setIcon] = useState(<CalendarPlusIcon size={14} color='white' />);
+  const [icon, setIcon] = useState(<ClipboardIcon size={14} color='white' />);
   const [bgColor, setBgColor] = useState('bg-indigo-400');
   const [isCompleted, setIsCompleted] = useState(false);
   const [marginBottom, setMarginBottom] = useState('mb-0');
@@ -32,7 +32,7 @@ const CardTarefa: React.FC<TarefaCardProps> = ({ formData, onDelete, onReopenMod
 
   const handleTaskComplete = () => {
     setCardTitle('Tarefa Concluída');
-    setIcon(<CalendarCheck2Icon size={14} color='white' />);
+    setIcon(<ClipboardCheckIcon size={14} color='white' />);
     setBgColor('bg-green-500');
     setIsCompleted(true);
   };
