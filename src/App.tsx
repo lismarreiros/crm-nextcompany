@@ -55,7 +55,7 @@ function App() {
             </SourceContextProvider>
           } />
           
-          <Route path='/detalhe' element={
+          <Route path='/detalhe/:leadId' element={
             <ActivityTypeProvider>
               <SourceContextProvider>
                 <DetailPage/>
