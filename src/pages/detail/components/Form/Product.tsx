@@ -21,15 +21,15 @@ import produtonegocio from '@/validations/schemas/produtonegocio';
 // };
 
 const products = [
-  { label: 'Produto A', value: 'a' },
-  { label: 'Produto B', value: 'b' },
-  { label: 'Produto C', value: 'c' },
-  { label: 'Produto D', value: 'd' },
-  { label: 'Produto E', value: 'e' },
-  { label: 'Produto F', value: 'f' },
-  { label: 'Produto G', value: 'g' },
-  { label: 'Produto H', value: 'h' },
-  { label: 'Produto I', value: 'i' },
+  { label: 'Produto A', value: 'a', comission: '10%' },
+  { label: 'Produto B', value: 'b', comission: '11%' },
+  { label: 'Produto C', value: 'c', comission: '12%' },
+  { label: 'Produto D', value: 'd', comission: '13%' },
+  { label: 'Produto E', value: 'e', comission: '14%' },
+  { label: 'Produto F', value: 'f', comission: '15%' },
+  { label: 'Produto G', value: 'g', comission: '9%' },
+  { label: 'Produto H', value: 'h', comission: '8%'},
+  { label: 'Produto I', value: 'i', comission: '5%' },
 ] as const;
 
 const Product = () => {
@@ -251,6 +251,7 @@ const Product = () => {
             if (selectedProduct) {
               const newProduct = {
                 label: selectedProduct.label,
+                comission: selectedProduct.comission,
                 quantity: quantity,
                 unitPrice: formData.valor, 
                 discount: formData.desconto, 
@@ -268,6 +269,7 @@ const Product = () => {
         <Table>
           <TableHeader className='border-b text-xs'>
             <TableHead>Produto</TableHead>
+            <TableHead>Comissão</TableHead>
             <TableHead>Quantidade</TableHead>
             <TableHead>Unitário</TableHead>
             <TableHead>Desconto</TableHead>
@@ -278,6 +280,7 @@ const Product = () => {
             {selectedProducts.map((product, index) => (
               <tr key={index}>
                 <TableCell>{product.label}</TableCell>
+                <TableCell>{product.comission}</TableCell>
                 <TableCell>{product.quantity}</TableCell>
                 <TableCell>{product.unitPrice}</TableCell>
                 <TableCell>{product.discount}</TableCell>
@@ -292,10 +295,11 @@ const Product = () => {
           </TableBody>
           <TableFooter className='text-xs'>
             <TableCell></TableCell>
-            <TableCell>totalquant</TableCell>
-            <TableCell>totalunitario</TableCell>
-            <TableCell>totaldesconto</TableCell>
-            <TableCell>total</TableCell>
+            <TableCell></TableCell>
+            <TableCell>12</TableCell>
+            <TableCell>1039</TableCell>
+            <TableCell>123</TableCell>
+            <TableCell>1323</TableCell>
             <TableCell></TableCell>
           </TableFooter>
         </Table>
