@@ -35,6 +35,7 @@ import { CirclePlus } from 'lucide-react';
 import { InputMasks } from '../shadcn/ui/input';
 import { useOpportunityFlowContext } from '@/pages/configurations/flow/OpportunityFlowContext';
 import { useOpportunityFlow } from '@/hook/useOportunityFlow';
+import { Textarea } from '../shadcn/ui/textarea';
 
 // const inter = Inter({ subsets: ['latin'] });
 
@@ -437,6 +438,13 @@ export default function Kanban() {
               type="text"
               placeholder="Número"
               name="itemname"
+            />
+            <label className='text-sm font-medium'>Observação</label>
+            <Textarea
+              placeholder="Observação"
+              name="obs"
+              value={itemName}
+              onChange={(e) => setItemName(e.target.value)}
             />
             <Button className='bg-indigo-900 hover:bg-indigo-700' onClick={onAddItem}>Adicionar</Button>
           </div>
