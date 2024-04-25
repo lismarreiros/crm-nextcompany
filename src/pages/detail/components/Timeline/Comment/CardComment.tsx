@@ -9,22 +9,21 @@ type ComentarioCardProps = {
 
 const CardComment: React.FC<ComentarioCardProps> = ({ comment, onDelete, onReopenModal }) => {
   return (
-    
-    <div className="w-full mt-4 ml-1 relative before:absolute before:ml-7 before:h-full before:w-0.5 before:bg-indigo-100">
+    <div className="w-[95%] pb-2 ml-4 relative before:absolute before:ml-8 before:h-full before:w-0.5 before:bg-indigo-100">
       <div className="relative">
-        <div className="md:flex items-center mb-2 px-4">
+        <div className="md:flex items-center mb-1 px-4">
           <div className="flex items-center space-x-4">
-            <div className="flex items-center justify-center w-8 h-8 rounded-full bg-white md:order-1">
-              <MessageSquareIcon size={14} className='text-slate-400'/>
+            <div className="flex bg-indigo-400 items-center justify-center w-8 h-8 rounded-full md:order-1">
+              <MessageSquareIcon size={14} className='text-white bg-indigo-400'/>
             </div>
           </div>
          
-          <div className="flex text-slate-500 items-center ml-4 gap-2">
+          <div className="flex text-slate-500 items-center ml-4 gap-2 pt-2">
             <span className="text-slate-700">Comentário </span> 
             <p className='text-xs'>de Mark Mikrol</p>
           </div>
         </div>
-        <div className="flex justify-between bg-white ml-14 p-4 rounded-lg border border-slate-100 text-slate-500 text-sm shadow-xs ml-2 break-words">
+        <div className="flex justify-between bg-white ml-16 mx-4 p-4 rounded-lg border border-slate-100 text-slate-500 text-sm shadow-xs break-words">
           <div>
             { comment }
           </div>

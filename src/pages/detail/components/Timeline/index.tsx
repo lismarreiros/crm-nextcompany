@@ -12,6 +12,7 @@ import { Tabs, TabsList, TabsTrigger } from '@/components/shadcn/ui/tabs';
 import { TabsContent } from '@radix-ui/react-tabs';
 import CardComment from './Comment/CardComment';
 import FormComment from './Comment/FormComment';
+import { ClipboardListIcon, FileIcon, MessageSquareIcon } from 'lucide-react';
 
 interface TaskFormData {
   id: string;
@@ -68,7 +69,7 @@ const Timeline: React.FC = () => {
 
   return (
     <div>
-      <div className='flex w-full mt-4 px-4 gap-2 justify-end'>
+      <div className='flex bg-white mx-4 mt-4 p-2 rounded-lg border gap-2 justify-end'>
         <Command className='w-1/3 border'> 
           <CommandInput placeholder='Digite para pesquisar...' />
           {/* <CommandList>
@@ -80,8 +81,8 @@ const Timeline: React.FC = () => {
        
         <Dialog open={openT} onOpenChange={setOpenT}>
           <DialogTrigger>
-            <Button className='flex gap-1 h-10 text-white text-sm bg-indigo-400 hover:bg-indigo-600'>
-              Adicionar Tarefa
+            <Button title='Adicionar Tarefa' className='flex gap-1 h-10 text-slate-500 border text-sm bg-white hover:bg-indigo-100'>
+              <ClipboardListIcon size={20} className='text-slate-500'/> Tarefa
             </Button>
           </DialogTrigger>
           <DialogContent className='h-[80%]'>
@@ -91,29 +92,32 @@ const Timeline: React.FC = () => {
           
         <Dialog open={openC} onOpenChange={setOpenC}>
           <DialogTrigger>
-            <Button className='flex gap-1 h-10 text-white text-sm bg-indigo-400 hover:bg-indigo-600'>
-              Adicionar Comentário
+            <Button title='Adicionar Comentário' className='flex gap-1 h-10 text-white text-sm text-slate-500 border  bg-white hover:bg-indigo-100'>
+              <MessageSquareIcon size={20} className='text-slate-500 '/> Comentário
             </Button>
           </DialogTrigger>
           <DialogContent className='w-4/5 h-[40%]'>
             <FormComment onCommentSubmit={handleCommentSubmit} />
           </DialogContent>
         </Dialog>
-        {/** barra de pesquisa (sem funcionar ainda!) + botões */}
+        <Button title='Anexar Arquivos' className='flex gap-1 h-10 text-white text-sm text-slate-500 border bg-white hover:bg-indigo-100'>
+          <FileIcon size={20} className='text-slate-500 '/> Anexos
+        </Button>
       </div>
+  
       <div className='flex flex-col min-h-screen mt-2 rounded-lg mx-4 bg-white border border-slate-200'>
         <Tabs defaultValue='timeline'>
           <TabsList className='flex justify-start items-center border-b border-slate-200 w-full'>
+            <TabsTrigger value='resumo'>Resumo</TabsTrigger>
             <TabsTrigger value='timeline'> Timeline
               {/* <div className='my-1 mx-1 h-5 w-5 bg-indigo-400 rounded rounded-full text-white text-xs content-center'>
                 2
               </div> */}
             </TabsTrigger>
-            <TabsTrigger value='tarefas'> Tarefas </TabsTrigger>
-            <TabsTrigger value='comentarios'> Comentários </TabsTrigger>
+       
           </TabsList>
 
-          <TabsContent value='timeline'>
+          <TabsContent value='timeline' className='mt-6'>
             {/** Card Comentário */}
             {comments.map((comment, index) => (
               <CardComment key={index} 
@@ -133,17 +137,8 @@ const Timeline: React.FC = () => {
             ))} 
           </TabsContent>
 
-          <TabsContent value='comentarios'>
-            {/** Card Comentário */}
-            {comments.map((comment, index) => (
-              <CardComment key={index} 
-                comment={comment} 
-                onDelete={() => handleCommentDelete(index)} 
-                onReopenModal={() => handleReopenModal(index)} />
-            ))}
-          </TabsContent>
-          <TabsContent value='tarefas'>
-            {/** Tarefa Adicionada */}
+          <TabsContent value='resumo' className='mt-6'>
+            {/* * Tarefa Adicionada
             {tasks.map((formData, index) => (
               <CardTask 
                 key={index} 
@@ -151,7 +146,7 @@ const Timeline: React.FC = () => {
                 onDelete={() => handleTaskDelete(index)} 
                 onReopenModal={() => handleReopenModalTask(index)}
               />
-            ))} 
+            ))}  */}
           </TabsContent>
         
           {/** Troca de fase */}
