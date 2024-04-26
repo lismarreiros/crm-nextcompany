@@ -1,30 +1,23 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import Constants from '@/constants';
-import axios from 'axios';
-import { string } from 'zod';
+import { Api } from './api/axios-config';
 
-interface Login {
-    accessToken: string;
+interface IAuth {
+  access_token: string;
 }
 
-export class LoginService {
-    
-  private static api = axios.create({
-    baseURL: Constants.BASE_URL,
-  });
+const auth = async (email: string, password: string): Promise<IAuth | Error> => {
+  try {
+    const { data } = await Api().post('auth/login', {email, password});
 
-  public static async getLogin(): Promise<Login | null> {
-    // axios call
-    const response = await this.api.get<any>('/login', { data: { email: string, password: string}
-    });
-
-    if (response.status === 200 ) {
-      return response.data.map((data: any) => ({
-        email: data.email,
-        password: data.password
-      }));
+    if (data) {
+      return data;
     }
-
-    return null;
+    return new Error('Erro no login');
+  } catch (error) {
+    console.log(error);
+    return new Error((error as { message: string }).message || 'Erro no login.');
   }
-}
+};
+
+export const LoginService = {
+  auth,
+};

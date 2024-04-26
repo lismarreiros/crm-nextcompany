@@ -4,7 +4,7 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useState } 
 interface IAuthContextData {
     logout: () => void;
     isAuthenticated: boolean;
-    login: (email: string, password: string) => Promise<string | void>;
+    login: (email: string, password: string) => Promise<Error | void>;
 }
 
 const AuthContext = createContext({} as IAuthContextData);
@@ -23,20 +23,20 @@ export const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
     const accessToken = localStorage.getItem(LOCAL_STORAGE_KEY__ACCESS_TOKEN);
 
     if (accessToken) {
-      setAccessToken(JSON.parse(accessToken));
+      setAccessToken((accessToken));
     } else {
       setAccessToken(undefined);
     }
   }, []);
 
   const handleLogin = useCallback(async (email: string, password: string) => {
-    const result = await LoginService.getLogin();
+    const result = await LoginService.auth(email, password);
 
     if (result instanceof Error) {
-      return result.message;
+      return new Error(result.message);
     } else {
-      localStorage.setItem(LOCAL_STORAGE_KEY__ACCESS_TOKEN, JSON.stringify(accessToken));
-      setAccessToken(accessToken);
+      localStorage.setItem(LOCAL_STORAGE_KEY__ACCESS_TOKEN, JSON.stringify(result.access_token));
+      setAccessToken(result.access_token);
     }
   }, []);
 
