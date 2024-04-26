@@ -79,6 +79,8 @@ const ClientPage = () => {
     listClient.splice(index, 1);
     setClient(listClient);
   };
+
+  {/** getAll */}
   
   return (
     <div className='min-h-screen bg-indigo-200 p-8'>
@@ -93,6 +95,7 @@ const ClientPage = () => {
             </div>
           </div>
           <div>
+          {/** o map vai ser aqui */}
           <TableView
           data={clients}
           onClientDelete={handleClientDelete} 
