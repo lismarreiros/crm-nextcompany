@@ -1,7 +1,7 @@
 export interface Bussiness {
     id: number;
     description: string;
-    status: string;
+    status?: string;
     closedAt?: Date;
     startedAt?: Date;
     createdAt?: Date;
@@ -12,5 +12,6 @@ export interface Bussiness {
       fantasyName: string;
     };
     opportunityFlowId: number;
-
 }
+
+export type BusinessCreateType = Omit<Bussiness, 'id'> 
