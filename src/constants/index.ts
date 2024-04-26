@@ -8,8 +8,8 @@ export default class Constants {
   static readonly BASE_URL = 'http://localhost:3001';
 
   static readonly LISTA_STATUS = [
-    'Ativo',
-    'Inativo',
+    'A',
+    'I',
   ];
 
   static readonly LISTA_DE_ESTADOS = [
