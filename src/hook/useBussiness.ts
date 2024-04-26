@@ -1,8 +1,8 @@
-import { Bussiness } from '@/entities/bussiness';
+import { BusinessCreateType, Bussiness } from '@/entities/bussiness';
 import { BussinessService } from '@/services/BussinessService';
 import { useEffect, useState } from 'react';
 
-export function useBussiness(bussinessId: number) {
+export function useBussiness(bussinessId?: number) {
   const [bussiness, setBussiness] = useState<Bussiness>();
 
   useEffect(() => {
@@ -16,5 +16,11 @@ export function useBussiness(bussinessId: number) {
   }
   , [bussinessId]);
 
-  return { bussiness };
+  // create business
+  const createBusiness = async (bussiness: BusinessCreateType) => {
+    const response = await BussinessService.createBussiness(bussiness);
+    if (response) setBussiness(response);
+  };
+
+  return { bussiness, createBusiness };
 }

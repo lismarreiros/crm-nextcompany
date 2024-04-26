@@ -1,5 +1,5 @@
 import Constants from '@/constants';
-import { Bussiness } from '@/entities/bussiness';
+import { BusinessCreateType, Bussiness } from '@/entities/bussiness';
 import axios from 'axios';
 
 export class BussinessService {
@@ -25,5 +25,18 @@ export class BussinessService {
 
   }
 
-}
+  public static async createBussiness(bussiness: BusinessCreateType): Promise<Bussiness | null> {
+    const response = await this.api.post<Bussiness>('/bussiness', bussiness, {
+      headers: {
+        Authorization: 'Bearer ' + this.token,
+      },
+    });
 
+    if (response.status !== 201) {
+      return null;
+    }
+
+    return response.data;
+  }
+
+}
