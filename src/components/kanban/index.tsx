@@ -36,6 +36,7 @@ import { InputMasks } from '../shadcn/ui/input';
 import { useOpportunityFlowContext } from '@/pages/configurations/flow/OpportunityFlowContext';
 import { useOpportunityFlow } from '@/hook/useOportunityFlow';
 import { Textarea } from '../shadcn/ui/textarea';
+import { useBussiness } from '@/hook/useBussiness';
 
 // const inter = Inter({ subsets: ['latin'] });
 
@@ -62,7 +63,13 @@ export default function Kanban() {
   const [showAddContainerModal, setShowAddContainerModal] = useState(false);
   const [showAddItemModal, setShowAddItemModal] = useState(false);
 
-  const { opportunityFlowsWithBussiness, swapOpportunityFlows, changeOpportunityFlowOfBussiness } = useOpportunityFlow();
+  const { 
+    opportunityFlowsWithBussiness,
+    swapOpportunityFlows,
+    changeOpportunityFlowOfBussiness,
+  } = useOpportunityFlow();
+
+  const { createBusiness } = useBussiness();
 
   useEffect(() => {
     // Transformar os fluxos de oportunidade em containers
@@ -121,6 +128,15 @@ export default function Kanban() {
     const id = `item-${uuidv4()}`;
     const firstContainer = containers[0];
     if (!firstContainer) return;
+
+    // done: fazer chamada para o endpoint para adicionar o item
+
+    const response = createBusiness({
+      description: itemName,
+      opportunityFlowId: 1,
+    });
+
+    if (!response) return;
 
     firstContainer.items.push({
       id,
