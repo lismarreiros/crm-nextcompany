@@ -4,8 +4,10 @@ import { Separator } from '@/components/shadcn/ui/separator';
 import { Button } from '../shadcn/ui/button';
 import { LogOutIcon, Settings, User2 } from 'lucide-react';
 import MenuTabs from './tabs/MenuTabs';
+import { useAuthContext } from '@/context/AuthContext';
 
 const NavBar = () => {
+  const { logout } = useAuthContext();
   return (
     <div className='bg-white h-12 px-2 py-4 my-2 w-full sm:px-6
       lg:px-8 flex justify-between items-center'>
@@ -46,7 +48,7 @@ const NavBar = () => {
           </div>
           <Separator />
           <div className='py-2'>
-            <Button className='flex justify-between w-full bg-transparent 
+            <Button onClick={ logout } className='flex justify-between w-full bg-transparent 
             text-slate-900 font-medium hover:bg-slate-100'>
               Sair
               <LogOutIcon className='w-4 h-4' />

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { OpportunityFlow } from '@/entities/opportunityFlow';
 import axios from 'axios';
 import Constants from '@/constants';
@@ -9,7 +10,7 @@ export class OpportunityFlowService {
     baseURL: Constants.BASE_URL,
   });
 
-  private static token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoibmV4dGNvbXBhbnkiLCJjb21wYW55SWQiOjEsInJvbGVzIjpbImFkbWluIl0sImlhdCI6MTcxNDA0NjQ2NCwiZXhwIjoxNzE0MTMyODY0fQ.dNfz6mxnQq5aSaJAnBBdEE2b4Qo2R2g6BSKQBxYQQz4';
+  private static token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoibmV4dGNvbXBhbnkiLCJjb21wYW55SWQiOjEsInJvbGVzIjpbImFkbWluIl0sImlhdCI6MTcxNDA3MjYyNiwiZXhwIjoxNzE0MTU5MDI2fQ.qX2L_BjiE2BCwjCITeQ-fAvI0kYrYewp_5GqZ4XZlZU';
 
   public static async getOpportunityFlow(): Promise<OpportunityFlow[] | null> {
     // axios call

@@ -9,72 +9,48 @@ import ActivityBranch from './pages/configurations/activities/branch/ActivityBra
 import Source from './pages/configurations/source/Source';
 import LeadPage from './pages/leads/LeadPage';
 import DashboardPage from './pages/dashboard/dashboard';
-import { OpportunityFlowProvider } from './pages/configurations/flow/OpportunityFlowContext';
-import { ActivityBranchProvider } from './pages/configurations/activities/branch/ActivityBranchContext';
-import { ActivityTypeProvider } from './pages/configurations/activities/type/ActivityTypeContext';
-import { SourceContextProvider } from './pages/configurations/source/SourceContext';
+// import { OpportunityFlowProvider } from './pages/configurations/flow/OpportunityFlowContext';
+// import { ActivityBranchProvider } from './pages/configurations/activities/branch/ActivityBranchContext';
+// import { ActivityTypeProvider } from './pages/configurations/activities/type/ActivityTypeContext';
+// import { SourceContextProvider } from './pages/configurations/source/SourceContext';
 import Login from './pages/login/Login';
+import { AuthProvider } from './context/AuthContext';
 
-function App() {
+const PrivateRoutes = () => (
+  <>
+    <NavBar />
+    <Routes>
+      <Route path='/' element={<DashboardPage />} />
+      <Route path='/fluxo' element={<OpportunityFlow />} />
+      <Route path='/clientes' element={<ClientPage />} />
+      <Route path='/ramoatividade' element={<ActivityBranch />} />
+      <Route path='/produtos' element={<ProductPage />} />
+      <Route path='/fonte' element={<Source />} />
+      <Route path='/detalhe/:leadId' element={<DetailPage />} />
+      <Route path='/tipoatividade' element={<ActivityType />} />
+      <Route path='/negocios' element={<LeadPage />} />
+    </Routes>
+  </>
+);
+
+export default function App() {
   return (
     <div>
       <header>
       </header>
       <div>
-        <NavBar />
-        <Routes>
-          <Route path='/' element={
-            <OpportunityFlowProvider>
-              <DashboardPage />
-            </OpportunityFlowProvider>
-          } />
-
-          <Route path='/fluxo' element={
-            <OpportunityFlowProvider>
-              <OpportunityFlow/>
-            </OpportunityFlowProvider>
-          } />
-
-          <Route path='/clientes' element={
-            <ActivityBranchProvider>
-              <ClientPage/>
-            </ActivityBranchProvider>
-          } />
-
-          <Route path='/ramoatividade' element={
-            <ActivityBranchProvider>
-              <ActivityBranch/>
-            </ActivityBranchProvider>
-          } />
-          
-          <Route path='/produtos'element={<ProductPage/>} />
-
-          <Route path='/fonte' element={
-            <SourceContextProvider>
-              <Source />
-            </SourceContextProvider>
-          } />
-          
-          <Route path='/detalhe/:leadId' element={
-            <ActivityTypeProvider>
-              <SourceContextProvider>
-                <DetailPage/>
-              </SourceContextProvider>
-            </ActivityTypeProvider>
-          } />
-
-          <Route path='/tipoatividade' element={
-            <ActivityTypeProvider>
-              <ActivityType />
-            </ActivityTypeProvider>
-          } />
-          
-          <Route path='/negocios' element={<LeadPage/>} />
-          <Route path='/login' element={<Login/>}/>
-        </Routes>
+        <AuthProvider>
+       
+          <Routes>
+            <Route path='/*' element={
+              <Login>
+                <PrivateRoutes />
+              </Login>
+            }/>
+          </Routes>
+        </AuthProvider>
       </div>
     </div>
   );
 }
 
-export default App;
