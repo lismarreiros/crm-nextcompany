@@ -17,17 +17,20 @@ import Login from './pages/login/Login';
 import { AuthProvider } from './context/AuthContext';
 
 const PrivateRoutes = () => (
-  <Routes>
-    <Route path='/' element={ <DashboardPage /> } />
-    <Route path='/fluxo' element={ <OpportunityFlow/> } />
-    <Route path='/clientes' element={ <ClientPage/> } />
-    <Route path='/ramoatividade' element={ <ActivityBranch/> } />
-    <Route path='/produtos'element={<ProductPage/>} />
-    <Route path='/fonte' element={ <Source /> } />
-    <Route path='/detalhe/:leadId' element={ <DetailPage/> } />
-    <Route path='/tipoatividade' element={ <ActivityType /> } />        
-    <Route path='/negocios' element={<LeadPage/>} />
-  </Routes>
+  <>
+    <NavBar />
+    <Routes>
+      <Route path='/' element={<DashboardPage />} />
+      <Route path='/fluxo' element={<OpportunityFlow />} />
+      <Route path='/clientes' element={<ClientPage />} />
+      <Route path='/ramoatividade' element={<ActivityBranch />} />
+      <Route path='/produtos' element={<ProductPage />} />
+      <Route path='/fonte' element={<Source />} />
+      <Route path='/detalhe/:leadId' element={<DetailPage />} />
+      <Route path='/tipoatividade' element={<ActivityType />} />
+      <Route path='/negocios' element={<LeadPage />} />
+    </Routes>
+  </>
 );
 
 export default function App() {
@@ -37,7 +40,7 @@ export default function App() {
       </header>
       <div>
         <AuthProvider>
-          <NavBar />
+       
           <Routes>
             <Route path='/*' element={
               <Login>
