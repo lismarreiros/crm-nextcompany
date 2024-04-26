@@ -4,45 +4,70 @@ import ClientForm from '@/components/forms/clientForm/ClientForm';
 import { Command, CommandInput } from '@/components/shadcn/ui/command';
 import { useState } from 'react';
 
-interface ClientFormData {
-  cpfOrCnpj: string;
-  nomefantasia: string;
-  razao: string;
-  ramo: string;
-  status: string;
-  nomeContato: string;
-  celular: string;
-  fixo: string;
+interface Contact {
+  id: number;
+  name: string;
   email: string;
-  funcao: string;
-  cep: string;
-  rua: string;
-  cidade: string;
-  uf: string;
-  bairro: string;
-  numero: string;
+  phone: string;
+  cellPhone: string;
+  jobtitle: string;
+}
+
+interface Address {
+  id: number;
+  zipCode: string;
+  address: string;
+  city: string;
+  complement: string;
+  number: string;
+  ibgeCode: string;
+  federativeUnit: string;
+  neighborhood: string;
+}
+
+interface ClientFormData {
+  id: number;
+  status: string;
+  cpfCnpj: string;
+  corporateName: string;
+  fantasyName: string;
+  activityBranchId: number;
+  contacts: Contact;
+  address: Address;
+  companyId: number;
 }
 
 const ClientPage = () => {
   const [clients, setClient] = useState<ClientFormData[]>([
     {
-      cpfOrCnpj:'111.111.111-60',
-      nomefantasia: 'Empresa Abc',
-      razao: 'Abc ltda',
-      ramo: 'Comércio',
-      status: 'Ativo',
-      nomeContato: 'Maria',
-      celular: '98888-8888',
-      fixo: '98888-9999',
-      email: 'maria@yahoo.com',
-      funcao: 'Sócia',
-      cep: '65400-590',
-      rua: 'Rua Marechal',
-      cidade: 'Teresina',
-      uf:'PI',
-      bairro: 'Porto Alegre',
-      numero: '1111'
-    }
+      'id': 1,
+      'status': 'A',
+      'cpfCnpj': '12345678901234',
+      'corporateName': 'ATACADO S.A',
+      'fantasyName': 'ALUMAPI',
+      'activityBranchId': 1,
+      'contacts': {
+              'id': 2,
+              'name': 'joao',
+              'email': 'joao@nextcompany.com.br',
+              'phone': '123456789',
+              'cellPhone': '123456789',
+              'jobtitle' : 'Sócio'
+          },
+      'address': {
+          'id': 1,
+          'zipCode': '6400000',
+          'address': 'Rua 02',
+          'city': 'Teresina',
+          'complement': '',
+          'number': '123',
+          'ibgeCode': '1234',
+          'federativeUnit': 'PI', 
+          'neighborhood': 'Parq. Piauí'
+      },
+      'companyId': 1
+  }
+  
   ]);
 
   const handleClientSubmit = (data: ClientFormData) => {

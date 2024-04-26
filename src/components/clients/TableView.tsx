@@ -6,23 +6,37 @@ import { ChevronDownIcon, EditIcon, Trash2Icon } from 'lucide-react';
 import Constants from '@/constants';
 import { Badge } from '../shadcn/ui/badge';
 
-interface ClientFormData {
-  nomefantasia: string;
-  razao: string;
-  ramo: string;
-  status: string;
-  nomeContato: string;
-  celular: string;
-  fixo: string;
+interface Contact {
+  id: number;
+  name: string;
   email: string;
-  funcao: string;
-  cep: string;
-  rua: string;
-  cidade: string;
-  uf: string;
-  bairro: string;
-  numero: string;
-  cpfOrCnpj: string;
+  phone: string;
+  cellPhone: string;
+  jobtitle: string;
+}
+
+interface Address {
+  id: number;
+  zipCode: string;
+  address: string;
+  city: string;
+  complement: string;
+  number: string;
+  ibgeCode: string;
+  federativeUnit: string;
+  neighborhood: string;
+}
+
+interface ClientFormData {
+  id: number;
+  status: string;
+  cpfCnpj: string;
+  corporateName: string;
+  fantasyName: string;
+  activityBranchId: number;
+  contacts: Contact;
+  address: Address;
+  companyId: number;
 }
 
 type TableViewProps = {
@@ -51,12 +65,12 @@ const TableView: React.FC<TableViewProps> = ({ data, onClientDelete }) => {
                   <CollapsibleTrigger asChild title='Mostrar Detalhes'>
                     <div className='px-2 flex items-center space-x-1 [&[data-state=open]>svg.chevron]:rotate-180'>
                       <ChevronDownIcon className="h-4 w-4 bg-indigo-50 hover:bg-indigo-200 rounded text-muted-foreground shrink-0 transition-transform duration-200 ease-in-out chevron" />
-                      <TableCell>{cliente.nomefantasia}</TableCell>
+                      <TableCell>{cliente.fantasyName}</TableCell>
                     </div> 
                   </CollapsibleTrigger>
-                  <TableCell>{cliente.cpfOrCnpj}</TableCell>
-                  <TableCell>{cliente.razao}</TableCell>
-                  <TableCell>{cliente.ramo}</TableCell>
+                  <TableCell>{cliente.cpfCnpj}</TableCell>
+                  <TableCell>{cliente.corporateName}</TableCell>
+                  <TableCell>{cliente.activityBranchId}</TableCell>
                   <TableCell> 
                     <Badge className={cliente.status === 'Ativo' ? 'text-green-600 font-light bg-green-200 hover:bg-green-200' : 'text-red-600 font-light bg-red-200 hover:bg-red-200'}>{cliente.status}</Badge>
                   </TableCell>

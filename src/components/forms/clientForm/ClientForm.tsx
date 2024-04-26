@@ -1,34 +1,20 @@
 /* eslint-disable no-extra-boolean-cast */
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import ValidationCpforCnpj from '@/validations/cpfCnpj/validationCpfCnpj';
+//import ValidationCpforCnpj from '@/validations/cpfCnpj/validationCpfCnpj';
 import CustomInputMask from '@/utils/customInputMask';
 import { PlusIcon, UsersIcon } from 'lucide-react';
 import { Button } from '@/components/shadcn/ui/button';
-import {
-  Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/shadcn/ui/dialog';
+import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger, } from '@/components/shadcn/ui/dialog';
 import { Input, InputMasks } from '@/components/shadcn/ui/input';
 import { Form, FormControl, FormField, FormLabel, FormItem, FormMessage } from '@/components/shadcn/ui/form';
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/shadcn/ui/select';
-
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue, } from '@/components/shadcn/ui/select';
 import Constants from '@/constants';
 import { useActivityBranchContext } from '@/pages/configurations/activities/branch/ActivityBranchContext';
+import { ClientService } from '@/services/ClientService';
+import cliente from '@/validations/schemas/client';
+import { z } from 'zod';
 
 type ClientFormProps = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -40,36 +26,12 @@ type BranchType = {
   descricao: string;
 }[]
 
-{/* validação */}
-const schema = z.object({
-  cpfOrCnpj: z.string()
-    .refine((value: string) => {
-      if (typeof value !== 'string') return false;
-      return ValidationCpforCnpj.validateCpfOrCnpj(value);
-    }, { message: 'Digite um CPF ou CNPJ válido.'} ),
-  nomefantasia: z.string().max(100),
-  razao: z.optional(z.string()),
-  ramo: z.optional(z.string()),
-  status: z.optional(z.string()),
-  nomeContato: z.optional(z.string()),
-  celular: z.optional(z.string()), 
-  fixo: z.optional(z.string()), 
-  email: z.optional(z.string().email('Digite um email válido')), 
-  funcao: z.optional(z.string()), 
-  cep: z.optional(z.string()),
-  rua: z.optional(z.string()),
-  cidade: z.optional(z.string()),
-  uf: z.optional(z.string()),
-  bairro: z.optional(z.string()),
-  numero: z.optional(z.string())
-});
-
 const ClientForm: React.FC<ClientFormProps> = ({ onClientSubmit }) => {
   const { activityBranches } = useActivityBranchContext();
   const [branches, setBranches] = useState<BranchType>([]);
   const [open, setOpen] = useState(false);
-  const form = useForm<z.infer<typeof schema>>({
-    resolver: zodResolver(schema),
+  const form = useForm<z.infer<typeof cliente>>({
+    resolver: zodResolver(cliente),
   });
 
   const cpfCNPJInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -77,13 +39,26 @@ const ClientForm: React.FC<ClientFormProps> = ({ onClientSubmit }) => {
     e.target.value = CustomInputMask.cpfCnpj(value);
   };
 
-  const handleSubmit =  (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = form.getValues();
-    // console.log(data);
-    onClientSubmit(data);
-    setOpen(false);
-  };
+  // const handleSubmit =  (event: React.FormEvent<HTMLFormElement>) => {
+  //   event.preventDefault();
+  //   const data = form.getValues();
+  //   // console.log(data);
+  //   onClientSubmit(data);
+  //   setOpen(false);
+  // };
+
+  function createCliente(data: z.infer<typeof cliente>) {
+    ClientService.create(data)
+      .then(response => {
+        console.log('Data being submitted:', data);
+        onClientSubmit(data);
+        setOpen(false);
+        console.log('Cliente Cadastrado', response);
+      })
+      .catch(error => {
+        console.log('Error', error);
+      });
+  }
   
   const pesquisarCep = async (cep: string) => {
     try {
@@ -93,10 +68,10 @@ const ClientForm: React.FC<ClientFormProps> = ({ onClientSubmit }) => {
       if (data.erro) {
         throw new Error('CEP não encontrado.');
       }
-      form.setValue('rua', data.logradouro);
-      form.setValue('bairro', data.bairro);
-      form.setValue('cidade', data.localidade);
-      form.setValue('uf', data.uf);
+      form.setValue('address.address', data.logradouro);
+      form.setValue('address.neighborhood', data.bairro);
+      form.setValue('address.city', data.localidade);
+      form.setValue('address.federativeUnit', data.uf);
     } catch (error) {
       console.error('Erro ao buscar CEP:', error);
       alert('Erro ao buscar CEP. Por favor, tente novamente');
@@ -104,10 +79,10 @@ const ClientForm: React.FC<ClientFormProps> = ({ onClientSubmit }) => {
   };
 
   const handleCepChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const cep = e.target.value.replace(/\D/g, ''); // Remove caracteres não númericos
+    const zipCode = e.target.value.replace(/\D/g, ''); // Remove caracteres não númericos
 
-    if (cep.length === 8) {
-      pesquisarCep(cep);
+    if (zipCode.length === 8) {
+      pesquisarCep(zipCode);
     }
   };
 
@@ -139,13 +114,17 @@ const ClientForm: React.FC<ClientFormProps> = ({ onClientSubmit }) => {
 
         {/* Começo do Formulário */}
         <Form {...form}>
-          <form onSubmit={handleSubmit} className="space-y-8">
+          <form onSubmit={(e) => {
+            e.preventDefault(); 
+            console.log('Form submitted');
+            form.handleSubmit(createCliente)(e); 
+          }} className="space-y-8">
             <div className='grid gap-4 pt-2'>
 
               {/* CPF/CNPJ */}
               <FormField
                 control={form.control}
-                name='cpfOrCnpj'
+                name='cpfCnpj'
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>CPF/CNPJ</FormLabel>
@@ -165,7 +144,7 @@ const ClientForm: React.FC<ClientFormProps> = ({ onClientSubmit }) => {
               {/* Nome/Fantasia */}
               <FormField
                 control={form.control}
-                name='nomefantasia'
+                name='fantasyName'
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Nome/Fantasia</FormLabel>
@@ -179,7 +158,7 @@ const ClientForm: React.FC<ClientFormProps> = ({ onClientSubmit }) => {
               {/* Razão Social */}
               <FormField
                 control={form.control}
-                name='razao'
+                name='corporateName'
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Razão Social</FormLabel>
@@ -194,7 +173,7 @@ const ClientForm: React.FC<ClientFormProps> = ({ onClientSubmit }) => {
               {/* Ramo Atividade */}
               <FormField
                 control={form.control}
-                name='ramo'
+                name='activityBranchId'
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Ramo Atividade</FormLabel>
@@ -253,7 +232,7 @@ const ClientForm: React.FC<ClientFormProps> = ({ onClientSubmit }) => {
                 {/* Nome do Contato */}
                 <FormField
                   control={form.control}
-                  name='nomeContato'
+                  name='contacts.name'
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Nome</FormLabel>
@@ -268,7 +247,7 @@ const ClientForm: React.FC<ClientFormProps> = ({ onClientSubmit }) => {
                 {/* Telefone 1 */}
                 <FormField
                   control={form.control}
-                  name='fixo'
+                  name='contacts.phone'
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Telefone</FormLabel>
@@ -287,7 +266,7 @@ const ClientForm: React.FC<ClientFormProps> = ({ onClientSubmit }) => {
                 {/* Telefone 2 */}
                 <FormField
                   control={form.control}
-                  name='celular'
+                  name='contacts.cellPhone'
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Telefone 2</FormLabel>
@@ -306,7 +285,7 @@ const ClientForm: React.FC<ClientFormProps> = ({ onClientSubmit }) => {
                 {/* Email */}
                 <FormField
                   control={form.control}
-                  name='email'
+                  name='contacts.email'
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Email</FormLabel>
@@ -321,7 +300,7 @@ const ClientForm: React.FC<ClientFormProps> = ({ onClientSubmit }) => {
                 {/* Função */}
                 <FormField
                   control={form.control}
-                  name='funcao'
+                  name='contacts.jobtitle'
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Função</FormLabel>
@@ -341,7 +320,7 @@ const ClientForm: React.FC<ClientFormProps> = ({ onClientSubmit }) => {
                 {/* CEP */}
                 <FormField
                   control={form.control}
-                  name='cep'
+                  name='address.zipCode'
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>CEP</FormLabel>
@@ -358,7 +337,7 @@ const ClientForm: React.FC<ClientFormProps> = ({ onClientSubmit }) => {
                 {/* BAIRRO */}
                 <FormField
                   control={form.control}
-                  name='bairro'
+                  name='address.neighborhood'
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Bairro</FormLabel>
@@ -373,7 +352,7 @@ const ClientForm: React.FC<ClientFormProps> = ({ onClientSubmit }) => {
                 {/* RUA */}
                 <FormField
                   control={form.control}
-                  name='rua'
+                  name='address.address'
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Rua</FormLabel>
@@ -388,7 +367,7 @@ const ClientForm: React.FC<ClientFormProps> = ({ onClientSubmit }) => {
                 {/* CIDADE */}
                 <FormField
                   control={form.control}
-                  name='cidade'
+                  name='address.city'
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Cidade</FormLabel>
@@ -403,7 +382,7 @@ const ClientForm: React.FC<ClientFormProps> = ({ onClientSubmit }) => {
                 {/* UF */}
                 <FormField
                   control={form.control}
-                  name='uf'
+                  name='address.federativeUnit'
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>UF</FormLabel>
@@ -437,7 +416,7 @@ const ClientForm: React.FC<ClientFormProps> = ({ onClientSubmit }) => {
                 {/* NÚMERO */}
                 <FormField
                   control={form.control}
-                  name='numero'
+                  name='address.number'
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Número</FormLabel>
