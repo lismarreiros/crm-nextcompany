@@ -6,13 +6,15 @@ import {
   DialogTrigger,
 } from '@/components/shadcn/ui/dialog';
 import FormTask from './Task/FormTask';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import CardTask from './Task/CardTask';
 import { Tabs, TabsList, TabsTrigger } from '@/components/shadcn/ui/tabs';
 import { TabsContent } from '@radix-ui/react-tabs';
 import CardComment from './Comment/CardComment';
 import FormComment from './Comment/FormComment';
 import { ClipboardListIcon, FileIcon, MessageSquareIcon } from 'lucide-react';
+import { useBusinessDetailContext } from '@/context/BusinessDetailContext';
+import { _BusinessComment } from '@/entities/bussiness';
 
 interface TaskFormData {
   id: string;
@@ -29,13 +31,24 @@ interface TaskFormData {
 const Timeline: React.FC = () => {
   const [openT, setOpenT] = useState(false);
   const [openC, setOpenC] = useState(false);
-  const [comments, setComments] = useState<string[]>([]);
+  const [comments, setComments] = useState<_BusinessComment[]>([]);
   const [tasks, setTasks] = useState<TaskFormData[]>([]);
 
-  const handleCommentSubmit = (newComment: string) => {
-    setComments([newComment, ...comments]);
-    setOpenC(!openC);
-  };
+  const { bussiness } = useBusinessDetailContext();
+
+  useEffect(() => {
+    if (!bussiness) return;
+
+    setComments(bussiness.businessComments.map(
+      (businessComment: _BusinessComment) => ({...businessComment})
+    ));
+
+  }, [bussiness]);
+
+  // const handleCommentSubmit = (newComment: string) => {
+  //   setComments([{comment: newComment}, ...comments]);
+  //   setOpenC(!openC);
+  // };
 
   const handleTaskSubmit = (formData: TaskFormData) => {
     setTasks([formData, ...tasks]);
@@ -97,7 +110,7 @@ const Timeline: React.FC = () => {
             </Button>
           </DialogTrigger>
           <DialogContent className='w-4/5 h-[40%]'>
-            <FormComment onCommentSubmit={handleCommentSubmit} />
+            <FormComment />
           </DialogContent>
         </Dialog>
         <Button title='Anexar Arquivos' className='flex gap-1 h-10 text-white text-sm text-slate-500 border bg-white hover:bg-indigo-100'>
@@ -120,8 +133,9 @@ const Timeline: React.FC = () => {
           <TabsContent value='timeline' className='mt-6'>
             {/** Card Comentário */}
             {comments.map((comment, index) => (
-              <CardComment key={index} 
-                comment={comment} 
+              <CardComment key={index}
+                userName={comment.user.name} 
+                comment={comment.comment} 
                 onDelete={() => handleCommentDelete(index)} 
                 onReopenModal={() => handleReopenModal(index)} />
             ))}
