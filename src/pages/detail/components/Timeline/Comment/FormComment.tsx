@@ -10,20 +10,20 @@ import { Form,
 } from '@/components/shadcn/ui/form';
 import { Button } from '@/components/shadcn/ui/button';
 
-type FormComentarioProps = {
-  onCommentSubmit: (comment: string) => void;
-};
+// type FormComentarioProps = {
+//   onCommentSubmit: (comment: {comentario: string}) => void;
+// };
 
 const schema = z.object({
   comentario: z.string().max(100, { message: 'Limite de caracteres atingido' }),
 });
 
-const FormComment: React.FC<FormComentarioProps> = ({ onCommentSubmit }) => {
+const FormComment: React.FC = () => {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const comentario = formData.get('comentario') as string;
-    onCommentSubmit(comentario);
+    // onCommentSubmit({comentario});
   };
 
   const form = useForm<z.infer<typeof schema>>({
