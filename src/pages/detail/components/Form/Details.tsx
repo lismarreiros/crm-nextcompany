@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { FormControl, FormField, FormLabel, FormItem, } from '@/components/shadcn/ui/form';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/shadcn/ui/popover';
@@ -13,9 +13,10 @@ import { ptBR } from 'date-fns/locale';
 import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
 import { useSourceContext } from '@/pages/configurations/source/SourceContext';
-import { Bussiness } from '@/entities/bussiness';
 import { MentionsInput, Mention } from 'react-mentions';
 import mentionStyles from './mentionStyles';
+
+import { useBusinessDetailContext } from '@/context/BusinessDetailContext';
 
 const participantes = [
   { id: 1, display: 'Chico' },
@@ -47,21 +48,21 @@ const types = [
   { label: 'Pós-Venda', value: 'posvenda' },
 ] as const;
 
-type PropsType = {
-  bussiness: Bussiness,
-}
-
-const Details = ({ bussiness }: PropsType) => {
+const Details = () => {
   const { sources } = useSourceContext();
   const { control, getValues, setValue } = useFormContext();
   const [openClientSelect, setOpenClientSelect] = useState(false);
   const [openTypeSelect, setOpenTypeSelect] = useState(false);
   const [openSourceSelect, setOpenSourceSelect] = useState(false);
 
+  const { bussiness } = useBusinessDetailContext();
+
   useEffect(() => {
-    setValue('descricao', bussiness.description);
+    if (!bussiness) return;
+
+    setValue('descricao',  bussiness.description);
     setValue('dtinicio', bussiness.startedAt);
-  }, []);
+  }, [bussiness]);
 
   return (
     <div>
