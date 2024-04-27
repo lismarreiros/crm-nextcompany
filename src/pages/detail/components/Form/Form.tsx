@@ -5,13 +5,8 @@ import Situation from './Situation';
 import { FormProvider, useForm } from 'react-hook-form';
 import negocio from '@/validations/schemas/negocio';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Bussiness } from '@/entities/bussiness';
 
-type PropsType = {
-  bussiness: Bussiness,
-}
-
-function FormDetalhe({ bussiness }: PropsType) {
+function FormDetalhe() {
   const methods = useForm({ resolver: zodResolver(negocio) });
   
   return (
@@ -25,7 +20,7 @@ function FormDetalhe({ bussiness }: PropsType) {
               <TabsTrigger value='situation'>Situação</TabsTrigger>
             </TabsList>
             <TabsContent value='details' className='w-full py-2 px-4'>
-              <Details bussiness={bussiness} />
+              <Details />
             </TabsContent>
             <TabsContent value='products' className='w-full py-2 px-4'>
               <Product/>
