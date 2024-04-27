@@ -3,11 +3,12 @@ import React from 'react';
 
 type ComentarioCardProps = {
     comment: string;
+    userName: string;
     onDelete: () => void;
     onReopenModal: () => void;
 };
 
-const CardComment: React.FC<ComentarioCardProps> = ({ comment, onDelete, onReopenModal }) => {
+const CardComment: React.FC<ComentarioCardProps> = ({ comment, userName, onDelete, onReopenModal }) => {
   return (
     <div className="w-[95%] pb-2 ml-4 relative before:absolute before:ml-8 before:h-full before:w-0.5 before:bg-indigo-100">
       <div className="relative">
@@ -20,7 +21,7 @@ const CardComment: React.FC<ComentarioCardProps> = ({ comment, onDelete, onReope
          
           <div className="flex text-slate-500 items-center ml-4 gap-2 pt-2">
             <span className="text-slate-700">Comentário </span> 
-            <p className='text-xs'>de Mark Mikrol</p>
+            <p className='text-xs'>de { userName }</p>
           </div>
         </div>
         <div className="flex justify-between bg-white ml-16 mx-4 p-4 rounded-lg border border-slate-100 text-slate-500 text-sm shadow-xs break-words">
