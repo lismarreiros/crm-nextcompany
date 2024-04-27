@@ -1,6 +1,18 @@
+export interface _BusinessComment {
+  id: number;
+  comment: string;
+  user: {
+    id: number;
+    name: string;
+  };
+  createdAt: Date;
+  updatedAt: Date;
+}
+
 export interface Bussiness {
     id: number;
     description: string;
+    bussinessComments?: _BusinessComment[]
     status?: string;
     closedAt?: Date;
     startedAt?: Date;
