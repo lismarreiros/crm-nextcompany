@@ -6,6 +6,7 @@ export function useOpportunityFlow() {
   const [opportunityFlows, setOpportunityFlows] = useState<OpportunityFlow[]>([]);
   const [opportunityFlowsWithBussiness, setOpportunityFlowsWithBussiness] = useState<OpportunityFlowWithBussiness[]>([]);
   const [errorFetchOpportunityFlows, setErrorFetchOpportunityFlows] = useState(false);
+  const [saveOpportunityFlowsError, setSaveOpportunityFlowsError] = useState(false);
 
   const getAllOpportunityFlowWithBussiness = async () => {
     try {
@@ -47,9 +48,21 @@ export function useOpportunityFlow() {
   };
 
   const saveOpportunityFlows = async (opportunityFlows: OpportunityFlow[]) => {
-    const response = await OpportunityFlowService.updateManyOpportunityFlow(opportunityFlows);
-    // console.log(response);
+    try {
+      await OpportunityFlowService.updateManyOpportunityFlow(opportunityFlows);
+    } catch (error) {
+      console.log(error);
+      setSaveOpportunityFlowsError(true);
+    }
   };
 
-  return { opportunityFlows, errorFetchOpportunityFlows, opportunityFlowsWithBussiness, swapOpportunityFlows, saveOpportunityFlows, changeOpportunityFlowOfBussiness };
+  return {
+    opportunityFlows,
+    errorFetchOpportunityFlows,
+    opportunityFlowsWithBussiness,
+    saveOpportunityFlowsError,
+    swapOpportunityFlows,
+    saveOpportunityFlows,
+    changeOpportunityFlowOfBussiness
+  };
 }
