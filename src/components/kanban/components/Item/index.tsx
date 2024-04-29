@@ -44,7 +44,7 @@ const Items = ({ id, bussinessId, title, contactNumber}: ItemsType) => {
       <div className='flex flex-col'>
         <div className="flex items-start h-full">
           <div className='flex flex-col gap-2 pr-2 mr-2 items-center justify-center'>
-            <Avatar className='h-5 w-5'>
+            <Avatar className='h-6 w-6'>
               <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>
