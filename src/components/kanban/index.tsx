@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { SetStateAction, useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 // DnD
@@ -11,7 +11,7 @@ import {
   KeyboardSensor,
   PointerSensor,
   UniqueIdentifier,
-  closestCorners,
+  closestCenter,
   useSensor,
   useSensors,
 } from '@dnd-kit/core';
@@ -33,9 +33,10 @@ import { Dialog, DialogContent } from '@/components/shadcn/ui/dialog';
 import InputModal from '@/components/kanban/components/Input';
 import { CirclePlus } from 'lucide-react';
 import { InputMasks } from '../shadcn/ui/input';
-import { useOpportunityFlowContext } from '@/pages/configurations/flow/OpportunityFlowContext';
+//import { useOpportunityFlowContext } from '@/pages/configurations/flow/OpportunityFlowContext';
 import { useOpportunityFlow } from '@/hook/useOportunityFlow';
 import { Textarea } from '../shadcn/ui/textarea';
+import { useBussiness } from '@/hook/useBussiness';
 
 // const inter = Inter({ subsets: ['latin'] });
 
@@ -47,7 +48,7 @@ type DNDType = {
     id: UniqueIdentifier;
     bussinessId: number;
     title: string;
-    status: string;
+    contactNumber: string;
   }[];
 };
 
@@ -59,10 +60,17 @@ export default function Kanban() {
     useState<UniqueIdentifier>();
   const [containerName, setContainerName] = useState('');
   const [itemName, setItemName] = useState('');
+  const [contactNumber, setContactNumber] = useState('');
   const [showAddContainerModal, setShowAddContainerModal] = useState(false);
   const [showAddItemModal, setShowAddItemModal] = useState(false);
 
-  const { opportunityFlowsWithBussiness } = useOpportunityFlow();
+  const { 
+    opportunityFlowsWithBussiness,
+    swapOpportunityFlows,
+    changeOpportunityFlowOfBussiness,
+  } = useOpportunityFlow();
+
+  const { createBusiness } = useBussiness();
 
   useEffect(() => {
     // Transformar os fluxos de oportunidade em containers
@@ -75,7 +83,7 @@ export default function Kanban() {
         id: `item-${uuidv4()}}`,
         bussinessId: bussiness.id,
         title: bussiness.description,
-        status: flow.description,
+        contactNumber: bussiness.contactNumber,
       })) : [],
     }));
   
@@ -122,15 +130,25 @@ export default function Kanban() {
     const firstContainer = containers[0];
     if (!firstContainer) return;
 
+    // done: fazer chamada para o endpoint para adicionar o item
+
+    const response = createBusiness({
+      description: itemName,
+      opportunityFlowId: 1,
+    });
+
+    if (!response) return;
+
     firstContainer.items.push({
       id,
       bussinessId: 0,
       title: itemName,
-      status: firstContainer.title,
+      contactNumber: contactNumber,
     });
 
     setContainers([...containers]);
     setItemName('');
+    setContactNumber('');
     setShowAddItemModal(false);
   };
 
@@ -182,7 +200,7 @@ export default function Kanban() {
 
   const handleDragMove = (event: DragMoveEvent) => {
     const { active, over } = event;
-
+    
     // Handle Items Sorting
     if (
       active.id.toString().includes('item') &&
@@ -221,9 +239,6 @@ export default function Kanban() {
           activeitemIndex,
           overitemIndex,
         );
-
-        // todo: alterar ordem do fluxo usando o endpoint switchOpportunityFlow.
-
         setContainers(newItems);
       } else {
         // In different containers
@@ -275,6 +290,14 @@ export default function Kanban() {
         activeitemIndex,
         1,
       );
+
+      const opportunityFlowsId = newItems[overContainerIndex].opportunityFlowsId;
+      const bussinessId = removeditem.bussinessId;
+      changeOpportunityFlowOfBussiness(bussinessId, opportunityFlowsId);
+      
+      // atualizando status do item
+      // removeditem.status = newItems[overContainerIndex].title;
+
       newItems[overContainerIndex].items.push(removeditem);
       setContainers(newItems);
     }
@@ -302,6 +325,9 @@ export default function Kanban() {
         (container) => container.id === over.id,
       );
       // Swap the active and over container
+      // alterar ordem do fluxo usando o endpoint switchOpportunityFlow
+      swapOpportunityFlows(containers[activeContainerIndex].opportunityFlowsId, containers[overContainerIndex].opportunityFlowsId);
+
       let newItems = [...containers];
       newItems = arrayMove(newItems, activeContainerIndex, overContainerIndex);
       setContainers(newItems);
@@ -391,6 +417,7 @@ export default function Kanban() {
         activeitemIndex,
         1,
       );
+
       newItems[overContainerIndex].items.push(removeditem);
       setContainers(newItems);
     }
@@ -437,14 +464,15 @@ export default function Kanban() {
               mask='(99) 99999-9999'
               type="text"
               placeholder="Número"
-              name="itemname"
+              value={contactNumber}
+              onChange={(e: { target: { value: SetStateAction<string>; }; }) => setContactNumber(e.target.value)}
             />
             <label className='text-sm font-medium'>Observação</label>
             <Textarea
               placeholder="Observação"
               name="obs"
-              value={itemName}
-              onChange={(e) => setItemName(e.target.value)}
+              // value={itemName}
+              // onChange={(e) => setItemName(e.target.value)}
             />
             <Button className='bg-indigo-900 hover:bg-indigo-700' onClick={onAddItem}>Adicionar</Button>
           </div>
@@ -469,7 +497,7 @@ export default function Kanban() {
         <div className="flex gap-x-4">
           <DndContext
             sensors={sensors}
-            collisionDetection={closestCorners}
+            collisionDetection={closestCenter}
             onDragStart={handleDragStart}
             onDragMove={handleDragMove}
             onDragEnd={handleDragEnd}
@@ -488,7 +516,7 @@ export default function Kanban() {
                   <SortableContext items={container.items.map((i) => i.id)}>
                     <div className="flex items-start flex-col gap-y-4">
                       {container.items.map((i) => (
-                        <Items title={i.title} id={i.id} key={i.id} status={i.status} />
+                        <Items title={i.title} bussinessId={i.bussinessId} id={i.id} key={i.id} contactNumber={i.contactNumber} />
                       ))}
                     </div>
                   </SortableContext>
@@ -498,13 +526,13 @@ export default function Kanban() {
             <DragOverlay adjustScale={false}>
               {/* Drag Overlay For item Item */}
               {activeId && activeId.toString().includes('item') && (
-                <Items id={activeId} title={findItemTitle(activeId)} status={findContainerTitle(activeId)} />
+                <Items id={activeId} bussinessId={0} title={findItemTitle(activeId)} contactNumber={contactNumber} />
               )}
               {/* Drag Overlay For Container */}
               {activeId && activeId.toString().includes('container') && (
                 <Container id={activeId} title={findContainerTitle(activeId)}>
                   {findContainerItems(activeId).map((i) => (
-                    <Items key={i.id} title={i.title} id={i.id} status={findContainerTitle(activeId)}/>
+                    <Items key={i.id} bussinessId={i.bussinessId} title={i.title} id={i.id} contactNumber={i.contactNumber}/>
                   ))}
                 </Container>
               )}

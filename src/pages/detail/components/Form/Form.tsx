@@ -8,6 +8,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 
 function FormDetalhe() {
   const methods = useForm({ resolver: zodResolver(negocio) });
+  
   return (
     <div className='bg-inherit h-full border-l border-slate-200'>
       <FormProvider {...methods}>
@@ -19,7 +20,7 @@ function FormDetalhe() {
               <TabsTrigger value='situation'>Situação</TabsTrigger>
             </TabsList>
             <TabsContent value='details' className='w-full py-2 px-4'>
-              <Details/>
+              <Details />
             </TabsContent>
             <TabsContent value='products' className='w-full py-2 px-4'>
               <Product/>

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { FormControl, FormField, FormLabel, FormItem, } from '@/components/shadcn/ui/form';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/shadcn/ui/popover';
@@ -15,6 +15,8 @@ import { cn } from '@/lib/utils';
 import { useSourceContext } from '@/pages/configurations/source/SourceContext';
 import { MentionsInput, Mention } from 'react-mentions';
 import mentionStyles from './mentionStyles';
+
+import { useBusinessDetailContext } from '@/context/BusinessDetailContext';
 
 const participantes = [
   { id: 1, display: 'Chico' },
@@ -52,6 +54,15 @@ const Details = () => {
   const [openClientSelect, setOpenClientSelect] = useState(false);
   const [openTypeSelect, setOpenTypeSelect] = useState(false);
   const [openSourceSelect, setOpenSourceSelect] = useState(false);
+
+  const { bussiness } = useBusinessDetailContext();
+
+  useEffect(() => {
+    if (!bussiness) return;
+
+    setValue('descricao',  bussiness.description);
+    setValue('dtinicio', bussiness.startedAt);
+  }, [bussiness]);
 
   return (
     <div>
