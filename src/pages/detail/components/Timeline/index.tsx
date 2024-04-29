@@ -121,7 +121,7 @@ const Timeline: React.FC = () => {
       <div className='flex flex-col min-h-screen mt-2 rounded-lg mx-4 bg-white border border-slate-200'>
         <Tabs defaultValue='timeline'>
           <TabsList className='flex justify-start items-center border-b border-slate-200 w-full'>
-            <TabsTrigger value='resumo'>Resumo</TabsTrigger>
+            {/* <TabsTrigger value='resumo'>Resumo</TabsTrigger> */}
             <TabsTrigger value='timeline'> Timeline
               {/* <div className='my-1 mx-1 h-5 w-5 bg-indigo-400 rounded rounded-full text-white text-xs content-center'>
                 2

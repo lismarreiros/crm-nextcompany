@@ -1,4 +1,5 @@
 interface _Bussiness {
+  [x: string]: any;
   id: number;
   description: string;
   satus?: string;
