@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { SetStateAction, useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 // DnD
@@ -33,7 +33,7 @@ import { Dialog, DialogContent } from '@/components/shadcn/ui/dialog';
 import InputModal from '@/components/kanban/components/Input';
 import { CirclePlus } from 'lucide-react';
 import { InputMasks } from '../shadcn/ui/input';
-import { useOpportunityFlowContext } from '@/pages/configurations/flow/OpportunityFlowContext';
+//import { useOpportunityFlowContext } from '@/pages/configurations/flow/OpportunityFlowContext';
 import { useOpportunityFlow } from '@/hook/useOportunityFlow';
 import { Textarea } from '../shadcn/ui/textarea';
 import { useBussiness } from '@/hook/useBussiness';
@@ -48,7 +48,7 @@ type DNDType = {
     id: UniqueIdentifier;
     bussinessId: number;
     title: string;
-    status: string;
+    contactNumber: string;
   }[];
 };
 
@@ -60,6 +60,7 @@ export default function Kanban() {
     useState<UniqueIdentifier>();
   const [containerName, setContainerName] = useState('');
   const [itemName, setItemName] = useState('');
+  const [contactNumber, setContactNumber] = useState('');
   const [showAddContainerModal, setShowAddContainerModal] = useState(false);
   const [showAddItemModal, setShowAddItemModal] = useState(false);
 
@@ -82,7 +83,7 @@ export default function Kanban() {
         id: `item-${uuidv4()}}`,
         bussinessId: bussiness.id,
         title: bussiness.description,
-        status: flow.description,
+        contactNumber: bussiness.contactNumber,
       })) : [],
     }));
   
@@ -142,11 +143,12 @@ export default function Kanban() {
       id,
       bussinessId: 0,
       title: itemName,
-      status: firstContainer.title,
+      contactNumber: contactNumber,
     });
 
     setContainers([...containers]);
     setItemName('');
+    setContactNumber('');
     setShowAddItemModal(false);
   };
 
@@ -294,7 +296,7 @@ export default function Kanban() {
       changeOpportunityFlowOfBussiness(bussinessId, opportunityFlowsId);
       
       // atualizando status do item
-      removeditem.status = newItems[overContainerIndex].title;
+      // removeditem.status = newItems[overContainerIndex].title;
 
       newItems[overContainerIndex].items.push(removeditem);
       setContainers(newItems);
@@ -462,14 +464,15 @@ export default function Kanban() {
               mask='(99) 99999-9999'
               type="text"
               placeholder="Número"
-              name="itemname"
+              value={contactNumber}
+              onChange={(e: { target: { value: SetStateAction<string>; }; }) => setContactNumber(e.target.value)}
             />
             <label className='text-sm font-medium'>Observação</label>
             <Textarea
               placeholder="Observação"
               name="obs"
-              value={itemName}
-              onChange={(e) => setItemName(e.target.value)}
+              // value={itemName}
+              // onChange={(e) => setItemName(e.target.value)}
             />
             <Button className='bg-indigo-900 hover:bg-indigo-700' onClick={onAddItem}>Adicionar</Button>
           </div>
@@ -513,7 +516,7 @@ export default function Kanban() {
                   <SortableContext items={container.items.map((i) => i.id)}>
                     <div className="flex items-start flex-col gap-y-4">
                       {container.items.map((i) => (
-                        <Items title={i.title} bussinessId={i.bussinessId} id={i.id} key={i.id} status={i.status} />
+                        <Items title={i.title} bussinessId={i.bussinessId} id={i.id} key={i.id} contactNumber={i.contactNumber} />
                       ))}
                     </div>
                   </SortableContext>
@@ -523,13 +526,13 @@ export default function Kanban() {
             <DragOverlay adjustScale={false}>
               {/* Drag Overlay For item Item */}
               {activeId && activeId.toString().includes('item') && (
-                <Items id={activeId} bussinessId={0} title={findItemTitle(activeId)} status={findContainerTitle(activeId)} />
+                <Items id={activeId} bussinessId={0} title={findItemTitle(activeId)} contactNumber={contactNumber} />
               )}
               {/* Drag Overlay For Container */}
               {activeId && activeId.toString().includes('container') && (
                 <Container id={activeId} title={findContainerTitle(activeId)}>
                   {findContainerItems(activeId).map((i) => (
-                    <Items key={i.id} bussinessId={i.bussinessId} title={i.title} id={i.id} status={findContainerTitle(activeId)}/>
+                    <Items key={i.id} bussinessId={i.bussinessId} title={i.title} id={i.id} contactNumber={i.contactNumber}/>
                   ))}
                 </Container>
               )}

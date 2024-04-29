@@ -28,8 +28,11 @@ type InputMasks = {
   className?: string;
   mask: string;
   [key: string]: any;
+  value: any;
+  onChange: any;
 }
-const InputMasks = ({className, ...props}: InputMasks) => {
+
+const InputMasks = ({className,value, onChange, ...props}: InputMasks) => {
   return (
     <InputMask
       {...props}
@@ -39,6 +42,8 @@ const InputMasks = ({className, ...props}: InputMasks) => {
       )}
       mask={props.mask}
       maskChar=''
+      onChange={onChange}
+      value={value}
     />
   );
 };

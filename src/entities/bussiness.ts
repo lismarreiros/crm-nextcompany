@@ -13,7 +13,7 @@ export interface Bussiness {
     id: number;
     description: string;
     bussinessComments?: _BusinessComment[]
-    status?: string;
+    contactNumber?: string;
     closedAt?: Date;
     startedAt?: Date;
     createdAt?: Date;
