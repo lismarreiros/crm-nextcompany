@@ -43,17 +43,27 @@ const Items = ({ id, bussinessId, title, contactNumber}: ItemsType) => {
     >
       <div className='flex flex-col'>
         <div className="flex items-start h-full">
-          <div className='flex flex-col gap-4 border-r border-indigo-50 pr-2 mr-2 items-center justify-center'>
+          <div className='flex flex-col gap-2 pr-2 mr-2 items-center justify-center'>
             <Avatar className='h-5 w-5'>
               <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>
-            <ClipboardListIcon size={22} className='rounded-full p-1 bg-indigo-300' color='#4b5569'/>
+            <button className="py-2 px-1 relative border-2 border-transparent rounded-full focus:outline-none focus:text-gray-500 transition duration-150 ease-in-out" >
+              <ClipboardListIcon size={20} color='#4b5563'/>
+              <span className="absolute inset-0 object-right-top -mr-6">
+                <div className="inline-flex items-center px-1.5 py-0.5 border-2 rounded-full text-xs font-semibold leading-4 bg-indigo-500 text-white">
+                  1
+                </div>
+              </span>
+            </button>
           </div>
           <div className='w-full flex flex-col'>
-            <div className='flex justify-between items-baseline gap-1'>
+            <div className='flex justify-between border-l border-indigo-50 px-2 items-baseline gap-4'>
               <div>
-                {title} 
+                <div className='flex items-baseline gap-2'>
+                  {title} 
+                  <p className='text-xs font-light'>#{bussinessId}</p>
+                </div>
                 <p className='mt-2 text-xs'>
                   {contactNumber}
                 </p>
