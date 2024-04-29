@@ -82,6 +82,25 @@ export class OpportunityFlowService {
     return null;
   }
 
+  // delete opportunity flow
+  public static async deleteOpportunityFlow(opportunityFlowId: number): Promise<OpportunityFlow | null> {
+    const response = await this.api.delete<any>(`/opportunity-flow/${opportunityFlowId}`, {
+      headers: {
+        Authorization: 'Bearer ' + this.token,
+      },
+    });
+
+    if (response.status === 200) {
+      return {
+        id: response.data.id,
+        description: response.data.description,
+        order: response.data.order,
+      };
+    }
+
+    return null;
+  }
+
   // change opportunity flow of bussiness
   public static async changeOpportunityFlowOfBussiness(bussinessId: number, opportunityFlowId: number): Promise<OpportunityFlowWithBussiness[] | null> {
     const response = await this.api.post<any>('/bussiness/change-opportunity-flow', {
