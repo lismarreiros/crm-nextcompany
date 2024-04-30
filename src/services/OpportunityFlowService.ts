@@ -50,6 +50,7 @@ export class OpportunityFlowService {
           id: bussiness.id,
           description: bussiness.description,
           status: bussiness.status,
+          contactNumber: bussiness.contactNumber,
           closedAt: bussiness.closedAt,
           startedAt: bussiness.startedAt,
           prevision: bussiness.prevision,
@@ -77,6 +78,25 @@ export class OpportunityFlowService {
         description: data.description,
         order: data.order,
       }));
+    }
+
+    return null;
+  }
+
+  // delete opportunity flow
+  public static async deleteOpportunityFlow(opportunityFlowId: number): Promise<OpportunityFlow | null> {
+    const response = await this.api.delete<any>(`/opportunity-flow/${opportunityFlowId}`, {
+      headers: {
+        Authorization: 'Bearer ' + this.token,
+      },
+    });
+
+    if (response.status === 200) {
+      return {
+        id: response.data.id,
+        description: response.data.description,
+        order: response.data.order,
+      };
     }
 
     return null;
