@@ -14,6 +14,7 @@ export interface Bussiness {
     description: string;
     bussinessComments?: _BusinessComment[]
     contactNumber?: string;
+    observation?: string;
     closedAt?: Date;
     startedAt?: Date;
     createdAt?: Date;

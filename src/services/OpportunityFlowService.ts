@@ -50,6 +50,7 @@ export class OpportunityFlowService {
           id: bussiness.id,
           description: bussiness.description,
           status: bussiness.status,
+          contactNumber: bussiness.contactNumber,
           closedAt: bussiness.closedAt,
           startedAt: bussiness.startedAt,
           prevision: bussiness.prevision,

@@ -48,7 +48,7 @@ type DNDType = {
     id: UniqueIdentifier;
     bussinessId: number;
     title: string;
-    contactNumber: string;
+    contactNumber?: string;
   }[];
 };
 
@@ -134,6 +134,7 @@ export default function Kanban() {
 
     const response = createBusiness({
       description: itemName,
+      contactNumber,
       opportunityFlowId: 1,
     });
 
@@ -516,7 +517,7 @@ export default function Kanban() {
                   <SortableContext items={container.items.map((i) => i.id)}>
                     <div className="flex items-start flex-col gap-y-4">
                       {container.items.map((i) => (
-                        <Items title={i.title} bussinessId={i.bussinessId} id={i.id} key={i.id} contactNumber={i.contactNumber} />
+                        <Items title={i.title} bussinessId={i.bussinessId} id={i.id} key={i.id} contactNumber={ i.contactNumber ? i.contactNumber : '' } />
                       ))}
                     </div>
                   </SortableContext>
@@ -532,7 +533,7 @@ export default function Kanban() {
               {activeId && activeId.toString().includes('container') && (
                 <Container id={activeId} title={findContainerTitle(activeId)}>
                   {findContainerItems(activeId).map((i) => (
-                    <Items key={i.id} bussinessId={i.bussinessId} title={i.title} id={i.id} contactNumber={i.contactNumber}/>
+                    <Items key={i.id} bussinessId={i.bussinessId} title={i.title} id={i.id} contactNumber={ i.contactNumber ? i.contactNumber : '' }/>
                   ))}
                 </Container>
               )}

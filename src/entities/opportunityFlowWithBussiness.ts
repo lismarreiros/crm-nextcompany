@@ -7,6 +7,7 @@ interface _Bussiness {
   startedAt?: Date;
   prevision?: Date;
   clientId?: number;  
+  contactNumber?: string;
 }
 
 export interface OpportunityFlowWithBussiness {

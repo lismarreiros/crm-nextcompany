@@ -9,7 +9,7 @@ export class BussinessService {
 
   private static token = localStorage.getItem('APP_ACCESS_TOKEN')?.replace(/"/g, '');
 
-  public static async getBussinesById(bussinessId: number): Promise<Bussiness| null> {
+  public static async getBussinesById(bussinessId: number): Promise<Bussiness | null> {
 
     const response = await this.api.get<Bussiness>(`/bussiness/${bussinessId}`, {
       headers: {
