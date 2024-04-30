@@ -4,24 +4,25 @@ import { Table, TableCell, TableHead, TableHeader, TableRow } from '@/components
 import { PlusIcon, Trash2Icon } from 'lucide-react';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
-import { useOpportunityFlowContext } from './OpportunityFlowContext';
+// import { useOpportunityFlowContext } from './OpportunityFlowContext';
 import { useOpportunityFlow } from '@/hook/useOportunityFlow';
+
+import { v4 as uuidv4 } from 'uuid';
 
 type FormValues = {
   flow: { 
-    idfluxodeoportunidade: number,
+    idfluxodeoportunidade?: string,
+    opportunityFlowId?: number,
     ordem: number,
     descricao: string 
   }[]
 }
 
 const OpportunityFlow = () => {
-  const { addOpportunityFlow } = useOpportunityFlowContext();
-  const [nextId, setNextId] = useState(7);
+  // const { addOpportunityFlow } = useOpportunityFlowContext();
   const [nextOrder, setNextOrder] = useState(7);
 
-  const { opportunityFlows, saveOpportunityFlows } = useOpportunityFlow();
-  // console.log(opportunityFlows);
+  const { opportunityFlows, saveOpportunityFlows, deleteOpportunityFlow } = useOpportunityFlow();
   
   const { register, formState: { errors }, handleSubmit, control  } = useForm<FormValues>({
     // defaultValues: {
@@ -46,7 +47,8 @@ const OpportunityFlow = () => {
 
   useEffect(() => {
     append(opportunityFlows.map((flow) => ({
-      idfluxodeoportunidade: flow.id,
+      opportunityFlowId: flow.id,
+      idfluxodeoportunidade: `flow-${uuidv4()}`,
       ordem: flow.order,
       descricao: flow.description
     })).sort((a, b) => a.ordem - b.ordem));
@@ -54,19 +56,13 @@ const OpportunityFlow = () => {
 
   const onSubmit = (data: FormValues) => {
     const opportunityFlows = data.flow.map(flow => ({
-      id: Number(flow.idfluxodeoportunidade),
+      id: Number(flow.opportunityFlowId),
       description: flow.descricao,
       order: Number(flow.ordem)
     }));
     saveOpportunityFlows(opportunityFlows);
-    addOpportunityFlow(data.flow);
+    // addOpportunityFlow(data.flow);
   };
-
-  // const onSubmit = ( data: FormValues ) => {
-  //   data.flow.forEach(flow => {
-  //     addOpportunityFlow(flow);
-  //   });
-  // };
 
   return (
     <div className='flex min-h-screen bg-indigo-200 p-8 justify-center'>
@@ -79,11 +75,10 @@ const OpportunityFlow = () => {
               type='button'
               onClick={() => { 
                 append({
-                  idfluxodeoportunidade: nextId,
+                  idfluxodeoportunidade: `flow-${uuidv4()}`,
                   ordem: nextOrder,
                   descricao: ''
                 });
-                setNextId(prevId => prevId + 1);
                 setNextOrder(prevOrder => prevOrder + 1);
               }}
               variant='ghost' 
@@ -105,7 +100,7 @@ const OpportunityFlow = () => {
                 <TableHead>Ações</TableHead>
               </TableHeader>
               {fields.map((field, index) => (
-                <TableRow className='border-b-0' key={field.id}>
+                <TableRow className='border-b-0' key={field.idfluxodeoportunidade}>
                   <TableCell className='w-1/5'>
                     <input
                       type='number'
@@ -122,7 +117,12 @@ const OpportunityFlow = () => {
                   <TableCell>
                     <button type='button' title='Apagar'>
                       <Trash2Icon
-                        onClick={() => remove(index)}
+                        onClick={() => {
+                          if (field.opportunityFlowId) {
+                            deleteOpportunityFlow(Number(field.opportunityFlowId));
+                          }
+                          remove(index);
+                        }}
                         size={26} 
                         className='bg-indigo-50 hover:bg-indigo-200 rounded-md p-1'/>
                     </button>              

@@ -40,6 +40,10 @@ export function useOpportunityFlow() {
   };
 
   // todo: adicionar função para remove fluxo de oportunidade.
+  const deleteOpportunityFlow = async (opportunityFlowId: number) => {
+    const response = await OpportunityFlowService.deleteOpportunityFlow(opportunityFlowId);
+    console.log(response);
+  };
 
   const changeOpportunityFlowOfBussiness = async (bussinessId: number, opportunityFlowId: number) => {
     const response = await OpportunityFlowService.changeOpportunityFlowOfBussiness(bussinessId, opportunityFlowId); 
@@ -63,6 +67,7 @@ export function useOpportunityFlow() {
     saveOpportunityFlowsError,
     swapOpportunityFlows,
     saveOpportunityFlows,
-    changeOpportunityFlowOfBussiness
+    changeOpportunityFlowOfBussiness,
+    deleteOpportunityFlow
   };
 }
