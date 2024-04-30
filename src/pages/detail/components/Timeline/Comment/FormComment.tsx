@@ -9,6 +9,8 @@ import { Form,
   FormItem,
 } from '@/components/shadcn/ui/form';
 import { Button } from '@/components/shadcn/ui/button';
+import { useBussiness } from '@/hook/useBussiness';
+import { useBusinessDetailContext } from '@/context/BusinessDetailContext';
 
 // type FormComentarioProps = {
 //   onCommentSubmit: (comment: {comentario: string}) => void;
@@ -19,10 +21,17 @@ const schema = z.object({
 });
 
 const FormComment: React.FC = () => {
+  const { createBusinessComment } = useBussiness();
+  const { bussiness } = useBusinessDetailContext();
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const comentario = formData.get('comentario') as string;
+    createBusinessComment({
+      businessId: bussiness.id,
+      comment: comentario
+    });
     // onCommentSubmit({comentario});
   };
 

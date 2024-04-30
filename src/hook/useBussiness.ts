@@ -1,4 +1,5 @@
 import { BusinessCreateType, Bussiness } from '@/entities/bussiness';
+import { BusinessCommentCreateType, BusinessCommentService } from '@/services/BusinessCommentService';
 import { BussinessService } from '@/services/BussinessService';
 import { useEffect, useState } from 'react';
 
@@ -22,5 +23,10 @@ export function useBussiness(bussinessId?: number) {
     if (response) setBussiness(response);
   };
 
-  return { bussiness, createBusiness };
+  const createBusinessComment = async (comment: BusinessCommentCreateType) => {
+    await BusinessCommentService.createBusinessComment(comment);
+    // if (response) setBussiness(response);
+  };
+
+  return { bussiness, createBusiness, createBusinessComment };
 }
