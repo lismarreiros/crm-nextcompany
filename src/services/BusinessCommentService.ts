@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Constants from '@/constants';
 import axios from 'axios';
 
@@ -25,6 +26,20 @@ export class  BusinessCommentService {
     }
 
     return response.data.comment;
+  }
+
+  public static async deleteBusinessComment(commentId: number): Promise<any | null> {
+    const response = await this.api.delete<any>(`/comment/${commentId}`, {
+      headers: {
+        Authorization: 'Bearer ' + this.token,
+      },
+    });
+
+    if (response.status !== 200) {
+      return null || 'comentário apagado';
+    }
+    
+    return null;
   }
 
 }

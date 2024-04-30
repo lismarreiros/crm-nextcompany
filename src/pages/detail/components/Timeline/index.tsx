@@ -15,6 +15,7 @@ import FormComment from './Comment/FormComment';
 import { ClipboardListIcon, FileIcon, MessageSquareIcon } from 'lucide-react';
 import { useBusinessDetailContext } from '@/context/BusinessDetailContext';
 import { _BusinessComment } from '@/entities/bussiness';
+import { useBussiness } from '@/hook/useBussiness';
 
 interface TaskFormData {
   id: string;
@@ -35,30 +36,47 @@ const Timeline: React.FC = () => {
   const [tasks, setTasks] = useState<TaskFormData[]>([]);
 
   const { bussiness } = useBusinessDetailContext();
+  const { deleteBusinessComment } = useBussiness();
+  const { createBusinessComment } = useBussiness();
 
-  useEffect(() => {
-    if (!bussiness) return;
+  // useEffect(() => {
+  //   if (!bussiness) return;
 
-    setComments(bussiness.businessComments.map(
-      (businessComment: _BusinessComment) => ({...businessComment})
-    ));
+  //   setComments(prevComments => [
+  //     ...prevComments,
+  //     ...bussiness.businessComments.map((comment: any) => ({...comment}))
+  //   ]);
+  // }, [bussiness]);
 
-  }, [bussiness]);
+  const handleCommentSubmit = async (comentario: string) => {
+    try {
+      console.log('Enviando comentário:', comentario);
+      await createBusinessComment({
+        businessId: bussiness.id,
+        comment: comentario
+      });
+      setComments([comentario, ...comments]);
+      setOpenC(!openC);
 
-  // const handleCommentSubmit = (newComment: string) => {
-  //   setComments([{comment: newComment}, ...comments]);
-  //   setOpenC(!openC);
-  // };
+    } catch (error) {
+      console.error('Erro ao criar o comentário:', error);
+    }
+  };
 
   const handleTaskSubmit = (formData: TaskFormData) => {
     setTasks([formData, ...tasks]);
     setOpenT(!openT);
   };
-  
-  const handleCommentDelete = (index: number) => {
-    const newComments = [...comments];
-    newComments.splice(index, 1);
-    setComments(newComments);
+ 
+  const handleCommentDelete = async (index: number) => {
+    try {
+      await deleteBusinessComment(comments[index].id);
+      const newComments = [...comments];
+      newComments.splice(index, 1);
+      setComments(newComments);
+    } catch (error) {
+      console.error('Erro ao excluir o comentário: ', error);
+    }
   };
 
   const handleTaskDelete = (index: number) => {
@@ -110,7 +128,7 @@ const Timeline: React.FC = () => {
             </Button>
           </DialogTrigger>
           <DialogContent className='w-4/5 h-[40%]'>
-            <FormComment />
+            <FormComment onCommentSubmit={handleCommentSubmit} />
           </DialogContent>
         </Dialog>
         <Button title='Anexar Arquivos' className='flex gap-1 h-10 text-white text-sm text-slate-500 border bg-white hover:bg-indigo-100'>

@@ -9,31 +9,46 @@ import { Form,
   FormItem,
 } from '@/components/shadcn/ui/form';
 import { Button } from '@/components/shadcn/ui/button';
-import { useBussiness } from '@/hook/useBussiness';
-import { useBusinessDetailContext } from '@/context/BusinessDetailContext';
+//import { useBussiness } from '@/hook/useBussiness';
+//import { useBusinessDetailContext } from '@/context/BusinessDetailContext';
 
-// type FormComentarioProps = {
-//   onCommentSubmit: (comment: {comentario: string}) => void;
-// };
-
+type FormComentarioProps = {
+  onCommentSubmit: (comment: string) => void;
+}
 const schema = z.object({
   comentario: z.string().max(100, { message: 'Limite de caracteres atingido' }),
 });
 
-const FormComment: React.FC = () => {
-  const { createBusinessComment } = useBussiness();
-  const { bussiness } = useBusinessDetailContext();
-
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+const FormComment: React.FC<FormComentarioProps>= ({ onCommentSubmit }) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const comentario = formData.get('comentario') as string;
-    createBusinessComment({
-      businessId: bussiness.id,
-      comment: comentario
-    });
-    // onCommentSubmit({comentario});
+    await onCommentSubmit(comentario);
+    console.log(comentario);
   };
+  // const { createBusinessComment } = useBussiness();
+  // const { bussiness } = useBusinessDetailContext();
+
+  // const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  //   event.preventDefault();
+  //   const formData = new FormData(event.currentTarget);
+  //   const comentario = formData.get('comentario') as string;
+
+  //   try {
+  //     await createBusinessComment({
+  //       businessId: bussiness.id,
+  //       comment: comentario
+  //     });
+
+  //     setNewComment(comentario);
+  //     event.currentTarget.reset();
+  //     // onCommentSubmit({comentario});
+
+  //   } catch (error) {
+  //     console.error('Erro ao criar o comentário:', error);
+  //   }
+  // };
 
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),

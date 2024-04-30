@@ -28,5 +28,10 @@ export function useBussiness(bussinessId?: number) {
     // if (response) setBussiness(response);
   };
 
-  return { bussiness, createBusiness, createBusinessComment };
+  const deleteBusinessComment = async (commentId: number) => {
+    const response = await BusinessCommentService.deleteBusinessComment(commentId);
+    console.log(response);
+  };
+
+  return { bussiness, createBusiness, createBusinessComment, deleteBusinessComment };
 }
